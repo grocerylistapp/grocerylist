@@ -31,6 +31,7 @@ export class EditProfileFormComponent implements OnDestroy{
   }
 
   async saveProfile(){
+    
     if(this.authenticatedUser){
       this.profile.email = this.authenticatedUser.email;
       const result = await this.data.saveProfile(this.authenticatedUser, this.profile);
