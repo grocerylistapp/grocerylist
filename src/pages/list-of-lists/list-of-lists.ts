@@ -22,4 +22,7 @@ export class ListOfListsPage {
     console.log('ionViewDidLoad ListOfListsPage');
   }
 
+  navigateToShoppingList(){
+    this.navCtrl.push('ShoppingListPage');
+  }
 }

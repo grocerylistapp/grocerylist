@@ -16,16 +16,10 @@
 <ion-content padding>
   <ion-item-group>
     <ion-item-divider color="listtitle">My Master List</ion-item-divider>
-    <ion-item>Master List</ion-item>
+    <ion-item (click)=navigateToShoppingList()>Master List</ion-item>
   </ion-item-group>
   <ion-item-group>
       <ion-item-divider color="listtitle">Trips</ion-item-divider>
-      <ion-item>My Next Trip</ion-item>
-      <ion-item>My Previous Trips</ion-item>
-    </ion-item-group>
-    <ion-item-group>
-        <ion-item-divider color="listtitle">Custom Lists</ion-item-divider>
-        <ion-item>Store 1</ion-item>
-        <ion-item>Store 2</ion-item>
-      </ion-item-group>
+      <ion-item (click)=navigateToShoppingList()>My Next Trip</ion-item>
+  </ion-item-group>
 </ion-content>

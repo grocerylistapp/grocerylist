@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, EventEmitter } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Profile } from '../../models/profile/profile';
 import {User} from 'firebase/app';
 import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database'
@@ -22,22 +22,27 @@ export class EditProfilePage {
   profile = {} as Profile;
   profileObject: FirebaseObjectObservable<Profile>
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, private database: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: AngularFireDatabase,
+    private toast: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
   }
 
-  // async saveProfile(user, profile){
-  //   this.profileObject = this.database.object('/profiles/${user.uid}');
-  //   try{
-  //     await this.profileObject.set(profile);
-  //     return true;
-  //   } catch(e){
-  //     console.error(e);
-  //     return false;
-  //   }
-  // }
+  navigateToPage(event: Boolean){
+    if(event){
+      this.navCtrl.setRoot('TabsHomePage');
+      this.toast.create({
+        message: `Welcome In!`,
+        duration: 3000
+      }).present();
+    } else{
+      this.toast.create({
+        message: `Save failed. Ensure all information is valid before saving!`,
+        duration: 3000
+      }).present();
+    }
+}
 
 }
