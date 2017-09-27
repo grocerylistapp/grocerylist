@@ -1,5 +1,8 @@
 {
   "name": "crud",
-  "app_id": "",
-  "type": "ionic-angular"
+  "app_id": "57b9fc8b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

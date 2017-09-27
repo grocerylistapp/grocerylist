@@ -1,0 +1,147 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		15A1FF321F6C25B3001F58CD /* crud */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 15A1FF331F6C25B3001F58CD /* Build configuration list for PBXAggregateTarget "crud" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = crud;
+			productName = crud;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXFileReference section */
+		15A1FF241F6C24D4001F58CD /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		15A1FF251F6C24D4001F58CD /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		15A1FF261F6C24D4001F58CD /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
+		15A1FF271F6C24D4001F58CD /* plugins */ = {isa = PBXFileReference; lastKnownFileType = folder; path = plugins; sourceTree = "<group>"; };
+		15A1FF281F6C24D4001F58CD /* platforms */ = {isa = PBXFileReference; lastKnownFileType = folder; path = platforms; sourceTree = "<group>"; };
+		15A1FF291F6C24D4001F58CD /* package-lock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "package-lock.json"; sourceTree = "<group>"; };
+		15A1FF2A1F6C24D4001F58CD /* node_modules */ = {isa = PBXFileReference; lastKnownFileType = folder; path = node_modules; sourceTree = "<group>"; };
+		15A1FF2B1F6C24D4001F58CD /* ionic.config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ionic.config.json; sourceTree = "<group>"; };
+		15A1FF2C1F6C24D4001F58CD /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		15A1FF2D1F6C24D4001F58CD /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		15A1FF2E1F6C24D4001F58CD /* hooks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hooks; sourceTree = "<group>"; };
+		15A1FF2F1F6C24D4001F58CD /* tsconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.json; sourceTree = "<group>"; };
+		15A1FF301F6C24D4001F58CD /* tslint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tslint.json; sourceTree = "<group>"; };
+		15A1FF311F6C24D4001F58CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		15A1FF1D1F6C24AC001F58CD = {
+			isa = PBXGroup;
+			children = (
+				15A1FF241F6C24D4001F58CD /* config.xml */,
+				15A1FF251F6C24D4001F58CD /* package.json */,
+				15A1FF261F6C24D4001F58CD /* resources */,
+				15A1FF271F6C24D4001F58CD /* plugins */,
+				15A1FF281F6C24D4001F58CD /* platforms */,
+				15A1FF291F6C24D4001F58CD /* package-lock.json */,
+				15A1FF2A1F6C24D4001F58CD /* node_modules */,
+				15A1FF2B1F6C24D4001F58CD /* ionic.config.json */,
+				15A1FF2C1F6C24D4001F58CD /* src */,
+				15A1FF2D1F6C24D4001F58CD /* www */,
+				15A1FF2E1F6C24D4001F58CD /* hooks */,
+				15A1FF2F1F6C24D4001F58CD /* tsconfig.json */,
+				15A1FF301F6C24D4001F58CD /* tslint.json */,
+				15A1FF311F6C24D4001F58CD /* README.md */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		15A1FF1E1F6C24AC001F58CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				TargetAttributes = {
+					15A1FF321F6C25B3001F58CD = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = E9WMMJES66;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 15A1FF211F6C24AC001F58CD /* Build configuration list for PBXProject "crud" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 15A1FF1D1F6C24AC001F58CD;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15A1FF321F6C25B3001F58CD /* crud */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		15A1FF221F6C24AC001F58CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		15A1FF231F6C24AC001F58CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		15A1FF341F6C25B3001F58CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = E9WMMJES66;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		15A1FF351F6C25B3001F58CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = E9WMMJES66;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15A1FF211F6C24AC001F58CD /* Build configuration list for PBXProject "crud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A1FF221F6C24AC001F58CD /* Debug */,
+				15A1FF231F6C24AC001F58CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15A1FF331F6C25B3001F58CD /* Build configuration list for PBXAggregateTarget "crud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A1FF341F6C25B3001F58CD /* Debug */,
+				15A1FF351F6C25B3001F58CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15A1FF1E1F6C24AC001F58CD /* Project object */;
+}
