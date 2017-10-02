@@ -9,7 +9,7 @@ import { User } from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '../../models/store/store';
 /**
- * Generated class for the AddToMyNextTripPage page.
+ * Generated class for the AddToMyNextTripAndMasterFromMntPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -17,10 +17,11 @@ import { Store } from '../../models/store/store';
 
 @IonicPage()
 @Component({
-  selector: 'page-add-to-my-next-trip',
-  templateUrl: 'add-to-my-next-trip.html',
+  selector: 'page-add-to-my-next-trip-and-master-from-mnt',
+  templateUrl: 'add-to-my-next-trip-and-master-from-mnt.html',
 })
-export class AddToMyNextTripPage {
+export class AddToMyNextTripAndMasterFromMntPage {
+
   currentShoppingItem = {} as ShoppingItem;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
   storeRef$: FirebaseListObservable<Store[]>;
@@ -42,7 +43,7 @@ export class AddToMyNextTripPage {
     }
 
   addShoppingItem(currentShoppingItem: ShoppingItem){
-    //console.log(currentShoppingItem);
+    //BUG: Eliminate duplicate entries in my next trip. Check with case insensitivity
     if(!currentShoppingItem.store) currentShoppingItem.store = "None";
     this.shoppingItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${currentShoppingItem.store}`);
     if(!currentShoppingItem.itemNumber) currentShoppingItem.itemNumber = 0;
@@ -53,6 +54,14 @@ export class AddToMyNextTripPage {
     });
 
     
+    //add to master list if it doesn't exist there
+    //BUG: Eliminate duplicate entries in masterlist. Check with case insensitivity
+    this.shoppingItemRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
+    this.shoppingItemRef$.push({
+      itemName: currentShoppingItem.itemName,
+      store: currentShoppingItem.store
+    });
+
     //reset global shopping item
     this.currentShoppingItem = {} as ShoppingItem;
     

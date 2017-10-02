@@ -63,14 +63,14 @@ export class MasterListPage implements OnInit{
           text: 'Add to Next Trip',
           handler: ()=> {
             console.log("addingto my next trip page");
-            this.navCtrl.push(AddToMyNextTripPage,{shoppingItem: shoppingItem} )
+            this.navCtrl.push('AddToMyNextTripPage',{shoppingItem: shoppingItem} )
           }
 
         },
         {
           text: 'Edit',
           handler: ()=> {
-            this.navCtrl.push(EditShoppingItemPage,{shoppingItemId: shoppingItem.$key, rootNode: "masterlist",
+            this.navCtrl.push('EditShoppingItemPage',{shoppingItemId: shoppingItem.$key, rootNode: "masterlist",
           userid: this.authenticatedUser.uid} )
           }
 

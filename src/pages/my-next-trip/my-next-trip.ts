@@ -44,7 +44,7 @@ export class MyNextTripPage implements OnInit{
   }
 
   navigateToAddToNextTripPage(){
-    this.navCtrl.push('AddToMyNextTripPage');
+    this.navCtrl.push('AddToMyNextTripAndMasterFromMntPage');
   }
 
 
@@ -55,7 +55,7 @@ export class MyNextTripPage implements OnInit{
         {
           text: 'Edit',
           handler: ()=> {
-            this.navCtrl.push(EditShoppingItemPage,{shoppingItemId: shoppingItem.$key} )
+            this.navCtrl.push('EditShoppingItemPage',{shoppingItemId: shoppingItem.$key} )
           }
 
         },

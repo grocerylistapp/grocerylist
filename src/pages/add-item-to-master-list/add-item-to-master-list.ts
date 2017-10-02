@@ -43,10 +43,18 @@ export class AddItemToMasterListPage {
   addShoppingItemToMasterList(currentShoppingItem: ShoppingItem){
     //console.log(currentShoppingItem);
     this.shoppingItemRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
-    this.shoppingItemRef$.push({
-      itemName: currentShoppingItem.itemName,
-      store: currentShoppingItem.store
-    });
+    if(currentShoppingItem.store){
+      this.shoppingItemRef$.push({
+        itemName: currentShoppingItem.itemName,
+        store: currentShoppingItem.store
+      });
+    }else{
+      this.shoppingItemRef$.push({
+        itemName: currentShoppingItem.itemName,
+        store: "None"
+      });
+    }
+    
     //reset global shopping item
     this.currentShoppingItem = {} as ShoppingItem;
 
