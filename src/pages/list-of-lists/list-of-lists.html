@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Lists</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Shopping List Home</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,10 +16,10 @@
 <ion-content padding>
   <ion-item-group>
     <ion-item-divider color="listtitle">My Master List</ion-item-divider>
-    <ion-item (click)=navigateToShoppingList()>Master List</ion-item>
+    <ion-item (click)=navigateToMasterList()>Master List</ion-item>
   </ion-item-group>
   <ion-item-group>
       <ion-item-divider color="listtitle">Trips</ion-item-divider>
-      <ion-item (click)=navigateToShoppingList()>My Next Trip</ion-item>
+      <ion-item (click)=navigateToMyNextTrip()>My Next Trip</ion-item>
   </ion-item-group>
 </ion-content>

@@ -17,8 +17,15 @@ export class EditShoppingItemPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase) {
     const shoppingItemId = this.navParams.get('shoppingItemId');
-    this.shoppingItemRef$ = this.db.object(`shopping-list/${shoppingItemId}`);
-    console.log(shoppingItemId);
+    const storeName = this.navParams.get('storeName');
+    const userid = this.navParams.get('userid');
+    const rootNode = this.navParams.get('rootNode');
+    if(storeName){
+    this.shoppingItemRef$ = this.db.object(`${rootNode}/${userid}/${storeName}/${shoppingItemId}`);
+    }else{
+      this.shoppingItemRef$ = this.db.object(`${rootNode}/${userid}/${shoppingItemId}`);
+    }
+    console.log(`In EditShopping page, shoppingitemid is ${rootNode}/${userid}/${storeName}/${shoppingItemId}`);
 
     this.shoppingItemRef$.subscribe(
       shoppingItem  => this.shoppingItem = shoppingItem);
@@ -29,6 +36,7 @@ export class EditShoppingItemPage {
   }
   
   updateShoppingItem(shoppingItem: ShoppingItem){
+    shoppingItem.store = shoppingItem.store ? shoppingItem.store : "None";
     this.shoppingItemRef$.update(shoppingItem);
     this.navCtrl.pop(); 
   }

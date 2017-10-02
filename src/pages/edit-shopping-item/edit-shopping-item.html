@@ -17,6 +17,10 @@
       <ion-label floating> Quantity </ion-label>
         <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
       </ion-item>
-    
+      <ion-item>
+          <ion-label floating> Store </ion-label>
+            <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input>
+          </ion-item>
+          
     <button ion-button block (click)="updateShoppingItem(shoppingItem)"> Update Item </button>
 </ion-content>

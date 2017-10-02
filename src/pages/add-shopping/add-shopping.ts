@@ -15,7 +15,6 @@ export class AddShoppingPage {
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase) {
-
     this.shoppingItemRef$ = this.db.list('shopping-list');
 
   }
@@ -24,7 +23,8 @@ export class AddShoppingPage {
     //console.log(currentShoppingItem);
     this.shoppingItemRef$.push({
       itemName: currentShoppingItem.itemName,
-      itemNumber: Number(currentShoppingItem.itemNumber)
+      itemNumber: Number(currentShoppingItem.itemNumber),
+      store: currentShoppingItem.store? currentShoppingItem.store : "None"
     });
     //reset global shopping item
     this.currentShoppingItem = {} as ShoppingItem;

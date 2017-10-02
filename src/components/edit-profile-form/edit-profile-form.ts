@@ -25,7 +25,6 @@ export class EditProfileFormComponent implements OnDestroy{
   constructor(private data: DataServiceProvider, private auth: AuthServiceProvider) {
     console.log('Hello EditProfileFormComponent Component');
     this.saveProfileResult = new EventEmitter<Boolean>();
-    
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
     this.authenticatedUser = user;
     })
