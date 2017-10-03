@@ -1,0 +1,27 @@
+<ion-header>
+  
+    <ion-navbar color="primary">
+      <ion-title>Add To Next Trip</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-item> 
+      <ion-label floating> Item Name </ion-label>
+      <ion-input type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label floating> Quantity </ion-label>
+      <ion-input type="number" [(ngModel)]="currentShoppingItem.itemNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating> Store </ion-label>
+          <ion-input type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
+    </ion-item>
+  
+  <button ion-button block (click)="addShoppingItem(currentShoppingItem)"> Add Item </button>
+  
+  </ion-content>
+  

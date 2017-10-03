@@ -3,6 +3,7 @@ import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/databa
 import {User} from 'firebase/app';
 import { Profile } from '../../models/profile/profile';
 import "rxjs/add/operator/take";
+import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 /*
   Generated class for the DataServiceProvider provider.
 
@@ -34,5 +35,6 @@ export class DataServiceProvider {
     this.profileObject = this.database.object(`/profiles/${user.uid}`, {preserveSnapshot : true});
     return this.profileObject.take(1);
   }
+
 
 }

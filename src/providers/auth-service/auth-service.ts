@@ -3,7 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Account} from '../../models/account/account.interface';
 import {ToastController} from 'ionic-angular';
 import {LoginResponse} from '../../models/login/login.response.interface';
-
+import firebase from 'firebase';
 /*
   Generated class for the AuthServiceProvider provider.
 
@@ -47,5 +47,8 @@ export class AuthServiceProvider {
     return this.auth.authState;
   }
 
+  getCurrentUser(){
+    return firebase.auth().currentUser;
+  }
 
 }

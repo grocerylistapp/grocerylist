@@ -1,0 +1,23 @@
+<ion-header>
+    
+      <ion-navbar color="primary">
+        <ion-title>Add Item</ion-title>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+      <ion-item> 
+        <ion-label floating> Item Name </ion-label>
+        <ion-input type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating> Store </ion-label>
+            <ion-input type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
+      </ion-item>
+    
+    <button ion-button block (click)="addShoppingItemToMasterList(currentShoppingItem)"> Add Item </button>
+    
+    </ion-content>
+    

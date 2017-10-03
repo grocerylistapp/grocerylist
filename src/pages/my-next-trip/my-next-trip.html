@@ -1,18 +1,27 @@
-<!--
-  Generated template for the MyNextTripPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>MyNextTrip</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    
+      <ion-navbar color="primary">
+        <ion-title>My Next Trip</ion-title>
+        <ion-buttons end>
+          <button ion-button (click)="navigateToAddToNextTripPage()" icon-only> 
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+      <ion-item-group>
+        <ion-item-divider color="listtitle">Stores</ion-item-divider>
+            <!-- <ion-list>
+              <ion-header><h1></h1></ion-header>
+            </ion-list> -->
+          <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
+            <h1>{{ item.$key }}</h1>
+          </ion-item>
+      </ion-item-group>
+    </ion-content>
+    

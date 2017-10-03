@@ -17,6 +17,7 @@
   <ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
     <h2>{{item.itemName}}</h2>
     <h3> Amount: {{item.itemNumber}}</h3>
+    <h3> Store: {{item.store}}</h3>
 
   </ion-item>
 
