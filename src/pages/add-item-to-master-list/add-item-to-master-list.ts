@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import {ShoppingItem} from '../../models/shopping-item/shopping-item.interface';
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Profile } from '../../models/profile/profile';
-import {User} from 'firebase/app';
+import { User } from 'firebase/app';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
-import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
-import {Subscription} from 'rxjs/Subscription';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -32,8 +32,11 @@ export class AddItemToMasterListPage {
   private authenticatedUser$ : Subscription;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
-  private auth: AuthServiceProvider, private data: DataServiceProvider) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private db: AngularFireDatabase,
+    private auth: AuthServiceProvider, 
+    private data: DataServiceProvider) {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
       })

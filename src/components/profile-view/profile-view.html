@@ -1,5 +1,8 @@
 <div *ngIf="userProfile">
   <ion-card>
+    <ion-card-title padding>
+      User Profile
+    </ion-card-title>
     <ion-card-content>
       <ion-item>
         <ion-label floating>First Name</ion-label>
@@ -15,4 +18,64 @@
           </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-title padding>
+      Pending Invitations
+    </ion-card-title>
+    <ion-card-content>
+     
+      <ion-item *ngFor="let invite of inviteListRef$ | async" >
+        <div *ngIf="invite.status === 'completed'" >
+          <h2> Email: {{invite.buddy.email}}</h2>
+          <h3> First Name: {{invite.buddy.firstName}}</h3>
+          <h3> Last Name: {{invite.buddy.lastName}}</h3>
+          <button ion-button color="secondary" (click)="acceptInvite(invite)">Accept Invite
+          </button>
+        </div>
+      </ion-item>
+      
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card *ngIf="buddyListRef$.length !== 0" >
+
+    <ion-card-title padding>
+      Buddy List
+    </ion-card-title>
+
+    <ion-card-content>
+
+      <ion-grid>
+
+        <ion-row align-items-center>
+          <ion-col>
+            First Name
+          </ion-col>
+          <ion-col >
+            Last Name
+          </ion-col>
+          <ion-col col-8>
+            Email
+          </ion-col>
+        </ion-row>
+
+        <ion-row align-items-center *ngFor="let buddy of buddyListRef$ | async" >
+        {{buddyListRef$.length}} 
+          <ion-col>
+            {{buddy}}
+          </ion-col>
+          <ion-col>
+            {{buddy.lastName}}
+          </ion-col>
+          <ion-col col-8>
+            {{buddy.email}}
+          </ion-col>
+        </ion-row>
+        
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card> -->
+
 </div>

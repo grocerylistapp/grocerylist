@@ -32,11 +32,11 @@ export class EditProfilePage {
 
   navigateToPage(event: Boolean){
     if(event){
-      this.navCtrl.setRoot('TabsHomePage');
-      this.toast.create({
-        message: `Welcome In!`,
-        duration: 3000
-      }).present();
+      this.navCtrl.push('AddBuddyPage');
+      // this.toast.create({
+      //   message: `Welcome In!`,
+      //   duration: 3000
+      // }).present();
     } else{
       this.toast.create({
         message: `Save failed. Ensure all information is valid before saving!`,
