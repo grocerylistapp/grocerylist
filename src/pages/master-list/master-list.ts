@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import {AddShoppingPage} from "../add-shopping/add-shopping";
 import {EditShoppingItemPage} from "../edit-shopping-item/edit-shopping-item";
@@ -17,37 +17,49 @@ import { AddToMyNextTripPage } from '../add-to-my-next-trip/add-to-my-next-trip'
   selector: 'page-master-list',
   templateUrl: 'master-list.html',
 })
-export class MasterListPage implements OnInit{
+export class MasterListPage{
   shoppingListRef$ : FirebaseListObservable<ShoppingItem[]>
   private authenticatedUser : User;
   private authenticatedUser$ : Subscription;
- 
-  ngOnInit(): void {
-   try{
-    console.log("Came to masterlist oninnit");
-    this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
-      this.authenticatedUser = user;
-      console.log(`Masterlist got user1 ${this.authenticatedUser.uid}`);
-      })
-    this.shoppingListRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
-    }catch(e){
+  private loading;
+  // ngOnInit(): void {
+  //  try{
+  //   console.log("Came to masterlist oninnit");
+  //   this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+  //     this.authenticatedUser = user;
+  //     console.log(`Masterlist got user1 ${this.authenticatedUser.uid}`);
+  //     })
+  //   this.shoppingListRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
+  //   }catch(e){
       
-    }
-  }
+  //   }
+  // }
 
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : AngularFireDatabase,
-  private actionSheetCntrl : ActionSheetController,private auth: AuthServiceProvider, private data: DataServiceProvider) {
+  private actionSheetCntrl : ActionSheetController,private auth: AuthServiceProvider, private data: DataServiceProvider,
+  public loadingCtrl: LoadingController) {
+    
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });    
+    this.loading.present();
     try{
       console.log("Came to masterlist constructor");
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
-        this.authenticatedUser = user;
-        console.log(`Masterlist got user1 ${this.authenticatedUser.uid}`);
+          this.authenticatedUser = user;
+          console.log(`Masterlist got user1 ${this.authenticatedUser.uid}`);
+          this.initFirebase();
         })
-      this.shoppingListRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
-      }catch(e){
-          
-      }
+      }catch(e){ }
+  }
+
+  initFirebase(){
+    let self = this;
+    this.shoppingListRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
+    this.shoppingListRef$.$ref.once("value",function(snapshot){
+      self.loading.dismiss();
+    });    
   }
 
   navigateToAddItemToMasterListPage(){
