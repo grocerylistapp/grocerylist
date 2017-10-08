@@ -36,7 +36,7 @@ export class EditShoppingItemPage {
   }
   
   updateShoppingItem(shoppingItem: ShoppingItem){
-    shoppingItem.store = shoppingItem.store ? shoppingItem.store : "None";
+    // shoppingItem.store = shoppingItem.store ? shoppingItem.store : "None";
     this.shoppingItemRef$.update(shoppingItem);
     this.navCtrl.pop(); 
   }

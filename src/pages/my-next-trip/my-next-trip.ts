@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
-import {AddShoppingPage} from "../add-shopping/add-shopping";
-import {EditShoppingItemPage} from "../edit-shopping-item/edit-shopping-item";
-import{ShoppingItem} from "../../models/shopping-item/shopping-item.interface";
-import {} from "../edit-shopping-item/edit-shopping-item";
+import { AddShoppingPage } from "../add-shopping/add-shopping";
+import { EditShoppingItemPage } from "../edit-shopping-item/edit-shopping-item";
+import { ShoppingItem } from "../../models/shopping-item/shopping-item.interface";
+import { } from "../edit-shopping-item/edit-shopping-item";
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { User } from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
@@ -18,94 +18,102 @@ import { Store } from '../../models/store/store';
   selector: 'page-my-next-trip-list',
   templateUrl: 'my-next-trip.html',
 })
-export class MyNextTripPage implements OnInit{
-  
-  
-  shoppingListRef$ : FirebaseListObservable<ShoppingItem[]>;
-  nextTripRef$ : FirebaseListObservable<Store[]>;
+export class MyNextTripPage implements OnInit {
 
-  private authenticatedUser : User;
-  private authenticatedUser$ : Subscription;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : AngularFireDatabase,
-  private actionSheetCntrl : ActionSheetController, private auth: AuthServiceProvider, private data: DataServiceProvider) {
 
-    try{
+  shoppingListRef$: FirebaseListObservable<ShoppingItem[]>;
+  nextTripRef$: FirebaseListObservable<Store[]>;
+
+  private authenticatedUser: User;
+  private authenticatedUser$: Subscription;
+  private loading;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
+    private actionSheetCntrl: ActionSheetController, private auth: AuthServiceProvider, private data: DataServiceProvider,
+    public loadingCtrl: LoadingController) {
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+
+    try {
       console.log("Came to nexttrip oninnit");
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
         this.authenticatedUser = user;
+        this.initFirebase();
         console.log(`nexttrip got user1 ${this.authenticatedUser.uid}`);
-        })
-        this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
-     
-      }catch(e){
-       // console.error(e);
-      } 
+      })
+    } catch (e) {
+      // console.error(e);
+    }
   }
 
-  navigateToAddToNextTripPage(){
+  initFirebase() {
+    let self = this;
+    this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
+    this.nextTripRef$.$ref.once("value", function (snapshot) {
+      self.loading.dismiss();
+    });
+  }
+
+  navigateToAddToNextTripPage() {
     this.navCtrl.push('AddToMyNextTripAndMasterFromMntPage');
   }
 
-
-  editShoppingList(shoppingItem: Store){
+  editShoppingList(shoppingItem: Store) {
     this.actionSheetCntrl.create({
       title: `${shoppingItem.storename}`,
       buttons: [
         {
           text: 'Edit',
-          handler: ()=> {
-            this.navCtrl.push('EditShoppingItemPage',{shoppingItemId: shoppingItem.$key} )
+          handler: () => {
+            this.navCtrl.push('EditShoppingItemPage', { shoppingItemId: shoppingItem.$key })
           }
-
         },
         {
           text: 'Delete',
           role: 'destructive',
-          handler: ()=> {
+          handler: () => {
             this.shoppingListRef$.remove(shoppingItem.$key);
           }
-
         },
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: ()=> {
-            
+          handler: () => {
           }
-
         }
-
       ]
     }).present();
   }
 
   ngOnInit(): void {
-    try{
+    try {
       console.log("Came to nexttrip oninnit");
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
         this.authenticatedUser = user;
         console.log(`nexttrip got user1 ${this.authenticatedUser.uid}`);
-        })
-        this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
-        
-        this.nextTripRef$.forEach(element => {
-          console.log(element);
-        });
-      
-      }catch(e){
-       // console.error(e);
-      }
+      })
+      this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
+
+      this.nextTripRef$.forEach(element => {
+        console.log(element);
+      });
+
+    } catch (e) {
+      // console.error(e);
+    }
   }
 
-  getItemsForStore(store: Store){
+  getItemsForStore(store: Store) {
     console.log("came to getItemsForStore in MyNextTripPage");
-    this.shoppingListRef$ =  this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${store.storename}`, {preserveSnapshot: true});
-   }
+    this.shoppingListRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${store.storename}`, { preserveSnapshot: true });
+  }
 
-   navigateToShoppingListForStore(store: string){
+  navigateToShoppingListForStore(store: string) {
     console.log(`came to navigateToShoppingListForStore in MyNextTripPage, store is ${store}`);
-    this.navCtrl.push('MyNextTripShoppingListForStorePage', {storeName: store, userid: this.authenticatedUser.uid});
+    this.navCtrl.push('MyNextTripShoppingListForStorePage', { storeName: store, userid: this.authenticatedUser.uid });
   }
 
 

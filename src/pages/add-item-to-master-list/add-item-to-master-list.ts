@@ -147,6 +147,7 @@ export class AddItemToMasterListPage {
     // };
     //   console.log(this.formErrors.itemName);
     this.showToast('Item added to the Master List', 1000);
+    this.navCtrl.pop();
   }
 
   /* show toast message dynamically */
