@@ -19,6 +19,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     DataServiceProvider,
-    WalmartApiProvider
+    WalmartApiProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule {}
