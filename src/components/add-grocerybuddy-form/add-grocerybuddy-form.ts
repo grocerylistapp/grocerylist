@@ -28,12 +28,9 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
 
   buddy1 = {} as Profile;
   currentBuddyRef$: FirebaseListObservable<Profile[]>;
-  currentBuddyObj: FirebaseObjectObservable<Profile>;
-  buddyNotificationRef$: FirebaseListObservable<Notification[]>;
+  userNotificationRef$: FirebaseListObservable<Notification[]>;
   buddyList = [] as Profile[];
   notificationList = [] as Notification[];
-  currentNotification = {} as Notification;
-  buddyNotificationObj: FirebaseObjectObservable<Notification>;
   userNotificationObj: FirebaseObjectObservable<Notification>;
   userProfile: Profile;
 
@@ -55,53 +52,29 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
 
   sendNotification(){
 
-    this.buddyNotificationRef$ = this.db.list(`/notification/${this.authenticatedUser.uid}`);
-    this.buddyNotificationRef$.subscribe( notificationList  => this.notificationList = notificationList );
-    
-    this.userNotificationObj = this.db.object(`/notification/${this.authenticatedUser.uid}`);
-    this.buddyNotificationObj = this.db.object(`/notification/${this.buddy1['$key']}`);
-    
-    let currentNotificationList = this.notificationList.filter(notification  => {
-      if (notification.buddy === this.buddy1){
-        return notification;
-      }
+
+    this.userNotificationObj = this.db.object(`/grocerybuddylist/${this.buddy1['$key']}`);
+    this.userNotificationObj.$ref.child(this.authenticatedUser.uid).set({
+      status: 'pending'
     });
-    if(currentNotificationList.length > 0){
-      alert("notification already exists");
-    }
-    else{
-      this.userNotificationObj.$ref.child(this.buddy1['$key']).set({
-        user: this.userProfile,
-        buddy: this.buddy1,
-        status: 'pending'
-      });
-      this.buddyNotificationObj.$ref.child(this.authenticatedUser.uid).set({
-        buddy: this.userProfile,
-        user: this.buddy1,
-        status: 'pending'
-      });
-      //this.currentBuddyObj.$ref.child(this.buddy1['$key']).set(this.buddy1);
-    }
-
-
   }
 
   saveBuddyList(){
     
+
+    //check if the array contains already added buddy or notification so that only new notification is pushed to buddy's grocerybuddyist
     this.currentBuddyRef$ = this.db.list(`/grocerybuddylist/${this.authenticatedUser.uid}`);
-    this.currentBuddyObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
     this.currentBuddyRef$.subscribe( buddyList  => this.buddyList = buddyList );
-    var self = this;
     var usersRef = this.db.list(`/profiles`, {
         query: {
             orderByChild: 'email',
-            equalTo: self.buddy1.email , // How to check if participants contain username
+            equalTo: this.buddy1.email , // How to check if participants contain username
         }
     });
     
     usersRef.subscribe(profileList => {
-      //const userData = snapshot.val();
-      if(profileList.length > 0){
+      
+      if(profileList.length > 0){//check if registered user
         this.buddy1 = profileList[0];
         
         if(this.buddy1.email){
@@ -113,15 +86,17 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
             });
             if(currentBuddyList.length > 0){
               alert("Buddy already exists");
+              this.toast.create({
+                message: `Buddy already exists`,
+                duration: 3000
+              }).present();
             }
             else{
               this.sendNotification();
-              //this.currentBuddyObj.$ref.child(this.buddy1['$key']).set(this.buddy1);
             }
           }
           else{
             this.sendNotification();
-            //this.currentBuddyObj.$ref.child(this.buddy1['$key']).set(this.buddy1);
           }
         }
         // else{
@@ -133,10 +108,8 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
 
       }
       else{
-        //sent mail to user 
+        //send mail to user 
       }
-      
-    
       
     });
 

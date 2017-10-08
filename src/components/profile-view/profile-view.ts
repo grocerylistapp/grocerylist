@@ -18,51 +18,65 @@ import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable }
 export class ProfileViewComponent implements OnInit{
   userProfile: Profile;
   private authenticatedUser : User;
-  private buddyListRef$ : FirebaseListObservable<Profile[]>
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   private userBuddyListObj: FirebaseObjectObservable<Profile>;
   private buddyBuddyListObj: FirebaseObjectObservable<Profile>;
-  private buddyNotificationObj: FirebaseObjectObservable<Notification>;
-  private userNotificationObj: FirebaseObjectObservable<Notification>;
+
+  buddyList: Array<any>;
 
   constructor(private data: DataServiceProvider, private auth: AuthServiceProvider,
     private db : AngularFireDatabase) {
     console.log('Hello ProfileViewComponent Component');
+
   }
 
   ngOnInit(): void {
     this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
+      this.buddyList = [];
+      this.inviteListRef$ = this.db.list(`/grocerybuddylist/${user.uid}`);
+      this.inviteListRef$.subscribe( inviteList  => {
+        console.log(inviteList);
+        inviteList.forEach((invite) => {
+          let profileData = this.db.object(`/profiles/${invite['$key']}`);
+          profileData.subscribe((buddyProfile) => {
+            this.buddyList.push({
+              buddy: buddyProfile,
+              status: invite['status']
+            });
+          });
+
+        });
+        console.log(this.buddyList);
+      });
       this.data.getProfile(user).subscribe(profile => {
         this.userProfile = <Profile>profile.val();
       });
-      this.buddyListRef$ = this.db.list(`/grocerybuddylist/${this.authenticatedUser.uid}`);
-      this.inviteListRef$ = this.db.list(`/notification/${this.authenticatedUser.uid}`);
-      
-
     })
   }
 
   acceptInvite(notification) {
     console.log(notification);
     this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
-    this.userBuddyListObj.$ref.child(notification['$key']).set(notification.buddy);
-    this.buddyBuddyListObj = this.db.object(`/grocerybuddylist/${notification['$key']}`);
-    this.buddyBuddyListObj.$ref.child(this.authenticatedUser.uid).set(this.userProfile);
+    this.buddyBuddyListObj = this.db.object(`/grocerybuddylist/${notification.buddy['$key']}`);
 
-    this.userNotificationObj = this.db.object(`/notification/${this.authenticatedUser.uid}`);
-    this.buddyNotificationObj = this.db.object(`/notification/${notification['$key']}`);
+    this.userBuddyListObj.$ref.child(notification.buddy['$key']).update({
+      status: 'completed'
+    });
+    this.buddyBuddyListObj.$ref.child(this.authenticatedUser.uid).set({
+      status: 'completed'
+    });
+    this.buddyList.forEach((invite) => {
+          if(invite.buddy['$key'] === notification.buddy['$key']) {
+            invite.buddy.status = 'completed';
+          }
+    });
 
-    this.userNotificationObj.$ref.child(notification['$key']).update({
-        user: notification.user,
-        buddy: notification.buddy,
-        status: 'completed'
-      });
-      this.buddyNotificationObj.$ref.child(this.authenticatedUser.uid).update({
-        buddy: notification.user,
-        user: notification.buddy,
-        status: 'completed'
-      });
+  }
 
+  declineInvite(notification) {
+    console.log(notification);
+    this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
+    this.userBuddyListObj.$ref.child(notification['$key']).remove();
   }
 }
