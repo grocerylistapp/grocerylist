@@ -25,8 +25,8 @@
     </ion-card-title>
     <ion-card-content>
      
-      <ion-item *ngFor="let buddyInvite of buddyList" >
-        <div *ngIf="buddyInvite.status === 'pending'" >
+      <ion-item *ngFor="let buddyInvite of buddyListPending"  >
+        <div>
           <h3 padding>{{buddyInvite.buddy.firstName}} {{buddyInvite.buddy.lastName}}</h3>
           <div class= "pending-invitations__buttons">
             <button ion-button color="secondary" (click)="acceptInvite(buddyInvite)">Accept</button>
@@ -44,9 +44,9 @@
     </ion-card-title>
     <ion-card-content>
      
-      <ion-item *ngFor="let buddyInvite of buddyList" >
-        <div *ngIf="buddyInvite.status === 'completed'" >
-          <h3 padding>{{buddyInvite.buddy.firstName}} {{buddyInvite.buddy.lastName}}</h3>
+      <ion-item *ngFor="let buddyInvites of buddyListCompleted" >
+        <div>
+          <h3 padding>{{buddyInvites.buddy.firstName}} {{buddyInvites.buddy.lastName}}</h3>
         </div>
       </ion-item>
       

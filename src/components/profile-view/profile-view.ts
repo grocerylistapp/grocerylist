@@ -22,7 +22,8 @@ export class ProfileViewComponent implements OnInit{
   private userBuddyListObj: FirebaseObjectObservable<Profile>;
   private buddyBuddyListObj: FirebaseObjectObservable<Profile>;
 
-  buddyList: Array<any>;
+  buddyListPending: Array<any>;
+  buddyListCompleted: Array<any>;
 
   constructor(private data: DataServiceProvider, private auth: AuthServiceProvider,
     private db : AngularFireDatabase) {
@@ -33,21 +34,34 @@ export class ProfileViewComponent implements OnInit{
   ngOnInit(): void {
     this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
-      this.buddyList = [];
+      //this.buddyList = [];
       this.inviteListRef$ = this.db.list(`/grocerybuddylist/${user.uid}`);
       this.inviteListRef$.subscribe( inviteList  => {
         console.log(inviteList);
         inviteList.forEach((invite) => {
           let profileData = this.db.object(`/profiles/${invite['$key']}`);
+          //this.buddyList = [];
+          this.buddyListPending  = [];
+          this.buddyListCompleted  = [];
           profileData.subscribe((buddyProfile) => {
-            this.buddyList.push({
-              buddy: buddyProfile,
-              status: invite['status']
-            });
+            if(invite['status'] == 'pending') {
+              console.log(this.buddyListPending)
+              this.buddyListPending.push({
+                buddy: buddyProfile,
+                status: invite['status']
+              });
+            }
+            else if(invite['status'] == 'completed') {
+              console.log(this.buddyListCompleted)
+              this.buddyListCompleted.push({
+                buddy: buddyProfile,
+                status: invite['status']
+              });
+            }
           });
 
         });
-        console.log(this.buddyList);
+        //console.log(this.buddyList);
       });
       this.data.getProfile(user).subscribe(profile => {
         this.userProfile = <Profile>profile.val();
@@ -66,9 +80,10 @@ export class ProfileViewComponent implements OnInit{
     this.buddyBuddyListObj.$ref.child(this.authenticatedUser.uid).set({
       status: 'completed'
     });
-    this.buddyList.forEach((invite) => {
+    this.buddyListCompleted.forEach((invite) => {
           if(invite.buddy['$key'] === notification.buddy['$key']) {
             invite.buddy.status = 'completed';
+            invite.status = 'completed';
           }
     });
 
