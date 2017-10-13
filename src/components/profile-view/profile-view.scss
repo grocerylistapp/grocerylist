@@ -1,3 +1,7 @@
-profile-view {
-
+.pending-invitations__buttons {
+    padding: 10px;
+    float: left;
+    div button:nth-of-type(1){
+        margin-right: 0px;
+    }
 }

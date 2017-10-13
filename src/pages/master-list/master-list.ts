@@ -72,7 +72,7 @@ export class MasterListPage{
       title: `${shoppingItem.itemName}`,
       buttons: [
         {
-          text: 'Add to Next Trip',
+          text: 'Add to Buddy List',
           handler: ()=> {
             console.log("addingto my next trip page");
             this.navCtrl.push('AddToMyNextTripPage',{shoppingItem: shoppingItem} )
@@ -83,9 +83,8 @@ export class MasterListPage{
           text: 'Edit',
           handler: ()=> {
             this.navCtrl.push('EditShoppingItemPage',{shoppingItemId: shoppingItem.$key, rootNode: "masterlist",
-          userid: this.authenticatedUser.uid} )
+              userid: this.authenticatedUser.uid} )
           }
-
         },
         {
           text: 'Delete',

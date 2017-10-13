@@ -8,10 +8,12 @@ import { User } from 'firebase/app';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Subscription } from 'rxjs/Subscription';
+
 import { ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
 
 /**
  * Generated class for the AddItemToMasterListPage page.
@@ -40,10 +42,12 @@ export class AddItemToMasterListPage {
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
     private barcodeScanner: BarcodeScanner) {
+
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     });
