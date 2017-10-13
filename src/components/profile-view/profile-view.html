@@ -1,5 +1,8 @@
 <div *ngIf="userProfile">
   <ion-card>
+    <ion-card-title padding>
+      User Profile
+    </ion-card-title>
     <ion-card-content>
       <ion-item>
         <ion-label floating>First Name</ion-label>
@@ -15,4 +18,39 @@
           </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-title padding>
+      Pending Invitations
+    </ion-card-title>
+    <ion-card-content>
+     
+      <ion-item *ngFor="let buddyInvite of buddyListPending"  >
+        <div>
+          <h3 padding>{{buddyInvite.buddy.firstName}} {{buddyInvite.buddy.lastName}}</h3>
+          <div class= "pending-invitations__buttons">
+            <button ion-button color="secondary" (click)="acceptInvite(buddyInvite)">Accept</button>
+            <button ion-button color="danger" (click)="declineInvite(buddyInvite)">Decline</button>
+          </div>
+        </div>
+      </ion-item>
+      
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title padding>
+      Grocery Buddies
+    </ion-card-title>
+    <ion-card-content>
+     
+      <ion-item *ngFor="let buddyInvites of buddyListCompleted" >
+        <div>
+          <h3 padding>{{buddyInvites.buddy.firstName}} {{buddyInvites.buddy.lastName}}</h3>
+        </div>
+      </ion-item>
+      
+    </ion-card-content>
+  </ion-card>
+
 </div>
