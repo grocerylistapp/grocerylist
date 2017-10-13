@@ -1,24 +1,22 @@
-
 <ion-header>
-    
-      <ion-navbar color="primary">
-        <ion-title>Master List</ion-title>
-        <ion-buttons end>
-          <button ion-button (click)="navigateToAddItemToMasterListPage()" icon-only> 
+
+  <ion-navbar color="primary">
+    <ion-title>Master List</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="navigateToAddItemToMasterListPage()" icon-only> 
             <ion-icon name="add"></ion-icon>
           </button>
-        </ion-buttons>
-      </ion-navbar>
-    
-    </ion-header>
-    
-    
-    <ion-content padding>
-      <ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
-        <h2>{{item.itemName}}</h2>
-        <h3> Store: {{item.store}}</h3>
-        
-      </ion-item>
-    
-    </ion-content>
-    
+
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="master-list">
+  <ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
+    <h2>{{item.itemName}}</h2>
+    <h3> Store: {{item.store}}</h3>
+  </ion-item>
+
+</ion-content>
