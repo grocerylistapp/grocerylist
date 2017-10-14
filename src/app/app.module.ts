@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 
-import { MyApp } from './app.component';
+import { inSCANout } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AddShoppingPage } from '../pages/add-shopping/add-shopping';
 import { EditShoppingItemPage} from '../pages/edit-shopping-item/edit-shopping-item';
@@ -24,12 +24,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
-    MyApp,
+    inSCANout,
     EditShoppingItemPage, AddShoppingPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(inSCANout),
     //initialize angularfire with credentials 
     AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
     AngularFireDatabaseModule,
@@ -38,7 +38,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, EditShoppingItemPage, AddShoppingPage
+    inSCANout, EditShoppingItemPage, AddShoppingPage
   ],
   providers: [
     StatusBar,

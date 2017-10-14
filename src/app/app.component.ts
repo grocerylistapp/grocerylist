@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @Component({
   templateUrl: 'app.html',
 })
-export class MyApp {
+export class inSCANout {
   rootPage:string = 'LoginPage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

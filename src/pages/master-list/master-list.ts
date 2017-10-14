@@ -22,19 +22,7 @@ export class MasterListPage{
   private authenticatedUser : User;
   private authenticatedUser$ : Subscription;
   private loading;
-  // ngOnInit(): void {
-  //  try{
-  //   console.log("Came to masterlist oninnit");
-  //   this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
-  //     this.authenticatedUser = user;
-  //     console.log(`Masterlist got user1 ${this.authenticatedUser.uid}`);
-  //     })
-  //   this.shoppingListRef$ = this.db.list(`/masterlist/${this.authenticatedUser.uid}`);
-  //   }catch(e){
-      
-  //   }
-  // }
-
+  
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : AngularFireDatabase,
   private actionSheetCntrl : ActionSheetController,private auth: AuthServiceProvider, private data: DataServiceProvider,
@@ -72,7 +60,7 @@ export class MasterListPage{
       title: `${shoppingItem.itemName}`,
       buttons: [
         {
-          text: 'Add to Buddy List',
+          text: 'Add to Next Trip',
           handler: ()=> {
             console.log("addingto my next trip page");
             this.navCtrl.push('AddToMyNextTripPage',{shoppingItem: shoppingItem} )
