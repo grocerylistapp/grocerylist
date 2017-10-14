@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Search Items</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating> Item Name </ion-label>
+      <ion-input type="text" [(ngModel)]="itemName" (input)="searchProduct($event, searchKey)"></ion-input>
+    </ion-item>
+    <ion-list *ngIf="isList">
+      <ion-item *ngFor="let item of products" (click)="itemTapped($event, item)">
+        <h2>{{item.name}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab mini (click)="closeWalmartModal()">
+      <ion-icon name="ios-arrow-down"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>
