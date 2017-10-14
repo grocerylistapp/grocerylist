@@ -9,6 +9,7 @@ import { inSCANout } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AddShoppingPage } from '../pages/add-shopping/add-shopping';
 import { EditShoppingItemPage} from '../pages/edit-shopping-item/edit-shopping-item';
+import { WalmartSearchModalPage} from '../pages/walmart-search-modal/walmart-search-modal';
 
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
@@ -24,8 +25,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
-    inSCANout,
-    EditShoppingItemPage, AddShoppingPage
+    MyApp,
+    EditShoppingItemPage,
+    AddShoppingPage,
+    WalmartSearchModalPage
+
   ],
   imports: [
     BrowserModule,
@@ -37,8 +41,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     HttpModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    inSCANout, EditShoppingItemPage, AddShoppingPage
+
+    MyApp, 
+    EditShoppingItemPage, 
+    AddShoppingPage,
+    WalmartSearchModalPage
+
   ],
   providers: [
     StatusBar,

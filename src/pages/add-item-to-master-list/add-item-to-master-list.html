@@ -9,13 +9,13 @@
     <ion-list>
       <ion-item>
         <ion-label floating> Item Name </ion-label>
-        <ion-input formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName" (input)="searchProduct($event, searchKey)"></ion-input>
+        <ion-input formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
       </ion-item>
-      <ion-list *ngIf="isList">
+      <!-- <ion-list *ngIf="isList">
         <ion-item *ngFor="let item of products" (click)="itemTapped($event, item)">
           <h2>{{item.name}}</h2>
         </ion-item>
-      </ion-list>
+      </ion-list> -->
       <ion-row *ngIf="formErrors.itemName">
         <div *ngFor="let errors of formErrors.itemName">
           <p class="alert">{{errors}}
@@ -36,7 +36,11 @@
     <button ion-button block [disabled]="!myForm.valid"> Add Item </button>
   </form>
 
-  <ion-fab right bottom>
-    <button ion-fab mini (click)="scanWalmartCode()"><ion-icon name="qr-scanner"></ion-icon></button>
+  <ion-fab bottom right >
+    <button ion-fab mini><ion-icon name="ios-search"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab mini (click)="scanWalmartCode()"><ion-icon name="qr-scanner"></ion-icon></button>
+      <button ion-fab mini (click)="openWalmartSearch()"><ion-icon name="ios-create"></ion-icon></button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

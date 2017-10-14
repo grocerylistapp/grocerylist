@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -12,6 +12,7 @@ import { ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { WalmartSearchModalPage} from '../walmart-search-modal/walmart-search-modal';
 
 @IonicPage()
 @Component({
@@ -34,11 +35,13 @@ export class AddToMyNextTripAndMasterFromMntPage {
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
   private itemQuantity: number;
+  private quantity: number = 1;
+  private storeName: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
-    private barcodeScanner: BarcodeScanner) {
+    private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     });
@@ -123,10 +126,10 @@ export class AddToMyNextTripAndMasterFromMntPage {
   saveToFirebaseMasterItemList() {
     console.log('saveToFirebaseMasterItemList');
     let isSaved;
-    if (this.currentShoppingItem.store) {
+    if (this.storeName) {
       isSaved = this.shoppingItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
-        store: this.currentShoppingItem.store
+        store: this.storeName
       }).key;
     } else {
       isSaved = this.shoppingItemRef$.push({
@@ -145,16 +148,36 @@ export class AddToMyNextTripAndMasterFromMntPage {
      check the store value exist or not
      if not, save store value as None */
   saveToFirebaseNextTripList(key) {
+    var self = this;
+    if (!this.storeName) this.storeName = "None";
 
-    if (!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
+    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${this.storeName}`);
+    
+    self.nextTripItemRef$.$ref.once("value", function (snapshot) {
+      snapshot.forEach(data => {
+        if (data.val().itemName == self.currentShoppingItem.itemName) {
+          self.isExist = true;
+          // self.loading.dismiss();
+        }
+        return false;
+      });
 
+      if (!self.isExist) {
+        self.saveFirebaseMyNextTrip();
+      }else{        
+        self.showToast('Item already exists in My Next Trip', 1000);
+      }
+      self.isExist = false;
+    });
+  }
+
+  saveFirebaseMyNextTrip(){
+    if (!this.quantity) this.quantity = 1;
     let isSaved;
-    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${this.currentShoppingItem.store}`);
-    if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
     isSaved = this.nextTripItemRef$.push({
       itemName: this.currentShoppingItem.itemName,
-      itemNumber: Number(this.currentShoppingItem.itemNumber)
-      // store: currentShoppingItem.store? currentShoppingItem.store : "None"
+      itemNumber: Number(this.quantity)
+      // store: this.storeName? this.storeName : "None"
     }).key;
 
     if (isSaved) {
@@ -164,47 +187,6 @@ export class AddToMyNextTripAndMasterFromMntPage {
     }
   }
 
-  /* search for a product with keyword*/
-  searchProduct(event, key) {
-
-    /* search activates only if the letter typed exceeds one*/
-    if (event.target.value.length > 1) {
-      var temp = event.target.value;
-
-      /* Call Api to get product details */
-      this.walmartApi.getProductDetaisByKeyword(temp).subscribe(
-        data => {
-          /* Set Api response values */
-          this.products = data.items;
-          this.isList = true;
-        },
-        err => {
-          /* Set Api response error */
-          console.log(err);
-        },
-        () => console.log('Product Search Complete')
-      );
-    }
-  }
-
-  /* Item tapped event on the item list */
-  itemTapped(event, item) {
-    this.currentShoppingItem.itemName = item.name;
-    this.products = [];
-    this.isList = false;
-  }
-  
-  /* call barcode plugin to scan the barcode */
-  scanWalmartCode() {
-    this.barcodeScanner.scan().then((barcodeData) => {
-      /* Success! Barcode data is here */
-      this.getBarcodeProductDetails(barcodeData.text);
-    }, (err) => {
-      // An error occurred
-      console.log('err ='+ JSON.stringify(err));
-    });
-  }
-
   /* get item detail from walmart using UPC */
   getBarcodeProductDetails(data) {
     /* Call Api to get product details */
@@ -212,7 +194,9 @@ export class AddToMyNextTripAndMasterFromMntPage {
       data => {
         this.currentShoppingItem.itemName = data.items[0].name;
       },
-      err => {  // Api response error
+      err => {  
+        this.showToast('Item not found, please type in the item.', 1000);
+        // Api response error
         console.log('err ='+ JSON.stringify(err));
       },
       () => console.log('Product Search Complete')
@@ -223,6 +207,19 @@ export class AddToMyNextTripAndMasterFromMntPage {
   showToast(message, time) {
     this.toast.create({ message: message, duration: time }).present();
   }
+  
+    /* open walmart api search modal */
+  openWalmartSearch(){
+    console.log('openWalmartSearch');
+    let walmartModal = this.modalCtrl.create(WalmartSearchModalPage);
+    
+    walmartModal.onDidDismiss(data => {
+      this.currentShoppingItem.itemName = data;
+    });
+    
+    walmartModal.present();
+  }
+  
 
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -8,12 +8,11 @@ import { User } from 'firebase/app';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Subscription } from 'rxjs/Subscription';
-
 import { ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
+import { WalmartSearchModalPage} from '../walmart-search-modal/walmart-search-modal';
 
 /**
  * Generated class for the AddItemToMasterListPage page.
@@ -42,12 +41,10 @@ export class AddItemToMasterListPage {
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
 
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
-    private barcodeScanner: BarcodeScanner) {
-
+    private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     });
@@ -158,36 +155,6 @@ export class AddItemToMasterListPage {
   showToast(message, time) {
     this.toast.create({ message: message, duration: time }).present();
   }
-
-  /* search for a product with keyword*/
-  searchProduct(event, key) {
-
-    /* search activates only if the letter typed exceeds one*/
-    if (event.target.value.length > 1) {
-      var temp = event.target.value;
-
-      /* Call Api to get product details */
-      this.walmartApi.getProductDetaisByKeyword(temp).subscribe(
-        data => {
-          /* Set Api response values */
-          this.products = data.items;
-          this.isList = true;
-        },
-        err => {
-          /* Set Api response error */
-          console.log(err);
-        },
-        () => console.log('Product Search Complete')
-      );
-    }
-  }
-
-  /* Item tapped event on the item list */
-  itemTapped(event, item) {
-    this.currentShoppingItem.itemName = item.name;
-    this.products = [];
-    this.isList = false;
-  }
   
   /* call barcode plugin to scan the barcode */
   scanWalmartCode() {
@@ -195,6 +162,7 @@ export class AddItemToMasterListPage {
       /* Success! Barcode data is here */
       this.getBarcodeProductDetails(barcodeData.text);
     }, (err) => {
+      this.showToast('Item not found, please type in the item.', 1000);
       // An error occurred
       console.log('err ='+ JSON.stringify(err));
     });
@@ -208,10 +176,23 @@ export class AddItemToMasterListPage {
         this.currentShoppingItem.itemName = data.items[0].name;
       },
       err => {  // Api response error
+        this.showToast('Item not found, please type in the item.', 1000);
         console.log('err ='+ JSON.stringify(err));
       },
       () => console.log('Product Search Complete')
     );
+  }
+
+  /* open walmart api search modal */
+  openWalmartSearch(){
+    console.log('openWalmartSearch');
+    let walmartModal = this.modalCtrl.create(WalmartSearchModalPage);
+    
+    walmartModal.onDidDismiss(data => {
+      this.currentShoppingItem.itemName = data;
+    });
+    
+    walmartModal.present();
   }
 
 }
