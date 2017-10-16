@@ -94,4 +94,9 @@ export class ProfileViewComponent implements OnInit{
     this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
     this.userBuddyListObj.$ref.child(notification['$key']).remove();
   }
+
+  // signout(){
+  //   this.auth.signOut();
+  // }
+
 }
