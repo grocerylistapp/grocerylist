@@ -4,4 +4,5 @@ export interface ShoppingItem{
         itemNumber?: number;
         itemKey?: string;
         store?: string;
+        pickedQuantity?: number;
 }

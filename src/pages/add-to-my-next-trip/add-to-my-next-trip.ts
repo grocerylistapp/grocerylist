@@ -57,7 +57,7 @@ export class AddToMyNextTripPage {
     // });
     // self.loading.present();
 
-    if(!self.currentShoppingItem.store) self.storeName = "None";
+    if(!self.storeName) self.storeName = "None";
     self.shoppingItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${self.storeName}`);
     
     self.shoppingItemRef$.$ref.once("value", function (snapshot) {
@@ -90,6 +90,7 @@ export class AddToMyNextTripPage {
     isSaved = this.shoppingItemRef$.push({
       itemName: self.currentShoppingItem.itemName,
       itemNumber: Number(self.quantity),
+      pickedQuantity : Number(0)
       // store: self.currentShoppingItem.store? self.currentShoppingItem.store : "None"
       });
 

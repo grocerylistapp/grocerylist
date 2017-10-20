@@ -4,53 +4,54 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content scroll="false">
   <ion-list>
-    <ion-item>
-      <ion-label floating> Item Name </ion-label>
-      <ion-input type="text" [(ngModel)]="currentShoppingItem.itemName" (input)="searchProduct($event, searchKey)"></ion-input>
-    </ion-item>
-    <div class="walmart-item-list">
-      <ion-list *ngIf="isList">
-        <ion-item *ngFor="let item of products" (click)="itemTapped($event, item)">
-          <h2>{{item.name}}</h2>
-        </ion-item>
-      </ion-list>
-    </div>
 
-    <h2 class="item-list-h2">Item List</h2>
+    <h2 class="item-list-h2">Cart Items</h2>
     <div class="firebase-item-list">
-      <ion-item class="firebase-ion-item" *ngFor="let item of shoppingListArray">
+      <ion-item class="firebase-ion-item" *ngFor="let item of shoppingListRef$ | async" (click)="itemActionSheetCartItems(item)">
+        <ion-label class="walmart-itemname">
+          <ion-row class="item-name-cart">{{item.itemName}}</ion-row>
+          <ion-row> Quantity: {{item.itemNumber}}</ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-item class="firebase-ion-item" *ngFor="let item of pickedListRef$ | async" (click)="itemActionSheetPickedItems(item)">
+        <ion-label class="walmart-itemname">
+          <ion-row class="item-name-picked">{{item.itemName}}</ion-row>
+          <ion-row> Quantity: {{item.pickedQuantity}}</ion-row>
+        </ion-label>
+      </ion-item>
+    </div> 
+  </ion-list>
+
+  <!-- <ion-list>
+    <h2 class="item-list-h2">Picked Items</h2>
+    <div class="firebase-item-list">
+      <ion-item class="firebase-ion-item" *ngFor="let item of pickedListArray" (click)="removeItem(item)">
         <ion-label class="walmart-itemname">
           <ion-row>{{item.itemName}}</ion-row>
           <ion-row> Quantity: {{item.itemNumber}}</ion-row>
         </ion-label>
-        <ion-checkbox checked="{{item.checked}}"></ion-checkbox>
       </ion-item>
     </div>
-  </ion-list>
+  </ion-list> -->
 
-  <div class="shopping-fab-one">
-      <div *ngIf="startShopping">    
-        <ion-fab>
-          <button ion-fab color="primary" mini (click)="startShopping = !startShopping"><ion-icon name="cart"></ion-icon></button>
-        </ion-fab>  
-      </div>
-  </div>
-
-  <div class="shopping-fab-two">
-      <div *ngIf="!startShopping">    
-        <ion-fab class="scan-qrcode-fab">
-          <button ion-fab color="primary" mini><ion-icon name="checkbox"></ion-icon></button>
-        </ion-fab>   
-        <ion-fab class="resume-shopping">
-          <button ion-fab color="primary" mini><ion-icon name="pause"></ion-icon></button>
-        </ion-fab>     
-        <ion-fab class="finish-shopping">
-          <button ion-fab color="primary" mini><ion-icon name="qr-scanner"></ion-icon></button>
-        </ion-fab>    
-      </div>
-
+  <div class="row">       
+      <ion-fab class="col col-20" (click)="cancelInstoreShopping()">
+        <button ion-fab color="danger" mini><ion-icon name="close"></ion-icon></button>
+      </ion-fab>   
+      <ion-fab class="col col-20" (click)="openWalmartSearch()">
+        <button ion-fab color="primary" mini><ion-icon name="ios-create"></ion-icon></button>
+      </ion-fab> 
+      <ion-fab class="col col-20" (click)="pauseShopping()">
+        <button ion-fab color="secondary" mini><ion-icon name="pause"></ion-icon></button>
+      </ion-fab> 
+      <ion-fab class="col col-20" (click)="finishShopping()">
+        <button ion-fab color="primary" mini><ion-icon name="checkbox"></ion-icon></button>
+      </ion-fab> 
+      <ion-fab class="col col-20" (click)="scanWalmartCode()">
+        <button ion-fab color="dark" mini><ion-icon name="qr-scanner"></ion-icon></button>
+      </ion-fab>
   </div>
 
 </ion-content>

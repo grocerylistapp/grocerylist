@@ -8,44 +8,39 @@ page-shopping-item-list {
 
     .firebase-item-list{
         width: 100%;
-        height: 200px;
+        height: 85%;
         overflow-y: auto;
-        bottom: 10%;
-        position: absolute;
+        // bottom: 10%;
+        // position: absolute;
     }
 
     .firebase-ion-item{
         padding-left: 0px;
+        // background-color: darkseagreen;
     }
 
     ion-list{
-        height: 90%;
+        height: 80%;
     }
+    
     .walmart-itemname{
         white-space: normal;
-    }
-    .item.item-md .checkbox-md{        
-        margin: 9px 22px 9px 4px;
-    }
-    .item-list-h2{
-        font-size: 16px;
-        border-bottom: 0.2px solid #E8DCDF;
         padding-left: 5%;
     }
-    .shopping-fab-one{
-        float: right;
-        margin-right: 15%;
+    
+    .item-name-picked{
+        color: blue;
     }
-    .shopping-fab-two{
-        margin-left: 50%;
+
+    .item-name-cart{
+        color: red;
     }
-    .resume-shopping{
-        margin-left: 15%;
-    }
-    .resume-shopping{
-        margin-left: 15%;
-    }
-    .finish-shopping{
-        margin-left: 30%;
+    
+    .item-list-h2{    
+        font-size: 16px;
+        /* border-bottom: 0.2px solid #E8DCDF; */
+        padding-left: 5%;
+        margin-top: 10px !important;
+        font-weight: 600;
     }
 }
