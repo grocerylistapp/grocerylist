@@ -47,8 +47,8 @@ export class ShoppingItemListPage {
     public loadingCtrl: LoadingController, private auth: AuthServiceProvider, public alertCtrl: AlertController) {
 
     this.startShopping = true;
-    // this.storeName = this.navParams.get('storeName');
-    this.storeName = 'ERT';
+    this.storeName = this.navParams.get('storeName');
+    // this.storeName = 'ERT';
     this.userid = this.navParams.get('userid');
     // this.userid = 'CQsDqoa1YZU9wCJfNwkbq2mtCsf1';
 
