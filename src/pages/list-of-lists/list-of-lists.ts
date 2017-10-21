@@ -29,4 +29,8 @@ export class ListOfListsPage {
   navigateToMasterList(){
     this.navCtrl.push('MasterListPage');
   }
+
+  navigateToMyPreviousTrip(){
+    this.navCtrl.push('MyPreviousTripPage');    
+  }
 }
