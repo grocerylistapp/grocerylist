@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { EditShoppingItemPage } from '../edit-shopping-item/edit-shopping-item';
+import { SelectBuddyModelPage } from '../select-buddy-model/select-buddy-model';
+
 
 /**
  * Generated class for the MyNextTripShoppingListForStorePage page.
@@ -22,7 +24,7 @@ export class MyNextTripShoppingListForStorePage {
   storeName: string;
   shoppingListRef$ : FirebaseListObservable<ShoppingItem[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
-    private actionSheetCntrl : ActionSheetController) {
+    private actionSheetCntrl : ActionSheetController, public modalCtrl: ModalController) {
     this.storeName = this.navParams.get('storeName');
     this.userid = this.navParams.get('userid');
     this.shoppingListRef$ =  this.db.list(`/nexttrip/${this.userid}/${this.storeName}`);
@@ -59,6 +61,12 @@ export class MyNextTripShoppingListForStorePage {
 
       ]
     }).present();
+  }
+
+  navigateToShareGrocery(){
+    let modal = this.modalCtrl.create(SelectBuddyModelPage, { shoppingList: this.shoppingListRef$, storeName: this.storeName });
+    modal.present();
+    
   }
 
 }

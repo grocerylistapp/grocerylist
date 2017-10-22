@@ -20,6 +20,12 @@
         <ion-label floating> Store </ion-label>
           <ion-input type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label stacked> Shopper </ion-label>
+      <ion-select [(ngModel)]="shopperName" (ionChange)="userSelect($event)">
+        <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
+      </ion-select>
+    </ion-item>
   
   <button ion-button block (click)="addShoppingItem(currentShoppingItem)"> Add Item </button>
   

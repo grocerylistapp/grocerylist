@@ -41,6 +41,12 @@
         <p>
     </div>
   </ion-row>
+  <ion-item>
+    <ion-label stacked> Shopper </ion-label>
+    <ion-select formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)">
+      <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
+    </ion-select>
+  </ion-item>
   <button ion-button block [disabled]="!myForm.valid"> Add Item </button>
 </form>
 

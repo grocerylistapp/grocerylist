@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
@@ -8,6 +8,7 @@ import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { User } from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '../../models/store/store';
+import { Profile } from '../../models/profile/profile';
 import { ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
@@ -21,10 +22,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 })
 export class AddToMyNextTripAndMasterFromMntPage {
 
+  userProfile: Profile;
   currentShoppingItem = {} as ShoppingItem;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
   nextTripItemRef$: FirebaseListObservable<ShoppingItem[]>;
   storeRef$: FirebaseListObservable<Store[]>;
+  private inviteListRef$ : FirebaseListObservable<Notification[]>
   private authenticatedUser: User;
   private authenticatedUser$: Subscription;
   private isExist: boolean;
@@ -34,6 +37,9 @@ export class AddToMyNextTripAndMasterFromMntPage {
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
   private itemQuantity: number;
+  private userId: string;
+  private shopperName: string = "My Self";
+  public shopperNames: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
@@ -41,6 +47,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
     private barcodeScanner: BarcodeScanner) {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
+      this.userId = this.authenticatedUser.uid;
     });
     //const shopppingItem : ShoppingItem = this.navParams.get('shoppingItem');
     if (this.navParams.get('shoppingItem')) {
@@ -51,7 +58,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.myForm = formBuilder.group({
       itemName: ['', Validators.required],
       quantity: [''],
-      storeName: ['']
+      storeName: [''],
+      shopperName: ['']
     });
 
     this.myForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -77,7 +85,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
   formErrors = {
     'itemName': '',
     'quantity': '',
-    'storeName': ''
+    'storeName': '',
+    'shopperName': ''
   };
 
   validationMessages = {
@@ -85,8 +94,47 @@ export class AddToMyNextTripAndMasterFromMntPage {
       'required': 'Item Name is required.'
     },
     'quantity': {},
-    'storeName': {}
+    'storeName': {},
+    'shopperName': {}
   };
+
+  ngOnInit(): void {
+    this.auth.getAuthenticatedUser().subscribe((user: User) => {
+      this.authenticatedUser = user;
+      //this.buddyList = [];
+      this.inviteListRef$ = this.db.list(`/grocerybuddylist/${user.uid}`);
+      this.inviteListRef$.subscribe( inviteList  => {
+        // console.log(inviteList);
+        inviteList.forEach((invite) => {
+          let profileData = this.db.object(`/profiles/${invite['$key']}`);
+          //this.buddyList = [];
+          
+          this.shopperNames  = [{shopperName: "My Self",key: this.authenticatedUser.uid}];
+          profileData.subscribe((buddyProfile) => {
+            
+            if(invite['status'] == 'completed') {
+              console.log(this.shopperNames);
+              var name = buddyProfile.firstName +' '+ buddyProfile.lastName;
+              console.log(name);
+              this.shopperNames.push({
+                shopperName: name,
+                key: buddyProfile.$key
+              });
+            }
+          });
+
+        });
+        //console.log(this.buddyList);
+      });
+      this.data.getProfile(user).subscribe(profile => {
+        this.userProfile = <Profile>profile.val();
+      });
+    })
+  }
+
+  userSelect(userId){
+    this.userId = userId;
+  }
 
   /* check whether the item name exist in masterlist, 
      if not save the value */
@@ -97,7 +145,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.loading.present();
     var self = this;
 
-    self.shoppingItemRef$ = self.db.list(`/masterlist/${self.authenticatedUser.uid}`);
+    self.shoppingItemRef$ = self.db.list(`/masterlist/${self.userId}`);
     /* gets firebase data only once */
     self.shoppingItemRef$.$ref.once("value", function (snapshot) {
       snapshot.forEach(data => {
@@ -149,7 +197,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
     if (!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
 
     let isSaved;
-    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${this.currentShoppingItem.store}`);
+    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.userId}/${this.currentShoppingItem.store}`);
     if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
     isSaved = this.nextTripItemRef$.push({
       itemName: this.currentShoppingItem.itemName,

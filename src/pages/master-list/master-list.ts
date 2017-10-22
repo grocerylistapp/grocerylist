@@ -72,7 +72,7 @@ export class MasterListPage{
       title: `${shoppingItem.itemName}`,
       buttons: [
         {
-          text: 'Add to Buddy List',
+          text: 'Add to Next Trip',
           handler: ()=> {
             console.log("addingto my next trip page");
             this.navCtrl.push('AddToMyNextTripPage',{shoppingItem: shoppingItem} )
