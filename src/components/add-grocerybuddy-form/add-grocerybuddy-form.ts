@@ -25,6 +25,7 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
 
   private authenticatedUser : User;
   private authenticatedUser$ : Subscription;
+  private buddyStatus : string;
 
   buddy1 = {} as Profile;
   currentBuddyRef$: FirebaseListObservable<Profile[]>;
@@ -47,7 +48,8 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
         this.userProfile = <Profile>profile.val();
       });
     });
-    
+    this.buddyStatus = this.navParams.get('buddyStatus');
+    console.log(this.buddyStatus);
   }
 
   sendNotification(){

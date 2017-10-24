@@ -32,7 +32,7 @@ export class EditProfilePage {
 
   navigateToPage(event: Boolean){
     if(event){
-      this.navCtrl.push('AddBuddyPage');
+      this.navCtrl.push('AddBuddyPage', { buddyStatus: "editProfile"});
       // this.toast.create({
       //   message: `Welcome In!`,
       //   duration: 3000

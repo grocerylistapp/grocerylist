@@ -34,6 +34,15 @@ export class MyNextTripShoppingListForStorePage {
     this.actionSheetCntrl.create({
       title: `${shoppingItem.itemName}`,
       buttons: [
+
+        {
+          text: 'Move to ShopBuddy',
+          handler: ()=> {
+            let modal = this.modalCtrl.create(SelectBuddyModelPage, { shoppingList: shoppingItem, storeName: this.storeName, shareType: "single" });
+            modal.present();
+          }
+
+        },
         {
           text: 'Edit',
           handler: ()=> {
@@ -64,7 +73,7 @@ export class MyNextTripShoppingListForStorePage {
   }
 
   navigateToShareGrocery(){
-    let modal = this.modalCtrl.create(SelectBuddyModelPage, { shoppingList: this.shoppingListRef$, storeName: this.storeName });
+    let modal = this.modalCtrl.create(SelectBuddyModelPage, { shoppingList: this.shoppingListRef$, storeName: this.storeName, shareType: "full" });
     modal.present();
     
   }

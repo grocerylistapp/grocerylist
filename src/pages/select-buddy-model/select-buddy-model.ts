@@ -27,7 +27,7 @@ export class SelectBuddyModelPage {
   storeName: string;
   itemName: string;
   itemNumber: number;
-  count: number = 0;
+  // count: number = 0;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   shoppingListRef$ : FirebaseListObservable<ShoppingItem[]>;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
@@ -35,8 +35,12 @@ export class SelectBuddyModelPage {
   nextTripItemRef$: FirebaseListObservable<ShoppingItem[]>;
 
   buddyListCompleted: Array<any>;
+  private isAvailable: boolean;
   private isExist: boolean;
   private isExistMaster: boolean;
+  private modelMessage: string;
+  private shareType: string;
+  private shoppingList: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private data: DataServiceProvider, private auth: AuthServiceProvider,
     private db : AngularFireDatabase, public toastCtrl: ToastController, public viewCtrl: ViewController) {
@@ -45,10 +49,14 @@ export class SelectBuddyModelPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectBuddyModelPage');
     this.shoppingListRef$ = this.navParams.get('shoppingList');
+    this.shoppingList = this.navParams.get('shoppingList');
     this.storeName = this.navParams.get('storeName');
+    this.shareType = this.navParams.get('shareType');
+    this.isAvailable = false;
     this.isExist = false;
     this.isExistMaster = false;
-    
+    this.modelMessage = "Please wait ...";
+    this.checkShareType();
 
   }
 
@@ -67,25 +75,47 @@ export class SelectBuddyModelPage {
           profileData.subscribe((buddyProfile) => {
             
             if(invite['status'] == 'completed') {
-              console.log(this.buddyListCompleted)
+              
               this.buddyListCompleted.push({
                 buddy: buddyProfile,
                 status: invite['status']
               });
             }
+            console.log("this.buddyListCompleted");
+            console.log(this.buddyListCompleted.length);
+            if(this.buddyListCompleted.length==0){
+                  this.isAvailable = false;
+            }else{
+              this.isAvailable = true;
+            }
           });
+          
 
         });
         //console.log(this.buddyList);
+        this.modelMessage = "No buddies exist that this list can be shared with";
       });
       this.data.getProfile(user).subscribe(profile => {
         this.userProfile = <Profile>profile.val();
       });
     })
+    
+  }
+
+  checkShareType(){
+
   }
 
   shareWithBuddy(item){
     console.log(item);
+    if(this.shareType == "single"){
+      this.itemName = this.shoppingList.itemName;
+      this.itemNumber = this.shoppingList.itemNumber;
+      this.addShoppingItemToMasterList(item.$key,this.itemName);
+      this.addShoppingItem(item.$key,this.itemName,this.itemNumber);
+      var message = this.itemName + ' shared with buddy';
+      this.presentToast(message);
+    }else{
     this.shoppingListRef$.subscribe( shoppingList  => {
       
       shoppingList.forEach((list) => {
@@ -97,10 +127,11 @@ export class SelectBuddyModelPage {
         
 
       });
-      var message = this.count + ' items shared with buddy';
+      var message = this.storeName + ' list shared with buddy';
       this.presentToast(message);
 
     });
+  }
   }
 
   /* check whether the item name exist in masterlist, 
@@ -181,7 +212,7 @@ export class SelectBuddyModelPage {
       
       }else{ 
         let message = self.itemName + ' already exists';       
-        self.presentToast(message);
+        // self.presentToast(message);
       }
       self.isExist = false;
     });
@@ -204,7 +235,7 @@ export class SelectBuddyModelPage {
 
     if (isSaved) {
       // this.loading.dismiss();
-      this.count= this.count + 1;
+      // this.count= this.count + 1;
       
     }
     

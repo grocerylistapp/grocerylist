@@ -7,7 +7,7 @@
 <ion-header>
   
     <ion-navbar>
-      <ion-title>Select Buddy</ion-title>
+      <ion-title>Select ShopBuddy</ion-title>
       <ion-buttons end>
         <button ion-button (click)="back()" icon-only> 
               <ion-icon name="close-circle"></ion-icon>
@@ -19,10 +19,15 @@
   
   
   <ion-content padding>
+      <div *ngIf="isAvailable">
     <ion-item *ngFor="let item of buddyListCompleted" (click)="shareWithBuddy(item.buddy)">
       <div>
         <h1 padding>{{item.buddy.firstName}} {{item.buddy.lastName}}</h1>
       </div>
     </ion-item>
+  </div>
+    <div *ngIf="!isAvailable">
+        <h2 style="text-align: center"padding>{{modelMessage}}</h2>
+    </div>
   </ion-content>
   

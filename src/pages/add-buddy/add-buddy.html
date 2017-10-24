@@ -14,7 +14,25 @@
 
 
 <ion-content padding>
-<app-add-grocerybuddy-form></app-add-grocerybuddy-form>
+<!-- <app-add-grocerybuddy-form></app-add-grocerybuddy-form> -->
+<ion-card> 
+  <ion-card-content>
+    <ion-item>
+      <ion-label floating>E-mail</ion-label>
+      <ion-input type="email" [(ngModel)]="buddy1.email"></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-label floating>Buddy 2</ion-label>
+        <ion-input type="email" [(ngModel)]="buddy2.email"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Buddy 3</ion-label>
+          <ion-input type="email" [(ngModel)]="buddy3.email"></ion-input>
+        </ion-item> -->
+  </ion-card-content>
+</ion-card>
+
+<button ion-button (click)="saveBuddyList()">Save</button>
 </ion-content>
 
     

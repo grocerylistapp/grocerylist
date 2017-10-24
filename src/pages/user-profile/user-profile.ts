@@ -29,7 +29,7 @@ export class UserProfilePage {
   }
   
   navigateToAddBuddy(){
-    this.navCtrl.push('AddBuddyPage');
+    this.navCtrl.push('AddBuddyPage',{ buddyStatus: "userProfile"});
   }
 
 }

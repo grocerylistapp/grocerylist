@@ -43,7 +43,7 @@
   </ion-row>
   <ion-item>
     <ion-label stacked> Shopper </ion-label>
-    <ion-select formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)">
+    <ion-select formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = {{shopperName}}>
       <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
     </ion-select>
   </ion-item>
