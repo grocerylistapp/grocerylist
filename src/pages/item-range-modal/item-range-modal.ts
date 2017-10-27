@@ -10,11 +10,14 @@ export class ItemRangeModalPage {
 
   private quantitySel: number;
   private maxQuantity: number;
+  private type: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public viewCtrl: ViewController) {
 
     this.quantitySel = navParams.get('quantity');
     this.maxQuantity = navParams.get('quantity');
+    this.type = navParams.get('type');
+    
   }
 
   selectQtyModal(){

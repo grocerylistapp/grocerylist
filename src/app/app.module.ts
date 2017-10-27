@@ -28,7 +28,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 @NgModule({
   declarations: [
     inSCANout,
-    EditShoppingItemPage,
+    // EditShoppingItemPage,
     AddShoppingPage,
     WalmartSearchModalPage,
     ItemRangeModalPage
@@ -45,8 +45,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   bootstrap: [IonicApp],
   
   entryComponents: [
-  inSCANout, 
-    EditShoppingItemPage, 
+    inSCANout, 
+    // EditShoppingItemPage, 
     AddShoppingPage,
     WalmartSearchModalPage,
     ItemRangeModalPage

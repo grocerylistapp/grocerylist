@@ -40,6 +40,7 @@ export class ShoppingItemListPage {
   private shoppingListRef$: FirebaseListObservable<ShoppingItem[]>;
   private pickedListRef$: FirebaseListObservable<ShoppingItem[]>;
   private previousListRef$: FirebaseListObservable<ShoppingItem[]>;
+  private masterListRef$: FirebaseListObservable<ShoppingItem[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private actionSheetCntrl: ActionSheetController, private walmartApi: WalmartApiProvider,
@@ -120,7 +121,7 @@ export class ShoppingItemListPage {
           text: 'Add to Picked Items',
           handler: () => {
             console.log("Add to Picked Items");
-            this.openItemRanger(shoppingItem.$key, shoppingItem.itemNumber);
+            this.openItemRanger(shoppingItem.$key, shoppingItem.itemNumber, 0);
           }
 
         },
@@ -216,7 +217,7 @@ export class ShoppingItemListPage {
       /* Success! Barcode data is here */
       this.getBarcodeProductDetails(barcodeData.text);
     }, (err) => {
-      this.showToast('Item not found, please type in the item.', 1000);
+      this.showToast('Item not found, please type in the item.', 3000);
       // An error occurred
       console.log('err =' + JSON.stringify(err));
     });
@@ -232,7 +233,7 @@ export class ShoppingItemListPage {
         this.checkItemExist(data.items[0].name);
       },
       err => {  // Api response error
-        this.showToast('Item not found, please type in the item.', 1000);
+        this.showToast('Item not found, please type in the item.', 3000);
         console.log('err =' + JSON.stringify(err));
       },
       () => console.log('Product Search Complete')
@@ -255,7 +256,8 @@ export class ShoppingItemListPage {
       if(isExist){          
         this.getQuantityByName(value);   
       }else{
-        this.showToast('Item Not Present in the Cart, do you want to add it', 1000);    
+        // this.showToast('Item Not Present in the Cart, do you want to add it', 1000);    
+        this.cnfmForNewItem(value);
       }
     });
   }
@@ -265,21 +267,25 @@ export class ShoppingItemListPage {
     this.shoppingListRef$.$ref.once("value", snapshot => {
       snapshot.forEach(snaps => {          
         if (snaps.val().itemName == value) {
-          this.openItemRanger(snaps.key, snaps.val().itemNumber); 
+          this.openItemRanger(snaps.key, snaps.val().itemNumber, 0); 
         }
         return false;
       });
     });
   }
   
-  openItemRanger(key, itemNumber) {
+  openItemRanger(key, itemNumber, type) {
     console.log('openItemRanger');
     
-    let rangeModal = this.modalCtrl.create(ItemRangeModalPage, { quantity: itemNumber });
+    let rangeModal = this.modalCtrl.create(ItemRangeModalPage, { quantity: itemNumber , type: type });
     rangeModal.onDidDismiss(data => {
       console.log('ccc =' + data);
       if (data != undefined) {
-        this.addToPickedItemList(key, data);
+        if(type == 0){
+          this.addToPickedItemList(key, data);
+        }else{
+          this.addItemToPickedListNew(key,data);
+        }
       }
     });
 
@@ -469,5 +475,75 @@ export class ShoppingItemListPage {
     let month = Number(date.getMonth()) + 1;
     let year = date.getFullYear();
     return day + "_" + month + "_" + year ;
+  }
+
+  cnfmForNewItem(value){
+    
+    const alert = this.alertCtrl.create({
+      title: 'Item Does Not Exist',
+      message: 'Do you want to add this item to the Shopping List?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Yes clicked');
+            this.openItemRanger(value,'', 1); 
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+  
+  addItemToPickedListNew(name,quantity) {
+    console.log('addItemtopickedlist');
+    // var self = this;
+    var isSaved;
+
+    isSaved = this.shoppingListRef$.push({
+      itemName: name,
+      itemNumber: Number(0),
+      pickedQuantity : Number(quantity)
+    }).key;
+
+    if (isSaved) {
+      this.showToast('Item added to the My Next Trip', 1000);
+      this.itemMasterExist(name);
+    }
+  }
+
+  itemMasterExist(name){
+    
+    let isExist: boolean = false;
+    var self = this;
+    self.masterListRef$ = self.db.list(`/masterlist/${self.authenticatedUser.uid}`);
+    /* gets firebase data only once */
+    self.masterListRef$.$ref.once("value", function (snapshot) {
+      snapshot.forEach(data => {
+
+        if (data.val().itemName == name) {
+          isExist = true;
+        }
+        return false;
+      });
+
+      if (!isExist) {
+        self.saveItemToMastrList(name);
+      }
+    });
+  }
+  
+  saveItemToMastrList(name){
+    this.masterListRef$.push({
+      itemName: name,
+      store: this.storeName
+    });
   }
 }

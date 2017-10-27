@@ -85,7 +85,15 @@ export class MyPreviousTripPage {
   }
 
   getDateInFormat(date){
-    return date.split('_').join('/');
+    
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    let dt = date.split("_");
+    let dtFmt = dt[2]+'/'+dt[1]+'/'+dt[0];
+    
+    let dtFormat = new Date(dtFmt);
+    return dt[0] + " " + monthNames[dtFormat.getMonth()]+ " "+ dt[2];
   }
 
   getItemPreviousTripByStore(date, store){
