@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AddShoppingPage } from '../pages/add-shopping/add-shopping';
 import { EditShoppingItemPage} from '../pages/edit-shopping-item/edit-shopping-item';
+import { MoveToBuddyPage} from '../pages/move-to-buddy/move-to-buddy';
 import { SelectBuddyModelPage} from '../pages/select-buddy-model/select-buddy-model';
 
 
@@ -22,12 +23,15 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 
 @NgModule({
   declarations: [
     MyApp,
-    EditShoppingItemPage, 
+    EditShoppingItemPage,
+    MoveToBuddyPage, 
     AddShoppingPage,
     SelectBuddyModelPage
   ],
@@ -42,7 +46,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, EditShoppingItemPage, AddShoppingPage, SelectBuddyModelPage
+    MyApp, EditShoppingItemPage, MoveToBuddyPage, AddShoppingPage, SelectBuddyModelPage
   ],
   providers: [
     StatusBar,
@@ -52,7 +56,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     AuthServiceProvider,
     DataServiceProvider,
     WalmartApiProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    SocialSharing
   ]
 })
 export class AppModule {}

@@ -39,7 +39,9 @@ export class SelectBuddyModelPage {
   private isExist: boolean;
   private isExistMaster: boolean;
   private modelMessage: string;
-  private shareType: string;
+  private userName: string;
+  private buddyName: string;
+  private buddyId: string;
   private shoppingList: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private data: DataServiceProvider, private auth: AuthServiceProvider,
@@ -51,18 +53,17 @@ export class SelectBuddyModelPage {
     this.shoppingListRef$ = this.navParams.get('shoppingList');
     this.shoppingList = this.navParams.get('shoppingList');
     this.storeName = this.navParams.get('storeName');
-    this.shareType = this.navParams.get('shareType');
     this.isAvailable = false;
     this.isExist = false;
     this.isExistMaster = false;
     this.modelMessage = "Please wait ...";
-    this.checkShareType();
 
   }
 
   ngOnInit(): void {
     this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
+      this.getUserDetails();
       //this.buddyList = [];
       this.inviteListRef$ = this.db.list(`/grocerybuddylist/${user.uid}`);
       this.inviteListRef$.subscribe( inviteList  => {
@@ -102,36 +103,46 @@ export class SelectBuddyModelPage {
     
   }
 
-  checkShareType(){
+  getUserDetails(){
+    var usersRef = this.db.list(`/profiles`, {
+      query: {
+          orderByChild: 'email',
+          equalTo: this.authenticatedUser.email , // How to check if participants contain username
+      }
+  });
 
+  usersRef.subscribe(profileList => {
+    
+    this.userName = profileList[0].firstName +' '+ profileList[0].lastName;
+    
+  });
+ 
   }
 
+ 
+
   shareWithBuddy(item){
-    console.log(item);
-    if(this.shareType == "single"){
-      this.itemName = this.shoppingList.itemName;
-      this.itemNumber = this.shoppingList.itemNumber;
-      this.addShoppingItemToMasterList(item.$key,this.itemName);
-      this.addShoppingItem(item.$key,this.itemName,this.itemNumber);
-      var message = this.itemName + ' shared with buddy';
-      this.presentToast(message);
-    }else{
+    
+    this.buddyName = item.firstName +' '+item.lastName;
+    this.buddyId = item.$key;
     this.shoppingListRef$.subscribe( shoppingList  => {
       
       shoppingList.forEach((list) => {
         this.itemName = list.itemName;
         this.itemNumber = list.itemNumber;
-        console.log(item.$key);
+      
         this.addShoppingItemToMasterList(item.$key,list.itemName);
-        this.addShoppingItem(item.$key,list.itemName,list.itemNumber);
-        
+        this.addShoppingItem(item.$key,list.itemName,list.itemNumber,list.$key);
+        // this.updateUserNextTrip(list.$key,item.$key);
 
       });
-      var message = this.storeName + ' list shared with buddy';
-      this.presentToast(message);
+      
 
     });
-  }
+    var message = this.storeName + ' list shared with buddy';
+    this.presentToast(message);
+    this.back();
+  
   }
 
   /* check whether the item name exist in masterlist, 
@@ -187,7 +198,7 @@ export class SelectBuddyModelPage {
     }
   }
 
-  addShoppingItem(userId,itemName,itemNumber){
+  addShoppingItem(userId,itemName,itemNumber,itemKey){
     // console.log(currentShoppingItem);
     var self = this;
     // self.loading = this.loadingCtrl.create({
@@ -200,18 +211,20 @@ export class SelectBuddyModelPage {
     
     self.nextTripItemRef$.$ref.once("value", function (snapshot) {
       snapshot.forEach(data => {
-        if (data.val().itemName == itemName) {
+        if (data.val().itemName == itemName && data.val().sharedArray[0].key == self.authenticatedUser.uid) {
           self.isExist = true;
           // self.loading.dismiss();
         }
         return false;
       });
 
+      
+
       if (!self.isExist) {
-        self.saveToFirebaseNextTrip(itemName,itemNumber);
+        self.saveToFirebaseNextTrip(itemName,itemNumber,itemKey);
       
       }else{ 
-        let message = self.itemName + ' already exists';       
+        // let message = self.itemName + ' cannot be shared back';       
         // self.presentToast(message);
       }
       self.isExist = false;
@@ -221,7 +234,7 @@ export class SelectBuddyModelPage {
     /* save the item to firebase
        check the store value exist or not
        if not, save store value as None */
-  saveToFirebaseNextTrip(itemName,itemNumber) {
+  saveToFirebaseNextTrip(itemName,itemNumber,itemKey) {
     console.log('saveToFirebaseNextTrip');
     var self = this;
     let isSaved;
@@ -230,17 +243,28 @@ export class SelectBuddyModelPage {
     isSaved = this.nextTripItemRef$.push({
       itemName: itemName,
       itemNumber: Number(itemNumber),
+      status: "shareIn",
+      sharedArray: [{shopperName: this.userName,key: this.authenticatedUser.uid}]
       // store: self.currentShoppingItem.store? self.currentShoppingItem.store : "None"
       });
 
     if (isSaved) {
       // this.loading.dismiss();
       // this.count= this.count + 1;
+      this.updateUserNextTrip(itemKey);
+      
       
     }
     
     // //navigate back one on the navigation stack
     //this.navCtrl.pop();
+  }
+
+  updateUserNextTrip(key){
+
+    this.db.object(`/nexttrip/${this.authenticatedUser.uid}/${this.storeName}/` + key)
+    .update({ status: "shareOut", sharedArray: [{shopperName: this.buddyName,key: this.buddyId}] });
+    
   }
 
   // Model page back button

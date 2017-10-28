@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
@@ -16,7 +16,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class UserProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider) {
+  constructor(public appCtrl: App, public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -25,7 +25,7 @@ export class UserProfilePage {
 
   signOut(){
     this.auth.signOut();
-    this.navCtrl.setRoot('LoginPage');
+    this.appCtrl.getRootNav().setRoot('LoginPage');
   }
   
   navigateToAddBuddy(){

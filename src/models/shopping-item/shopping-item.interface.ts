@@ -4,4 +4,6 @@ export interface ShoppingItem{
         itemNumber?: number;
         itemKey?: string;
         store?: string;
+        status?: string;
+        share?: Array<any>;
 }

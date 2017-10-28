@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Platform  } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
@@ -39,11 +40,12 @@ export class AddBuddyPage  {
   userProfile: Profile;
   private user: any;
   private buddy: any;
+  private userName : string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
   	private toastCtrl: ToastController, private data: DataServiceProvider, 
-  	private auth: AuthServiceProvider,
-  	private db: AngularFireDatabase) {
+  	private auth: AuthServiceProvider, public platform: Platform,
+  	private db: AngularFireDatabase, private socialSharing: SocialSharing) {
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
         this.authenticatedUser = user;
         this.data.getProfile(user).subscribe(profile => {
@@ -57,6 +59,23 @@ export class AddBuddyPage  {
     this.buddyStatus = this.navParams.get('buddyStatus');
     console.log(this.authenticatedUser);
     this.checkBuddyStatus();
+    this.getUserDetails();
+  }
+
+  getUserDetails(){
+    var usersRef = this.db.list(`/profiles`, {
+      query: {
+          orderByChild: 'email',
+          equalTo: this.authenticatedUser.email , // How to check if participants contain username
+      }
+  });
+
+  usersRef.subscribe(profileList => {
+    
+    this.userName = profileList[0].firstName +' '+ profileList[0].lastName;
+    
+  });
+ 
   }
 
   checkBuddyStatus(){
@@ -95,7 +114,7 @@ export class AddBuddyPage  {
         });
         
         usersRef.subscribe(profileList => {
-          console.log(profileList);
+          
           if(profileList.length > 0){//check if registered user
             this.buddy1 = profileList[0];
             
@@ -112,10 +131,7 @@ export class AddBuddyPage  {
                 
                 if(currentBuddyList.length > 0){
                   this.presentToast("Buddy already exists");
-                  // this.toast.create({
-                  //   message: `Buddy already exists`,
-                  //   duration: 3000
-                  // }).present();
+                  
                 }
                 else{
                   this.sendNotification();
@@ -125,12 +141,7 @@ export class AddBuddyPage  {
                 this.sendNotification();
               }
             }
-            // else{
-            //   this.toast.create({
-            //     message: `No grocery buddy added!`,
-            //     duration: 3000
-            //   }).present();
-            // }
+            
     
           }
           else{
@@ -140,19 +151,29 @@ export class AddBuddyPage  {
           }
           
         });
-    
-    
-        
-        // this.toast.create({
-        //   message: `Welcome In!`,
-        //   duration: 3000
-        // }).present();
+  
       }
         
       }
     
       ngOnDestroy(): void {
         this.authenticatedUser$.unsubscribe();
+      }
+
+      invitebuddy(){
+
+        let subject = this.authenticatedUser.email +' invited you to XOOMcart';
+        let message = this.userName +' '+this.authenticatedUser.email+' invited you to join XOOMcart, that helps you improve your shopping experience in stores. Please click on the link below to download the app'
+
+        if (this.platform.is('ios')) {
+          
+        
+          this.socialSharing.share(message, subject,"", "www.xoomcart.com/ios")
+        }
+        if (this.platform.is('android')) {
+          this.socialSharing.share(message, subject,"", "www.xoomcart.com/andriod ")
+          
+        }
       }
 
       // Configure Toast

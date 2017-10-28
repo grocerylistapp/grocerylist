@@ -26,6 +26,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
   currentShoppingItem = {} as ShoppingItem;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
   nextTripItemRef$: FirebaseListObservable<ShoppingItem[]>;
+  buddyShoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
+  buddyNextTripItemRef$: FirebaseListObservable<ShoppingItem[]>;
   storeRef$: FirebaseListObservable<Store[]>;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   private authenticatedUser: User;
@@ -38,8 +40,12 @@ export class AddToMyNextTripAndMasterFromMntPage {
   public products: Array<any>; // Products search array
   private itemQuantity: number;
   private userId: string;
-  private shopperName: string = "My Self";
+  private userName: string;
+  private shopperName: string;
   public shopperNames: Array<any>;
+  private status: string;  
+  public shareList: Array<any>=[];
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
@@ -48,7 +54,10 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
       this.userId = this.authenticatedUser.uid;
+      this.shopperNames  = [{shopperName: "My Self",key: this.authenticatedUser.uid}];
+      console.log(this.authenticatedUser);
     });
+    
     //const shopppingItem : ShoppingItem = this.navParams.get('shoppingItem');
     if (this.navParams.get('shoppingItem')) {
       this.currentShoppingItem = this.navParams.get('shoppingItem');
@@ -109,7 +118,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
           let profileData = this.db.object(`/profiles/${invite['$key']}`);
           //this.buddyList = [];
           
-          this.shopperNames  = [{shopperName: "My Self",key: this.authenticatedUser.uid}];
+          
           profileData.subscribe((buddyProfile) => {
             
             if(invite['status'] == 'completed') {
@@ -131,21 +140,67 @@ export class AddToMyNextTripAndMasterFromMntPage {
       });
     })
   }
+  ionViewDidLoad() {
+    this.getUserDetails();
+  }
+
+  getUserDetails(){
+    var usersRef = this.db.list(`/profiles`, {
+      query: {
+          orderByChild: 'email',
+          equalTo: this.authenticatedUser.email , // How to check if participants contain username
+      }
+  });
+
+  usersRef.subscribe(profileList => {
+    
+    this.userName = profileList[0].firstName +' '+ profileList[0].lastName;
+    
+  });
+ 
+  }
 
   userSelect(userId){
+    
     this.userId = userId;
+    if(this.userId != this.authenticatedUser.uid)
+    {
+      let selectUser =this.shopperNames.filter(shopper  => {
+        if (shopper.key == this.userId){
+          return shopper;
+        }
+      });
+      console.log(selectUser);
+      this.shareList.push({
+        shopperName: selectUser[0].shopperName,
+        key: selectUser[0].key
+      });
+      console.log(this.shareList);
+    }
+  }
+
+  checkUserSelection(){
+    if(this.userId == this.authenticatedUser.uid){
+      this.status = "self";
+      this.addShoppingItemToUserMasterList();
+    }
+    else{
+      this.status = "shareOut";
+      this.addShoppingItemToUserMasterList();
+      this.addShoppingItemToBuddyMasterList();
+    }
   }
 
   /* check whether the item name exist in masterlist, 
      if not save the value */
-  addShoppingItemToMasterList() {
+  addShoppingItemToUserMasterList() {
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
     this.loading.present();
     var self = this;
 
-    self.shoppingItemRef$ = self.db.list(`/masterlist/${self.userId}`);
+    self.shoppingItemRef$ = self.db.list(`/masterlist/${self.authenticatedUser.uid}`);
     /* gets firebase data only once */
     self.shoppingItemRef$.$ref.once("value", function (snapshot) {
       snapshot.forEach(data => {
@@ -159,7 +214,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
       });
 
       if (!self.isExist) {
-        self.saveToFirebaseMasterItemList();
+        self.saveToFirebaseUserMasterItemList();
       }
       self.isExist = false;
     });
@@ -168,7 +223,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
   /* save the item to firebase
      check the store value exist or not
      if not, save store value as None */
-  saveToFirebaseMasterItemList() {
+     saveToFirebaseUserMasterItemList() {
     console.log('saveToFirebaseMasterItemList');
     let isSaved;
     if (this.currentShoppingItem.store) {
@@ -185,23 +240,25 @@ export class AddToMyNextTripAndMasterFromMntPage {
 
     if (isSaved) {
       // this.loading.dismiss();
-      this.saveToFirebaseNextTripList(isSaved);
+      this.saveToFirebaseUserNextTripList(isSaved);
     }
   }
 
   /* save the item to firebase
      check the store value exist or not
      if not, save store value as None */
-  saveToFirebaseNextTripList(key) {
+     saveToFirebaseUserNextTripList(key) {
 
     if (!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
 
     let isSaved;
-    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.userId}/${this.currentShoppingItem.store}`);
+    this.nextTripItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${this.currentShoppingItem.store}`);
     if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
     isSaved = this.nextTripItemRef$.push({
       itemName: this.currentShoppingItem.itemName,
-      itemNumber: Number(this.currentShoppingItem.itemNumber)
+      itemNumber: Number(this.currentShoppingItem.itemNumber),
+      status: this.status,
+      sharedArray: this.shareList
       // store: currentShoppingItem.store? currentShoppingItem.store : "None"
     }).key;
 
@@ -211,6 +268,88 @@ export class AddToMyNextTripAndMasterFromMntPage {
       this.navCtrl.pop();
     }
   }
+
+   /* check whether the item name exist in masterlist, 
+     if not save the value */
+     addShoppingItemToBuddyMasterList() {
+      // this.loading = this.loadingCtrl.create({
+      //   content: 'Please wait...'
+      // });
+      // this.loading.present();
+      var self = this;
+      let key;
+      self.buddyShoppingItemRef$ = self.db.list(`/masterlist/${self.userId}`);
+      /* gets firebase data only once */
+      self.buddyShoppingItemRef$.$ref.once("value", function (snapshot) {
+        snapshot.forEach(data => {
+  
+          if (data.val().itemName == self.currentShoppingItem.itemName) {
+            self.isExist = true;
+            key = data.key
+            self.showToast('Item already exists in buddy Master List', 1000);
+            // self.loading.dismiss();
+          }
+          return false;
+        });
+  
+        if (!self.isExist) {
+          self.saveToFirebaseBuddyMasterItemList();
+        }
+        else{
+          self.saveToFirebaseBuddyNextTripList(key);
+        }
+        self.isExist = false;
+      });
+    }
+  
+    /* save the item to firebase
+       check the store value exist or not
+       if not, save store value as None */
+    saveToFirebaseBuddyMasterItemList() {
+      console.log('saveToFirebaseMasterItemList');
+      let isSaved;
+      if (this.currentShoppingItem.store) {
+        isSaved = this.buddyShoppingItemRef$.push({
+          itemName: this.currentShoppingItem.itemName,
+          store: this.currentShoppingItem.store
+        }).key;
+      } else {
+        isSaved = this.buddyShoppingItemRef$.push({
+          itemName: this.currentShoppingItem.itemName,
+          store: "None"
+        }).key;
+      }
+  
+      if (isSaved) {
+        // this.loading.dismiss();
+        this.saveToFirebaseBuddyNextTripList(isSaved);
+      }
+    }
+  
+    /* save the item to firebase
+       check the store value exist or not
+       if not, save store value as None */
+    saveToFirebaseBuddyNextTripList(key) {
+  
+      if (!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
+      
+      let isSaved;
+      this.buddyNextTripItemRef$ = this.db.list(`/nexttrip/${this.userId}/${this.currentShoppingItem.store}`);
+      if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
+      isSaved = this.buddyNextTripItemRef$.push({
+        itemName: this.currentShoppingItem.itemName,
+        itemNumber: Number(this.currentShoppingItem.itemNumber),
+        status: "shareIn",
+        sharedArray: [{shopperName: this.userName,key: this.authenticatedUser.uid}]
+        // store: currentShoppingItem.store? currentShoppingItem.store : "None"
+      }).key;
+  
+      if (isSaved) {
+        // this.loading.dismiss();
+        this.showToast('Item added to Buddy Next Trip', 1000);
+        // this.navCtrl.pop();
+      }
+    }
 
   /* search for a product with keyword*/
   searchProduct(event, key) {

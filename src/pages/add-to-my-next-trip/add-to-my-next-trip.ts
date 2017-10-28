@@ -26,15 +26,19 @@ export class AddToMyNextTripPage {
   userProfile: Profile;
   currentShoppingItem = {} as ShoppingItem;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
+  masterListItemRef$: FirebaseListObservable<ShoppingItem[]>;
   storeRef$: FirebaseListObservable<Store[]>;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   
   private authenticatedUser : User;
   private authenticatedUser$ : Subscription;
   private userId: string;
+  private userName: string;
   private isExist: boolean;  
   private shopperName: string = "My Self";
   public shopperNames: Array<any>;
+  private status: string; 
+  public shareList: Array<any>=[];
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
@@ -42,6 +46,7 @@ export class AddToMyNextTripPage {
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
         this.authenticatedUser = user;
         this.userId = this.authenticatedUser.uid;
+        this.shopperNames  = [{shopperName: "My Self",key: this.authenticatedUser.uid}];
         });
       //const shopppingItem : ShoppingItem = this.navParams.get('shoppingItem');
       if(this.navParams.get('shoppingItem')){
@@ -62,7 +67,7 @@ export class AddToMyNextTripPage {
             let profileData = this.db.object(`/profiles/${invite['$key']}`);
             //this.buddyList = [];
             
-            this.shopperNames  = [{shopperName: "My Self",key: this.authenticatedUser.uid}];
+            
             profileData.subscribe((buddyProfile) => {
               
               if(invite['status'] == 'completed') {
@@ -85,15 +90,36 @@ export class AddToMyNextTripPage {
   
     userSelect(userId){
       this.userId = userId;
+      if(this.userId != this.authenticatedUser.uid)
+      {
+        let selectUser =this.shopperNames.filter(shopper  => {
+          if (shopper.key == this.userId){
+            return shopper;
+          }
+        });
+        console.log(selectUser);
+        this.shareList.push({
+          shopperName: selectUser[0].shopperName,
+          key: selectUser[0].key
+        });
+        console.log(this.shareList);
+      }
     }
 
-  addShoppingItem(currentShoppingItem: ShoppingItem){
-
+  addShoppingItem(){
+    
     if(this.userId != this.authenticatedUser.uid){
-      this.addShoppingItemToMasterList(currentShoppingItem)
+      
+      this.status = "shareOut";
+      this.addShoppingItemToMasterList()
+      this.navCtrl.pop();
+      
     }
     else{
-      this.addToNextTrip(currentShoppingItem);
+      this.status = "self";
+      this.addToUserNextTrip();
+      this.navCtrl.pop();
+      
     }
     
     
@@ -101,20 +127,25 @@ export class AddToMyNextTripPage {
 
   /* check whether the item name exist in masterlist, 
      if not save the value */
-     addShoppingItemToMasterList(currentShoppingItem: ShoppingItem) {
+     addShoppingItemToMasterList() {
       // this.loading = this.loadingCtrl.create({
       //   content: 'Please wait...'
       // });
       // this.loading.present();
+    
       var self = this;
-  
-      self.shoppingItemRef$ = self.db.list(`/masterlist/${self.userId}`);
+      let key;
+      self.masterListItemRef$ = self.db.list(`/masterlist/${self.userId}`);
       /* gets firebase data only once */
-      self.shoppingItemRef$.$ref.once("value", function (snapshot) {
+      self.masterListItemRef$.$ref.once("value", function (snapshot) {
         snapshot.forEach(data => {
-  
+         
           if (data.val().itemName == self.currentShoppingItem.itemName) {
             self.isExist = true;
+            
+            
+            key = data.key
+           
             // self.showToast('Item already exists in Master List', 1000);
             // self.loading.dismiss();
           }
@@ -122,7 +153,11 @@ export class AddToMyNextTripPage {
         });
   
         if (!self.isExist) {
-          self.saveToFirebaseMasterItemList(currentShoppingItem);
+          self.saveToFirebaseMasterItemList();
+        }
+        else{
+         
+          self.addToBuddyNextTrip(key);
         }
         self.isExist = false;
       });
@@ -131,16 +166,16 @@ export class AddToMyNextTripPage {
     /* save the item to firebase
        check the store value exist or not
        if not, save store value as None */
-    saveToFirebaseMasterItemList(currentShoppingItem: ShoppingItem) {
+    saveToFirebaseMasterItemList() {
       console.log('saveToFirebaseMasterItemList');
       let isSaved;
       if (this.currentShoppingItem.store) {
-        isSaved = this.shoppingItemRef$.push({
+        isSaved = this.masterListItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
           store: this.currentShoppingItem.store
         }).key;
       } else {
-        isSaved = this.shoppingItemRef$.push({
+        isSaved = this.masterListItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
           store: "None"
         }).key;
@@ -148,18 +183,44 @@ export class AddToMyNextTripPage {
   
       if (isSaved) {
         // this.loading.dismiss();
-        this.addToNextTrip(currentShoppingItem);
+        console.log(isSaved);
+        this.addToBuddyNextTrip(isSaved);
       }
     }
 
-    addToNextTrip(currentShoppingItem: ShoppingItem){
+    addToBuddyNextTrip(key) {
+      
+          if (!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
+      
+          let isSaved;
+          this.shoppingItemRef$ = this.db.list(`/nexttrip/${this.userId}/${this.currentShoppingItem.store}`);
+          if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
+          isSaved = this.shoppingItemRef$.push({
+            itemName: this.currentShoppingItem.itemName,
+            itemNumber: Number(this.currentShoppingItem.itemNumber),
+            status: "shareIn",
+            sharedArray: [{shopperName: this.userName, key: this.authenticatedUser.uid}]
+            // store: currentShoppingItem.store? currentShoppingItem.store : "None"
+          }).key;
+      
+          if (isSaved) {
+            // this.loading.dismiss();
+            this.addToUserNextTrip();
+            this.presentToast('Item added to Buddy Next Trip');
+            
+          }
+        }
+
+    addToUserNextTrip(){
       //console.log(currentShoppingItem);
-    if(!currentShoppingItem.store) currentShoppingItem.store = "None";
-    this.shoppingItemRef$ = this.db.list(`/nexttrip/${this.userId}/${currentShoppingItem.store}`);
-    if(!currentShoppingItem.itemNumber) currentShoppingItem.itemNumber = 0;
+    if(!this.currentShoppingItem.store) this.currentShoppingItem.store = "None";
+    this.shoppingItemRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${this.currentShoppingItem.store}`);
+    if(!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
     this.shoppingItemRef$.push({
-      itemName: currentShoppingItem.itemName,
-      itemNumber: Number(currentShoppingItem.itemNumber)
+      itemName: this.currentShoppingItem.itemName,
+      itemNumber: Number(this.currentShoppingItem.itemNumber),
+      status: this.status,
+      sharedArray: this.shareList
       // store: currentShoppingItem.store? currentShoppingItem.store : "None"
     });
 
@@ -168,12 +229,28 @@ export class AddToMyNextTripPage {
     this.currentShoppingItem = {} as ShoppingItem;
     this.presentToast('Item added');
     //navigate back one on the navigation stack
-    this.navCtrl.pop();
+    
     }
 
   
   ionViewDidLoad() {
+    this.getUserDetails();
+  }
+
+  getUserDetails(){
+    var usersRef = this.db.list(`/profiles`, {
+      query: {
+          orderByChild: 'email',
+          equalTo: this.authenticatedUser.email , // How to check if participants contain username
+      }
+  });
+
+  usersRef.subscribe(profileList => {
     
+    this.userName = profileList[0].firstName +' '+ profileList[0].lastName;
+    
+  });
+ 
   }
 
    // Configure Toast
