@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HttpModule } from '@angular/http';
+import { Geofence } from '@ionic-native/geofence';
 
 import { inSCANout } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
@@ -60,7 +61,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     DataServiceProvider,
     WalmartApiProvider,
     BarcodeScanner,
-    NativeStorage
+    NativeStorage,
+    Geofence
   ]
 })
 export class AppModule {}
