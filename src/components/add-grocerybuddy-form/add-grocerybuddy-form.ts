@@ -114,11 +114,8 @@ export class AddGrocerybuddyFormComponent implements OnDestroy {
     });
 
 
-    this.navCtrl.setRoot('TabsHomePage');
-    this.toast.create({
-      message: `Welcome In!`,
-      duration: 3000
-    }).present();
+    this.navCtrl.push('AddPreferredStorePage');
+    
 
     
   }

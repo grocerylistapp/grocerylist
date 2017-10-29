@@ -21,6 +21,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     AuthServiceProvider,
     DataServiceProvider,
     WalmartApiProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    Geolocation,
+    Network
   ]
 })
 export class AppModule {}

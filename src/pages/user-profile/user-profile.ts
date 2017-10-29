@@ -27,6 +27,10 @@ export class UserProfilePage {
   this.auth.signOut();
   this.navCtrl.setRoot('LoginPage');
 }
+
+addPreferredStore(){
+  this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "userProfile"});
+}
     
 
 }
