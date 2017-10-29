@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>My Previous Trip</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngFor="let item of previousListArray">
+    <ion-item-group>
+      <ion-item-divider color="listtitle">{{ item.date }}</ion-item-divider>
+      <ion-item *ngFor="let store of item.store" (click)="getItemPreviousTripByStore(item.date, store)">
+        <h1>{{ store.storeName }}</h1>
+        <h3> Time : {{ store.time }}</h3>
+      </ion-item>
+    </ion-item-group>
+  </div>
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <span>
+        <!-- Please Select Quantity -->
+      Quantity : {{quantitySel}}
+      </span>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding *ngIf="type == 0">
+  <ion-item>
+    <ion-range min="1" max="{{maxQuantity}}" [(ngModel)]="quantitySel" color="secondary">
+      <ion-label range-left>1</ion-label>
+      <ion-label range-right>{{maxQuantity}}</ion-label>
+    </ion-range>
+  </ion-item>
+  <!-- <ion-item>
+    Quantity Selected : {{quantitySel}}
+  </ion-item> -->
+
+  <ion-row>
+    <ion-col>
+      <button ion-button color="danger" block (click)="cancelQtyModal()">Cancel</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button color="secondary" block (click)="selectQtyModal()">Ok</button>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-content padding *ngIf="type == 1">
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Quantity</ion-label>
+      <ion-input type="number" [(ngModel)]="quantitySel"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button color="danger" block (click)="cancelQtyModal()">Cancel</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button color="secondary" block (click)="selectQtyModal()">Ok</button>
+    </ion-col>
+  </ion-row>
+</ion-content>

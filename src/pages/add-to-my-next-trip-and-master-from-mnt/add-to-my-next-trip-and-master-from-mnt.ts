@@ -176,7 +176,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
     let isSaved;
     isSaved = this.nextTripItemRef$.push({
       itemName: this.currentShoppingItem.itemName,
-      itemNumber: Number(this.quantity)
+      itemNumber: Number(this.quantity),
+      pickedQuantity : Number(0)
       // store: this.storeName? this.storeName : "None"
     }).key;
 

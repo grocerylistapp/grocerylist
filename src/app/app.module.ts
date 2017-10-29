@@ -3,13 +3,16 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { HttpModule } from '@angular/http';
+import { Geofence } from '@ionic-native/geofence';
 
 import { inSCANout } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AddShoppingPage } from '../pages/add-shopping/add-shopping';
 import { EditShoppingItemPage} from '../pages/edit-shopping-item/edit-shopping-item';
 import { WalmartSearchModalPage} from '../pages/walmart-search-modal/walmart-search-modal';
+import { ItemRangeModalPage} from '../pages/item-range-modal/item-range-modal';
 
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
@@ -26,9 +29,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 @NgModule({
   declarations: [
     inSCANout,
-    AddShoppingPage,
-    WalmartSearchModalPage
+    // EditShoppingItemPage,
 
+    AddShoppingPage,
+    WalmartSearchModalPage,
+    ItemRangeModalPage
   ],
   imports: [
     BrowserModule,
@@ -42,9 +47,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   bootstrap: [IonicApp],
   
   entryComponents: [
-  inSCANout, 
+    inSCANout, 
+    // EditShoppingItemPage, 
+
     AddShoppingPage,
-    WalmartSearchModalPage
+    WalmartSearchModalPage,
+    ItemRangeModalPage
 ],
   providers: [
     StatusBar,
@@ -54,7 +62,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     AuthServiceProvider,
     DataServiceProvider,
     WalmartApiProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    NativeStorage,
+    Geofence
   ]
 })
 export class AppModule {}
