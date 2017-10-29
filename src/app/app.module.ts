@@ -30,6 +30,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   declarations: [
     inSCANout,
     // EditShoppingItemPage,
+
     AddShoppingPage,
     WalmartSearchModalPage,
     ItemRangeModalPage
@@ -48,6 +49,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   entryComponents: [
     inSCANout, 
     // EditShoppingItemPage, 
+
     AddShoppingPage,
     WalmartSearchModalPage,
     ItemRangeModalPage

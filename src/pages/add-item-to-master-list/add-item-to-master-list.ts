@@ -187,7 +187,7 @@ export class AddItemToMasterListPage {
   openWalmartSearch(){
     console.log('openWalmartSearch');
     let walmartModal = this.modalCtrl.create(WalmartSearchModalPage);
-    
+        
     walmartModal.onDidDismiss(data => {
       this.currentShoppingItem.itemName = data;
     });

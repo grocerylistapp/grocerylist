@@ -51,4 +51,8 @@ export class AuthServiceProvider {
     return firebase.auth().currentUser;
   }
 
+  signOut(){
+    this.auth.auth.signOut();
+    }
+
 }
