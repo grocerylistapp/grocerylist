@@ -8,13 +8,39 @@
 
   <ion-navbar color="primary">
     <ion-title>Add Buddy</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="skipContent()" icon-only> 
+              <ion-icon  *ngIf ="!isAddBuddy" name="arrow-forward"></ion-icon>
+              <ion-icon *ngIf ="isAddBuddy" name="close-circle"></ion-icon>
+            </button>
+    
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<app-add-grocerybuddy-form></app-add-grocerybuddy-form>
+<!-- <app-add-grocerybuddy-form></app-add-grocerybuddy-form> -->
+<ion-card> 
+  <ion-card-content>
+    <ion-item>
+      <ion-label floating>E-mail</ion-label>
+      <ion-input type="email" [(ngModel)]="buddy1.email"></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-label floating>Buddy 2</ion-label>
+        <ion-input type="email" [(ngModel)]="buddy2.email"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Buddy 3</ion-label>
+          <ion-input type="email" [(ngModel)]="buddy3.email"></ion-input>
+        </ion-item> -->
+  </ion-card-content>
+</ion-card>
+
+<button ion-button (click)="saveBuddyList()">Save</button>
+<button ion-button block color="primary" (click)="invitebuddy()"> Invite </button>
 </ion-content>
 
     

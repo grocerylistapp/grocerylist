@@ -18,12 +18,14 @@ export class TabsHomePage {
   tab1Root: string;
   tab2Root: string;
   tab3Root: string;
+  tab4Root: string;
 
   constructor() {
   
     this.tab1Root = 'ListOfListsPage';
-    this.tab2Root = 'ShoppingModePage'
-    this.tab3Root = 'UserProfilePage'
+    this.tab2Root = 'ShoppingModePage';
+    this.tab3Root = 'PreferredStoreListPage';
+    this.tab4Root = 'UserProfilePage';
 
   }
 

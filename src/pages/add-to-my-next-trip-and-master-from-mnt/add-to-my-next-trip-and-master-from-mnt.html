@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="myForm" (ngSubmit)="addShoppingItemToMasterList()">
+  <form [formGroup]="myForm" (ngSubmit)="checkUserSelection()">
   <ion-item>
     <ion-label floating> Item Name </ion-label>
     <ion-input formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
@@ -36,6 +36,12 @@
         <p>
     </div>
   </ion-row>
+  <ion-item>
+      <ion-label stacked> Shopper </ion-label>
+      <ion-select formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "My Self">
+        <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
+      </ion-select>
+    </ion-item>
   <button ion-button block [disabled]="!myForm.valid"> Add Item </button>
 </form>
 
