@@ -14,3 +14,41 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+//----------------------List---------------------//
+
+.list-grid{
+    border-right: 5px solid #2C6AA0;
+    width: 100%;  /* Or whatever */
+    height: 100%; /* Or whatever */
+    padding: 0 !important;
+    margin: auto;
+  
+  }
+  .list-row{
+    border-bottom: 1px solid #cecece;
+  }
+  
+  .list-col{
+    border-right: 5px solid #cecece;
+    width: 100%;  /* Or whatever */
+    height: 100%; /* Or whatever */
+    padding: 0 !important;
+    margin: auto;
+    text-align:center;
+  }
+  .list-col-badge{
+    width: 100%;  /* Or whatever */
+    height: 100%; /* Or whatever */
+    padding: 0 !important;
+    margin: auto;
+    text-align:center;
+  }
+  
+  .list-main-content{font-size: 140%; font-weight:bold; color:#053361;padding:5px 0;}
+  .date-content{font-size: 180%;}
+  .list-bottom-left-content{font-size: 95%; color: #6c737b; font-weight:bold;width:50%; display:inline-flex;}
+  .list-bottom-right-content{font-size: 85%; color: #9399a0; float:right;width:40%; display:inline-flex;}
+
+  // -------------Toolbar---------------//
+

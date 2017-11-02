@@ -17,5 +17,11 @@
     <ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)" >
         <h2>{{item.itemName}}</h2>
         <h3>{{item.itemNumber}}</h3>
+        <ion-badge *ngIf="item.status == 'shareIn'" item-end>Shared from {{item.sharedArray[0].shopperName}}</ion-badge>
+        <ion-badge *ngIf="item.status == 'shareOut'" item-end>Shared to {{item.sharedArray[0].shopperName}}</ion-badge>
       </ion-item>
+
+      <ion-fab bottom right >
+          <button ion-fab mini (click)="navigateToShareGrocery()"><ion-icon name="share"></ion-icon></button>
+        </ion-fab>
 </ion-content>

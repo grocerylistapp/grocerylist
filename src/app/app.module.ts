@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HttpModule } from '@angular/http';
 import { Geofence } from '@ionic-native/geofence';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Network } from '@ionic-native/network';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { inSCANout } from './app.component';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
@@ -64,7 +67,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     WalmartApiProvider,
     BarcodeScanner,
     NativeStorage,
-    Geofence
+    Geofence,
+    Geolocation,
+    Network,
+    SocialSharing
+
   ]
 })
 export class AppModule {}
