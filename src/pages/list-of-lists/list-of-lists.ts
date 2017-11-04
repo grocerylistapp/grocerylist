@@ -53,14 +53,14 @@ export class ListOfListsPage {
         self.storeListArray.push(
           {
             id: generateUUID(), //any unique ID
-            latitude: data.val().latitude, //center of geofence radius
-            longitude:  data.val().longitude,
+            latitude: data.val().lat, //center of geofence radius
+            longitude:  data.val().long,
             radius: 100, //radius to edge of geofence in meters
             transitionType: 1, //see 'Transition Types' below
             notification: { //notification settings
               id: count + 1, //any unique ID
               title: 'Start Shopping', //notification title
-              text: 'You are near a Preferred Store -'+ data.val().store, //notification body
+              text: 'You are near a Preferred Store -'+ data.val().storename, //notification body
               openAppOnClick: true //open app when notification is tapped
             }
           }

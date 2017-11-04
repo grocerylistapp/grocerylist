@@ -1,18 +1,12 @@
-<ion-card>
-  <ion-card-content>
-  <ion-item>
-      <ion-label floating>Email Address</ion-label>
-      <ion-input [(ngModel)]="account.email" type="email"></ion-input>
-    </ion-item>
-
-    <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input [(ngModel)]="account.password" type="password"></ion-input>
-    </ion-item>
-     <ion-row class = "register-form__buttons">
-      <button ion-button color="secondary" (click)="register()" >Register</button>
-      
-    </ion-row>
-
-  </ion-card-content>
-</ion-card>
+   
+<div class="register-form-body">
+  <div class="sub-heading">Email</div>
+  <!-- <ion-input [(ngModel)]="account.email" type="email"></ion-input> -->
+  <ion-input type="email"></ion-input>
+  <div class="sub-heading">Password</div>
+  <!-- <ion-input [(ngModel)]="account.password" type="password"></ion-input> -->
+  <ion-input type="password"></ion-input>
+  <button class="register-button" ion-button block> Register </button>  
+  <div class="terms-policy">By registering,you automatically accept the <span>Terms & Policy</span> of XoomCart.</div>
+  <div class="redirect-login" (click)="goBackToLogin()">Have account? Log In </div>
+</div>
