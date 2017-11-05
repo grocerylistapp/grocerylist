@@ -1,33 +1,22 @@
-
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>{{shoppingItem.itemName}}</ion-title>
+<ion-header no-shadow no-border>
+<ion-navbar class="nav-header" color="navColorLight">   
+    <ion-title class="nav-header-title">{{shoppingItem.itemName}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-    <ion-item> 
-        <ion-label floating> Item Name </ion-label>
-        <ion-input type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
-      </ion-item>
-      <ion-item>
-      <ion-label floating> Quantity </ion-label>
-        <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label stacked> Store </ion-label>
-            <!-- <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input> -->
-            <ion-select [(ngModel)]="shoppingItem.store"  placeholder = {{shoppingItem.store}}>
-              <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
-            </ion-select>
-          </ion-item>
-          
-    <button ion-button block (click)="updateShoppingItem(shoppingItem)"> Update Item </button>
-
-    <ion-fab bottom left>
+<ion-content>
+  <div class="edit-item-content">
+      <div class="sub-heading">Email</div>
+      <ion-input type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
+      <div class="sub-heading">Quantity</div>
+      <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
+      <div class="sub-heading">Store</div>
+      <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input>
+      <button class="update-button" ion-button block (click)="updateShoppingItem(shoppingItem)"> Update </button>  
+  </div>
+  <ion-fab bottom left>
       <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
       </ion-fab>
 </ion-content>
+

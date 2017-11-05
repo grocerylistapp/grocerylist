@@ -1,27 +1,19 @@
+<ion-header no-shadow no-border>
+  <ion-navbar class="nav-header" color="navColorLight">
+      <ion-title class="nav-header-title">My Next Trip</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="navigateToAddToNextTripPage()" icon-only>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
-<ion-header>
-    
-      <ion-navbar color="primary">
-        <ion-title>My Next Trip</ion-title>
-        <ion-buttons end>
-          <button ion-button (click)="navigateToAddToNextTripPage()" icon-only> 
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-navbar>
-    
-    </ion-header>
-    
-    
-    <ion-content padding>
-      <ion-item-group>
-        <ion-item-divider color="listtitle">Stores</ion-item-divider>
-            <!-- <ion-list>
-              <ion-header><h1></h1></ion-header>
-            </ion-list> -->
-          <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
-            <h1>{{ item.$key }}</h1>
-          </ion-item>
-      </ion-item-group>
-    </ion-content>
-    
+<div class="nav-header-second">Stores</div>
+<ion-content class=" non-scorllable-content">
+  <ion-item-group>
+    <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
+      <h1 class="text-h1-color">{{ item.$key }}</h1>
+    </ion-item>
+  </ion-item-group>
+</ion-content>

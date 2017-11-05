@@ -1,30 +1,23 @@
-<!--
-  Generated template for the PreferredStoreListPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar color="primary"> 
-    <ion-title style="text-align: center">Preferred Stores</ion-title>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">      
+      <ion-title class="nav-header-title">Preferred Stores</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
+<div class="nav-header-second">Stores</div>
+<ion-content class="non-scorllable-content">
   <ion-list >
     <ion-item *ngFor="let item of storeListRef$ | async">
       <ion-grid class="list-grid" (click)="showActionSheetControler(item)">
-        <ion-row class="list-row">
-          <ion-col width-20 center>
-            <p class="list-main-content date-content">{{item.storename}}</p>
-            <p class="list-bottom-content">{{item.address}}</p>
-          </ion-col>
+<!--         <ion-row class="list-row">
+          <ion-col width-20 center> -->
+            <h2 class="text-h2-color">{{item.storename}}</h2>
+            <h3 class="text-h3">{{item.address}}</h3>
+<!--           </ion-col>
           
-        </ion-row>
+        </ion-row> -->
       </ion-grid>
+
     </ion-item>
   </ion-list>
   <ion-fab bottom right>

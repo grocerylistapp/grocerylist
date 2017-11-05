@@ -121,7 +121,12 @@ export class ShoppingItemListPage {
           text: 'Add to Picked Items',
           handler: () => {
             console.log("Add to Picked Items");
-            this.openItemRanger(shoppingItem.$key, shoppingItem.itemNumber, 0);
+            if(shoppingItem.itemNumber != 1){
+              this.openItemRanger(shoppingItem.$key, shoppingItem.itemNumber, 0);
+            }else{
+              console.log('csdcsd');
+              this.addToPickedItemList(shoppingItem.$key, shoppingItem.itemNumber);
+            }
           }
 
         },

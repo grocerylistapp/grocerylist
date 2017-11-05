@@ -1,39 +1,45 @@
-<!--
-  Generated template for the MoveToBuddyPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Move To Buddy</ion-title>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">
+      <ion-title class="nav-header-title">Move To Buddy</ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
+    <div class="ion-custom-content">
+        <div class="sub-heading">Item Name </div>
+        <ion-input class="input-color" type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
+        <div class="sub-heading">Quantity </div>
+        <ion-input class="input-color" type="number" [disabled]="true" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
+        <div class="sub-heading">Store </div>
+        <ion-input class="input-color" type="text" [disabled]="true" [(ngModel)]="storeName"></ion-input>
+        <div class="sub-heading">Shopper </div>
+        <ion-item>
+          <ion-select class="input-color" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder="Select">
+              <ion-option *ngFor="let shopperItem of shopperNames" value={{shopperItem.key}}>{{shopperItem.shopperName}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <button class="ion-button-custom" ion-button block (click)="addShoppingItemToMasterList(shoppingItem)"> Move Item </button>
+    </div>
+  <!-- <ion-item>
+    <ion-label floating> Item Name </ion-label>
+    <ion-input type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating> Quantity </ion-label>
+    <ion-input type="number" [disabled]="true" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating> Store </ion-label>
+    <ion-input type="text" [disabled]="true" [(ngModel)]="storeName"></ion-input>
+  </ion-item>
 
-<ion-content padding>
-    <ion-item> 
-        <ion-label floating> Item Name </ion-label>
-        <ion-input type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
-      </ion-item>
-      <ion-item>
-      <ion-label floating> Quantity </ion-label>
-        <ion-input type="number" [disabled]="true" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label floating> Store </ion-label>
-            <ion-input type="text" [disabled]="true" [(ngModel)]="storeName"></ion-input>
-          </ion-item>
+  <ion-item>
+    <ion-label stacked> Shopper </ion-label>
+    <ion-select [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder="Select">
+      <ion-option *ngFor="let shopperItem of shopperNames" value={ {shopperItem.key}}>{{shopperItem.shopperName}}</ion-option>
+    </ion-select>
+  </ion-item>
 
-          <ion-item>
-              <ion-label stacked> Shopper </ion-label>
-              <ion-select [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "Select">
-                <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
-              </ion-select>
-            </ion-item>
-          
-    <button ion-button block (click)="addShoppingItemToMasterList(shoppingItem)"> Move Item </button>
+  <button ion-button block (click)="addShoppingItemToMasterList(shoppingItem)"> Move Item </button> -->
 
 </ion-content>

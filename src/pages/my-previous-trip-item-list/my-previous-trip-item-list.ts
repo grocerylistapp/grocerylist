@@ -29,9 +29,6 @@ export class MyPreviousTripItemListPage {
       let time: string = this.navParams.get('time');
       let date: string = this.navParams.get('dateValue');
       this.storeName = this.navParams.get('storeName');
-      console.log(time);
-      console.log(date);
-      console.log(this.storeName);
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
