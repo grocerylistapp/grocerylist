@@ -18,9 +18,16 @@
         <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
       </ion-item>
       <ion-item>
-          <ion-label floating> Store </ion-label>
-            <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input>
+          <ion-label stacked> Store </ion-label>
+            <!-- <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input> -->
+            <ion-select [(ngModel)]="shoppingItem.store"  placeholder = {{shoppingItem.store}}>
+              <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+            </ion-select>
           </ion-item>
           
     <button ion-button block (click)="updateShoppingItem(shoppingItem)"> Update Item </button>
+
+    <ion-fab bottom left>
+      <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+      </ion-fab>
 </ion-content>

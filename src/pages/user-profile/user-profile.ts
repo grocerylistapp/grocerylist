@@ -27,10 +27,6 @@ export class UserProfilePage {
   this.auth.signOut();
   this.navCtrl.setRoot('LoginPage');
   }
-
-  navigateToAddBuddy(){
-    this.navCtrl.push('AddBuddyPage',{ buddyStatus: "userProfile"});
-  }
-    
+  
 
 }

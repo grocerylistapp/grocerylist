@@ -79,7 +79,7 @@ export class AddPreferredStorePage {
     if(this.storeStatus == "addStore"){
       this.isAddstore = true;
     }else{
-      this.navCtrl.setRoot('TabsHomePage');
+      // this.navCtrl.setRoot('TabsHomePage');
       // this.presentToast('Welcome In!');
       this.isAddstore = false;
     }
@@ -334,7 +334,7 @@ export class AddPreferredStorePage {
 
   
   addItemToPreferredStorelist(item) {
-
+    
      if(item.place_id && item.place_id !== ""){
        if(this.map === undefined){
          var service = new google.maps.places.PlacesService(this.map);
@@ -354,7 +354,7 @@ export class AddPreferredStorePage {
             
                   self.preferredStoresList.$ref.once("value", function (snapshot) {
                     snapshot.forEach(data => {
-                      
+                    
                       if (data.val().lat === place.geometry.location.lat() && data.val().long === place.geometry.location.lng()) {
                         self.isStorexists = true;
                         // self.showToast('Item already exists in Master List', 1000);

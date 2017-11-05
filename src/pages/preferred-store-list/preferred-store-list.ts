@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import { Store } from '../../models/store/store';
 import {FirebaseListObservable, AngularFireDatabase} from 'angularfire2/database';
@@ -28,7 +28,7 @@ export class PreferredStoreListPage {
   private loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : AngularFireDatabase,
-    private auth: AuthServiceProvider, private data: DataServiceProvider,
+    private auth: AuthServiceProvider, private data: DataServiceProvider, private actionSheetCntrl : ActionSheetController,
     public loadingCtrl: LoadingController) {
 
       this.loading = this.loadingCtrl.create({
@@ -59,6 +59,31 @@ export class PreferredStoreListPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PreferredStoreListPage');
+  }
+  showActionSheetControler(item){
+  
+    this.actionSheetCntrl.create({
+      title: `${item.storename}`,
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: ()=> {
+            this.storeListRef$.remove(item.$key);
+          }
+
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: ()=> {
+            
+          }
+
+        }
+
+      ]
+    }).present();
   }
 
 }

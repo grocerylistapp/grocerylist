@@ -26,7 +26,9 @@ export class AddToMyNextTripPage {
   currentShoppingItem = {} as ShoppingItem;
   masterListItemRef$: FirebaseListObservable<ShoppingItem[]>;  
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
-  storeRef$: FirebaseListObservable<Store[]>;
+  // storeRef$: FirebaseListObservable<Store[]>;
+  // storeListRef$ : FirebaseListObservable<Store[]>
+  preferredStoresList: FirebaseListObservable<Store[]>;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   
   private authenticatedUser : User;
@@ -41,6 +43,8 @@ export class AddToMyNextTripPage {
   public shopperNames: Array<any>;
   private status: string; 
   public shareList: Array<any>=[];
+  public storeList: Array<any>;
+
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
@@ -91,6 +95,35 @@ export class AddToMyNextTripPage {
           this.userProfile = <Profile>profile.val();
         });
       })
+      this.getPreferredStore();
+    }
+
+    getPreferredStore(){
+      var self =this;
+      self.storeList = [];
+      self.preferredStoresList = self.db.list(`/preferredStores/${self.userId}`);
+      /* gets firebase data only once */
+      
+      self.preferredStoresList.$ref.once("value", function (snapshot) {
+        
+        snapshot.forEach(data => {
+          var store = data.val().storename+' - '+data.val().address;
+          if (data.val().lat) {
+            self.storeList.push({
+              storeName: store
+            });
+            // self.showToast('Item already exists in Master List', 1000);
+            // self.loading.dismiss();
+          }
+          return false;
+        });
+      
+  
+        
+        
+        
+      });
+
     }
 
     userSelect(userId){
@@ -303,6 +336,10 @@ export class AddToMyNextTripPage {
  
   }
 
+  navigateToAddPreferredStorePage(){
+    this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "addStore"});
+  }
+
    // Configure Toast
    public presentToast(text) {
     let toast = this.toastCtrl.create({
@@ -316,6 +353,10 @@ export class AddToMyNextTripPage {
   
   ionViewDidLoad() {
     this.getUserDetails();
+  }
+  
+  ionViewWillEnter(){
+    this.getPreferredStore();
   }
 
 

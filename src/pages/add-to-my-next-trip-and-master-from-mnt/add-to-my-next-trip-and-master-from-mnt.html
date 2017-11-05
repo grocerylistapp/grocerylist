@@ -27,8 +27,11 @@
     </div>
   </ion-row>
   <ion-item>
-    <ion-label floating> Store </ion-label>
-    <ion-input formControlName="storeName" type="text" [(ngModel)]="storeName"></ion-input>
+    <ion-label stacked> Store </ion-label>
+    <!-- <ion-input formControlName="storeName" type="text" [(ngModel)]="storeName"></ion-input> -->
+    <ion-select formControlName="storeName" [(ngModel)]="storeName"  placeholder ="Select store">
+      <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+    </ion-select>
   </ion-item>
   <ion-row *ngIf="formErrors.storeName">
     <div *ngFor="let errors of formErrors.storeName">
@@ -52,5 +55,9 @@
       <button ion-fab mini (click)="openWalmartSearch()"><ion-icon name="ios-create"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
+
+  <ion-fab bottom left>
+    <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+    </ion-fab>
 
 </ion-content>

@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { User } from 'firebase/app';
 import { Profile } from '../../models/profile/profile';
 import { Subscription } from 'rxjs/Subscription';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+
 /**
- * Generated class for the ProfileViewComponent component.
+ * Generated class for the ShopBuddyListPage page.
  *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
  */
+
+@IonicPage()
 @Component({
-  selector: 'app-profile-view',
-  templateUrl: 'profile-view.html'
+  selector: 'page-shop-buddy-list',
+  templateUrl: 'shop-buddy-list.html',
 })
-export class ProfileViewComponent implements OnInit{
+export class ShopBuddyListPage {
+
   userProfile: Profile;
   private authenticatedUser : User;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
@@ -25,10 +30,12 @@ export class ProfileViewComponent implements OnInit{
   buddyListPending: Array<any>;
   buddyListCompleted: Array<any>;
 
-  constructor(private data: DataServiceProvider, private auth: AuthServiceProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private data: DataServiceProvider, private auth: AuthServiceProvider,
     private db : AngularFireDatabase) {
-    console.log('Hello ProfileViewComponent Component');
+  }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ShopBuddyListPage');
   }
 
   ngOnInit(): void {
@@ -69,10 +76,34 @@ export class ProfileViewComponent implements OnInit{
     })
   }
 
- 
+  acceptInvite(notification) {
+    console.log(notification);
+    this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
+    this.buddyBuddyListObj = this.db.object(`/grocerybuddylist/${notification.buddy['$key']}`);
 
-  // signout(){
-  //   this.auth.signOut();
-  // }
+    this.userBuddyListObj.$ref.child(notification.buddy['$key']).update({
+      status: 'completed'
+    });
+    this.buddyBuddyListObj.$ref.child(this.authenticatedUser.uid).set({
+      status: 'completed'
+    });
+    this.buddyListCompleted.forEach((invite) => {
+          if(invite.buddy['$key'] === notification.buddy['$key']) {
+            invite.buddy.status = 'completed';
+            invite.status = 'completed';
+          }
+    });
+
+  }
+
+  declineInvite(notification) {
+    console.log(notification);
+    this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
+    this.userBuddyListObj.$ref.child(notification['$key']).remove();
+  }
+
+  navigateToAddBuddy(){
+    this.navCtrl.push('AddBuddyPage',{ buddyStatus: "userProfile"});
+  }
 
 }

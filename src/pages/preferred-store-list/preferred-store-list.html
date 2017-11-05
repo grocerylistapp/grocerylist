@@ -16,7 +16,7 @@
 <ion-content padding>
   <ion-list >
     <ion-item *ngFor="let item of storeListRef$ | async">
-      <ion-grid class="list-grid">
+      <ion-grid class="list-grid" (click)="showActionSheetControler(item)">
         <ion-row class="list-row">
           <ion-col width-20 center>
             <p class="list-main-content date-content">{{item.storename}}</p>
