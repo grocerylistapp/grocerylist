@@ -4,6 +4,7 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content>
   <div class="edit-item-content">
       <div class="sub-heading">Email</div>
@@ -14,4 +15,8 @@
       <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input>
       <button class="update-button" ion-button block (click)="updateShoppingItem(shoppingItem)"> Update </button>  
   </div>
+  <ion-fab bottom left>
+      <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+      </ion-fab>
 </ion-content>
+

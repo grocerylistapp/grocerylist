@@ -30,6 +30,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
   buddyShoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
   buddyNextTripItemRef$: FirebaseListObservable<ShoppingItem[]>;
   storeRef$: FirebaseListObservable<Store[]>;
+  preferredStoresList: FirebaseListObservable<Store[]>;
   private inviteListRef$ : FirebaseListObservable<Notification[]>
   private authenticatedUser: User;
   private authenticatedUser$: Subscription;
@@ -48,6 +49,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
   public shopperNames: Array<any>;
   private status: string;  
   public shareList: Array<any>=[];
+  public storeList: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
@@ -144,6 +146,10 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.getUserDetails();
   }
 
+  ionViewWillEnter(){
+    this.getPreferredStore();
+  }
+
   getUserDetails(){
     var usersRef = this.db.list(`/profiles`, {
       query: {
@@ -157,7 +163,31 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.userName = profileList[0].firstName +' '+ profileList[0].lastName;
     
   });
- 
+  this.getPreferredStore();
+  }
+
+  getPreferredStore(){
+    var self =this;
+    self.storeList = [];
+    self.preferredStoresList = self.db.list(`/preferredStores/${self.authenticatedUser.uid}`);
+    /* gets firebase data only once */
+    
+    self.preferredStoresList.$ref.once("value", function (snapshot) {
+      
+      snapshot.forEach(data => {
+        var store = data.val().storename+' - '+data.val().address;
+        if (data.val().lat) {
+          self.storeList.push({
+            storeName: store
+          });
+          // self.showToast('Item already exists in Master List', 1000);
+          // self.loading.dismiss();
+        }
+        return false;
+      });
+      
+    });
+
   }
 
   userSelect(userId){
@@ -424,6 +454,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
     walmartModal.present();
   }
   
-
+  navigateToAddPreferredStorePage(){
+    this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "addStore"});
+  }
 
 }

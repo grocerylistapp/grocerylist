@@ -19,13 +19,15 @@ export class TabsHomePage {
   tab2Root: string;
   tab3Root: string;
   tab4Root: string;
+  tab5Root: string;
 
   constructor() {
   
     this.tab1Root = 'ListOfListsPage';
-    this.tab2Root = 'ShoppingModePage';
-    this.tab3Root = 'PreferredStoreListPage';
-    this.tab4Root = 'UserProfilePage';
+    this.tab2Root = 'PreferredStoreListPage';
+    this.tab3Root = 'ShoppingModePage';
+    this.tab4Root = 'ShopBuddyListPage';
+    this.tab5Root = 'UserProfilePage';
 
   }
 

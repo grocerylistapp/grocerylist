@@ -78,10 +78,6 @@ export class UserProfilePage {
         });
         alert.present();
   }
-
-  navigateToAddBuddy(){
-    this.navCtrl.push('AddBuddyPage',{ buddyStatus: "userProfile"});
-  }
-    
+  
 
 }

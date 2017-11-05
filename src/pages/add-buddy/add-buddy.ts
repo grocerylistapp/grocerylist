@@ -112,6 +112,9 @@ export class AddBuddyPage {
       }
     
       saveBuddyList(){
+        if(this.buddy1.email == "" || this.buddy1.email == null){
+          this.presentToast("Please enter email address");
+        }else{
         
         if(this.authenticatedUser.email == this.buddy1.email){
           this.presentToast("Same as registered email");
@@ -166,8 +169,9 @@ export class AddBuddyPage {
         });
   
       }
+    }
         
-      }
+  }
     
       ngOnDestroy(): void {
         this.authenticatedUser$.unsubscribe();

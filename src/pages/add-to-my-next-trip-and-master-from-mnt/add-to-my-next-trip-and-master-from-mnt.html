@@ -8,6 +8,7 @@
   <div class="ion-custom-content">
     
   <form [formGroup]="myForm" (ngSubmit)="checkUserSelection()">
+
     
       <div class="sub-heading">Item Name </div>
       <ion-input class="input-color" formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
@@ -35,6 +36,7 @@
       </ion-row>
       <div class="sub-heading">Shopper </div>
       <!-- <ion-select class="input-color" formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "My Self">
+
         <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
       </ion-select> -->
       <ion-item>
@@ -91,5 +93,9 @@
       <button ion-fab mini (click)="openWalmartSearch()"><ion-icon name="ios-create"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
+
+  <ion-fab bottom left>
+    <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+    </ion-fab>
 
 </ion-content>

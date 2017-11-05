@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ModalController
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Profile } from '../../models/profile/profile';
+import { Store } from '../../models/store/store';
 import { User } from 'firebase/app';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -32,6 +33,7 @@ export class AddItemToMasterListPage {
 
   currentShoppingItem = {} as ShoppingItem;
   shoppingItemRef$: FirebaseListObservable<ShoppingItem[]>;
+  preferredStoresList: FirebaseListObservable<Store[]>;
   private authenticatedUser: User;
   private authenticatedUser$: Subscription;
   private isExist: boolean;
@@ -40,6 +42,7 @@ export class AddItemToMasterListPage {
   public isList: boolean;  // Product item list boolean
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
+  public storeList: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
@@ -86,6 +89,42 @@ export class AddItemToMasterListPage {
     },
     'storeName': {}
   };
+
+  ionViewDidLoad() {
+    this.getPreferredStore();
+  }
+  
+  ionViewWillEnter(){
+    this.getPreferredStore();
+  }
+
+  getPreferredStore(){
+    var self =this;
+    self.storeList = [];
+    self.preferredStoresList = self.db.list(`/preferredStores/${self.authenticatedUser.uid}`);
+    /* gets firebase data only once */
+    
+    self.preferredStoresList.$ref.once("value", function (snapshot) {
+      
+      snapshot.forEach(data => {
+        var store = data.val().storename+' - '+data.val().address;
+        if (data.val().lat) {
+          self.storeList.push({
+            storeName: store
+          });
+          // self.showToast('Item already exists in Master List', 1000);
+          // self.loading.dismiss();
+        }
+        return false;
+      });
+    
+
+      
+      
+      
+    });
+
+  }
 
 
   /* check whether the item name exist in masterlist, 
@@ -193,6 +232,10 @@ export class AddItemToMasterListPage {
     });
     
     walmartModal.present();
+  }
+
+  navigateToAddPreferredStorePage(){
+    this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "addStore"});
   }
 
 }

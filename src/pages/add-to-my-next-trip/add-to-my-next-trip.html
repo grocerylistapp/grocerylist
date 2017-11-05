@@ -29,8 +29,11 @@
       <ion-input type="number" [(ngModel)]="quantity"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating> Store </ion-label>
-          <ion-input type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
+        <ion-label stacked> Store </ion-label>
+          <!-- <ion-input type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
+          <ion-select [(ngModel)]="currentShoppingItem.store"  placeholder = {{currentShoppingItem.store}}>
+              <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+            </ion-select>
     </ion-item>
     <ion-item>
       <ion-label stacked> Shopper </ion-label>
@@ -39,7 +42,12 @@
       </ion-select>
     </ion-item>
   
-  <button ion-button block (click)="addShoppingItem()"> Add Item </button> -->
-  
+
+  <button ion-button block (click)="addShoppingItem()"> Add Item </button>
+
+  <ion-fab bottom left>
+    <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+    </ion-fab>
+ 
   </ion-content>
   
