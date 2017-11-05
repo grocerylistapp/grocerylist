@@ -1,19 +1,9 @@
-<ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-label floating>Email Address</ion-label>
-        <ion-input [(ngModel)]="account.email" type="email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input [(ngModel)]="account.password" type="password"></ion-input>
-      </ion-item>
-      <ion-row class = "login-form__buttons">
-      <div>
-        <button ion-button color="secondary" (click)="navigateToRegisterPage()" >Register</button>
-        <button ion-button color="primary" (click)="loginUser()">Login</button>
-      </div>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
+ 
+  <div class="login-form-body">
+    <div class="sub-heading">Email</div>
+    <ion-input [(ngModel)]="account.email" type="email"></ion-input>
+    <div class="sub-heading">Password</div>
+    <ion-input [(ngModel)]="account.password" type="password"></ion-input>
+    <button class="login-button" ion-button block (click)="loginUser()"> Login </button>  
+    <div class="register-link" (click)="navigateToRegisterPage()">New User? Register Here</div>
+</div>

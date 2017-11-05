@@ -1,7 +1,56 @@
-.register-form__buttons {
-    padding: 10px;
-    float: right;
-    div button:nth-of-type(1){
-        margin-right: 10px;
+// .register-form__buttons {
+//     padding: 10px;
+//     float: right;
+//     div button:nth-of-type(1){
+//         margin-right: 10px;
+//     }
+// }
+
+    ////
+    
+    .terms-policy{
+        font-size: 13px;
+        color: #243B6B;
+        /* margin-bottom: 2%; */
+        text-align: center;
+        margin-top: 15%;
     }
-}
+    
+    .terms-policy span{
+        text-decoration: underline;
+    }
+
+    ion-input{    
+        background-color: white;
+        margin-bottom: 2%;
+        border-radius: 10px !important;
+    }
+
+    .sub-heading{
+        font-size: 12px;
+        color: #243B6B;
+        margin-bottom: 2%;
+    }
+
+    .register-form-body{
+        padding-left: 5%;
+        margin-top: 25%;
+        padding-right: 5%;
+    }
+    
+    .register-button{
+        margin-top: 10%;
+        background-color: #243B6B;
+        height: 55px;
+        font-size: 15px;
+        text-transform: capitalize;
+        border-radius: 10px;
+    }
+    .redirect-login{
+        font-size: 13px;
+        color: #243B6B;
+        text-align: center;
+        margin-top: 15%;
+        text-decoration: underline;
+        font-weight: bold;
+    }

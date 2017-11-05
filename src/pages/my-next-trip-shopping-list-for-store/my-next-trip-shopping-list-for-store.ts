@@ -4,13 +4,6 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { EditShoppingItemPage } from '../edit-shopping-item/edit-shopping-item';
 
-/**
- * Generated class for the MyNextTripShoppingListForStorePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-my-next-trip-shopping-list-for-store',

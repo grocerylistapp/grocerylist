@@ -104,7 +104,7 @@ export class AddItemToMasterListPage {
 
         if (data.val().itemName == self.currentShoppingItem.itemName) {
           self.isExist = true;
-          self.showToast('Item already exists in Master List', 1000);
+          self.showToast('Item already exists in Master List', 3000);
           self.loading.dismiss();
         }
         return false;

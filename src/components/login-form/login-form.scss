@@ -1,7 +1,29 @@
-.login-form__buttons {
-    padding: 10px;
-    float: right;
-    div button:nth-of-type(1){
-        margin-right: 10px;
-    }
+
+ion-input{    
+    background-color: white;
+    margin-bottom: 2%;
+    border-radius: 10px !important;
+}
+.sub-heading{
+    font-size: 12px;
+    color: #243B6B;
+    margin-bottom: 2%;
+}
+.login-form-body{
+    padding-left: 5%;
+    margin-top: 25%;
+    padding-right: 5%;
+}
+.login-button{
+    margin-top: 10%;
+    background-color: #243B6B;
+    height: 55px;
+    font-size: 15px;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+.register-link{    
+    margin-top: 5%;
+    text-align: center;
+    text-decoration: underline;
 }

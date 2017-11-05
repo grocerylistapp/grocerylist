@@ -1,3 +1,19 @@
 page-user-profile {
 
+    .nav-header-second{        
+        padding-left: 0%;
+        padding-top: 5%;
+    }
+    .item-md ion-avatar ion-img, .item-md ion-avatar img{
+        width: 80px;
+        height: 80px;
+    }
+    .profile-item{        
+        color: #243B6B;
+        background-color: #E2EBF5;
+    }
+    ion-icon.logout{
+        color: red;
+        font-size: 30px !important;
+    }
 }

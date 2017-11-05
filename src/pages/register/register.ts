@@ -5,7 +5,6 @@ import {Account} from '../../models/account/account.interface';
 import {ToastController} from 'ionic-angular';
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import {RegisterFormComponent} from '../../components/register-form/register-form';
-import {ComponentsModule} from '../../components/components.module';
 import {LoginResponse} from '../../models/login/login.response.interface';
 
 /**

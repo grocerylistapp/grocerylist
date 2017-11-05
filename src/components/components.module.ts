@@ -6,19 +6,21 @@ import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form'
 import { ProfileViewComponent } from './profile-view/profile-view';
 import { AddGrocerybuddyFormComponent } from './add-grocerybuddy-form/add-grocerybuddy-form';
 @NgModule({
-    declarations: [LoginFormComponent,
-    RegisterFormComponent,
-    EditProfileFormComponent,
-    ProfileViewComponent,
-    AddGrocerybuddyFormComponent],
+    declarations: [
+        LoginFormComponent,
+        RegisterFormComponent,
+        EditProfileFormComponent,
+        ProfileViewComponent,
+        AddGrocerybuddyFormComponent
+    ],
     imports: [IonicModule],
-    exports: [LoginFormComponent,
-    RegisterFormComponent,
-    EditProfileFormComponent,
-    ProfileViewComponent,
-    AddGrocerybuddyFormComponent]
+    exports: [
+        LoginFormComponent,
+        RegisterFormComponent,
+        EditProfileFormComponent,
+        ProfileViewComponent,
+        AddGrocerybuddyFormComponent
+    ]
 })
 
-export class ComponentsModule{
-
-}
+export class ComponentsModule{}

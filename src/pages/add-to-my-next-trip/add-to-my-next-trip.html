@@ -1,14 +1,26 @@
-<ion-header>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">
+      <ion-title class="nav-header-title">Add To Next Trip</ion-title>
+    </ion-navbar>  
+  </ion-header>  
   
-    <ion-navbar color="primary">
-      <ion-title>Add To Next Trip</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content padding>
-    <ion-item> 
+  <ion-content>
+      <div class="ion-custom-content">
+          <div class="sub-heading">Item Name </div>
+          <ion-input class="input-color" type="text" [disabled]="true" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
+          <div class="sub-heading">Quantity </div>
+          <ion-input class="input-color" type="number" [(ngModel)]="quantity"></ion-input>
+          <div class="sub-heading">Store </div>
+          <ion-input class="input-color" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
+          <div class="sub-heading">Shopper </div>
+          <ion-item>
+              <ion-select class="input-color" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = {{shopperName}}>
+                <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
+              </ion-select>
+          </ion-item>
+          <button class="ion-button-custom" ion-button block (click)="addShoppingItem()"> Add Item </button>
+      </div>
+    <!-- <ion-item> 
       <ion-label floating> Item Name </ion-label>
       <ion-input type="text" [disabled]="true" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
     </ion-item>
@@ -27,7 +39,7 @@
       </ion-select>
     </ion-item>
   
-  <button ion-button block (click)="addShoppingItem()"> Add Item </button>
+  <button ion-button block (click)="addShoppingItem()"> Add Item </button> -->
   
   </ion-content>
   

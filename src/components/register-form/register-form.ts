@@ -59,4 +59,8 @@ export class RegisterFormComponent {
     // }
   }
 
+  goBackToLogin(){    
+    this.navCtrl.pop();
+  }
+
 }

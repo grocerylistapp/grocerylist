@@ -1,46 +1,24 @@
 page-shopping-item-list {
 
-    .walmart-item-list{
-        width: 100%;
-        height: 200px;
-        overflow-y: auto;
-    }
-
     .firebase-item-list{
         width: 100%;
-        height: 95%;
+        height: 100%; 
         overflow-y: auto;
-        // bottom: 10%;
-        // position: absolute;
     }
-
     .firebase-ion-item{
         padding-left: 0px;
-        // background-color: darkseagreen;
     }
-
     ion-list{
-        height: 80%;
-    }
-    
+        height: 85%;
+    }    
     .walmart-itemname{
         white-space: normal;
         padding-left: 5%;
-    }
-    
+    }    
     .item-name-picked{
         color: blue;
     }
-
     .item-name-cart{
         color: red;
-    }
-    
-    .item-list-h2{    
-        font-size: 16px;
-        /* border-bottom: 0.2px solid #E8DCDF; */
-        padding-left: 5%;
-        margin-top: 10px !important;
-        font-weight: 600;
     }
 }

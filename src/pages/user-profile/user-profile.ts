@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { Profile } from '../../models/profile/profile';
+import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { User } from 'firebase/app';
+import { Subscription } from 'rxjs/Subscription';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-
-/**
- * Generated class for the UserProfilePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,7 +13,40 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class UserProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider) {
+  private firstName: string;
+  private lastName: string;
+  private emailAddress: string;  
+  private loading;
+  userProfile: Profile;
+  private authenticatedUser : User;
+  private authenticatedUser$ : Subscription;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider,
+    public loadingCtrl: LoadingController,private data: DataServiceProvider, public alertCtrl: AlertController) {
+    
+    let self = this;
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });    
+    this.loading.present();
+    try{
+      this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+          self.getUserDet(user);
+        })
+      }catch(e){ }
+  }
+
+  getUserDet(user){
+    var self = this;
+    this.data.getProfile(user).subscribe(profile => {
+      self.userProfile = <Profile>profile.val();
+      
+      self.firstName = self.userProfile.firstName;
+      self.lastName = self.userProfile.lastName;
+      self.emailAddress = self.userProfile.email;
+      self.loading.dismiss();
+    });
+    
   }
 
   ionViewDidLoad() {
@@ -24,8 +54,29 @@ export class UserProfilePage {
   }
 
   signOut(){
-  this.auth.signOut();
-  this.navCtrl.setRoot('LoginPage');
+    
+        const alert = this.alertCtrl.create({
+          title: 'Logout',
+          message: 'Do you want to logout?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Yes',
+              handler: () => {
+                console.log('Yes clicked');
+                this.auth.signOut();
+                this.navCtrl.setRoot('LoginPage');
+              }
+            }
+          ]
+        });
+        alert.present();
   }
 
   navigateToAddBuddy(){
