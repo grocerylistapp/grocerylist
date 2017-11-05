@@ -12,13 +12,6 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { Store } from '../../models/store/store';
 
-/**
- * Generated class for the MyPreviousTripPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-my-previous-trip',
@@ -65,7 +58,8 @@ export class MyPreviousTripPage {
     this.previousTripRef$.$ref.once("value", function (snapshot) {
       snapshot.forEach(snaps => {
         let previousArray = [];
-        previousArray['date'] = self.getDateInFormat(snaps.key);
+        previousArray['dateInFormat'] = self.getDateInFormat(snaps.key);
+        previousArray['date'] = snaps.key.split('/').join('_');
         let storeArray: Array<any> = [];
         snaps.child('/').forEach(itemTmp => {          
           itemTmp.child('/').forEach(itemTp => {            

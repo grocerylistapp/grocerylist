@@ -7,7 +7,6 @@ import {Account} from '../../models/account/account.interface';
 import {ToastController} from 'ionic-angular';
 import {LoginResponse} from '../../models/login/login.response.interface';
 import {LoginFormComponent} from '../../components/login-form/login-form';
-import {ComponentsModule} from '../../components/components.module';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { User } from 'firebase/app';
 /**

@@ -86,6 +86,7 @@ export class SelectBuddyModelPage {
             console.log(this.buddyListCompleted.length);
             if(this.buddyListCompleted.length==0){
                   this.isAvailable = false;
+                  this.modelMessage = "No buddies exist that this list can be shared with";
             }else{
               this.isAvailable = true;
             }
@@ -94,7 +95,6 @@ export class SelectBuddyModelPage {
 
         });
         //console.log(this.buddyList);
-        this.modelMessage = "No buddies exist that this list can be shared with";
       });
       this.data.getProfile(user).subscribe(profile => {
         this.userProfile = <Profile>profile.val();

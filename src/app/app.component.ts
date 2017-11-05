@@ -23,17 +23,15 @@ export class inSCANout {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      // var self = this;
-      // // initialize the plugin
-      // geofence.initialize().then(
-      //   // resolved promise does not return a value
-      //   () => {
-          
-      //     self.addGeofence();
-      //     console.log('Geofence Plugin Ready Always');
-      //   },
-      //   (err) => console.log(err)
-      // )
+      var self = this;
+      // initialize the plugin
+      geofence.initialize().then(
+        // resolved promise does not return a value
+        () => {
+          console.log('Geofence Plugin Ready Always');
+        },
+        (err) => console.log(err)
+      )
     });
   }
 

@@ -50,5 +50,109 @@
   .list-bottom-left-content{font-size: 95%; color: #6c737b; font-weight:bold;width:50%; display:inline-flex;}
   .list-bottom-right-content{font-size: 85%; color: #9399a0; float:right;width:40%; display:inline-flex;}
 
+  .nav-header{
+    background-color: #E2EBF5;
+    text-align: center;
+    opacity: 0.8;
+    letter-spacing: 4px;
+    font-weight: bolder;
+  }
+  .nav-header-second{    
+    height: 20vh;
+    font-size: 25px;
+    font-weight: bolder;
+    color: #243B6B;
+    background-color: #E2EBF5;
+    margin-top: 56px;
+    padding-left: 5%;
+    padding-top: 10%;
+  }
+  .non-scorllable-content{
+    // top: 22vh;
+    position: relative !important;
+    height: 70vh;
+  }
+  .non-scorllable-content .scroll-content{
+    margin-top: 0px !important;
+  }
+  .toolbar-title-md{
+      color: #243B6B !important;
+      font-size: 18px;
+  }
+  .text-h1-color{    
+    white-space: normal;
+    color: #243B6B;
+    font-size: 18px !important;
+  }
+  .text-h2-color{    
+    white-space: normal;
+    color: #243B6B;
+    font-size: 15px !important;
+  }
+  .text-h3-color{
+    white-space: normal;
+    color: #243B6B;
+    font-size: 13px !important;
+  }
+  .text-h1{    
+    white-space: normal; 
+    font-size: 18px !important;
+  }
+  .text-h2{    
+    white-space: normal;
+    font-size: 15px !important;
+  }
+  .text-h3{
+    white-space: normal;
+    font-size: 13px !important;
+  }
+  ion-input.input-color{
+      margin-bottom: 2%;
+      border-radius: 10px !important;
+      background-color: #E2EBF5;
+  }
+  .sub-heading{
+      font-size: 12px;
+      color: #243B6B;
+      margin-bottom: 2%;
+  }
+  .ion-custom-content{
+      padding-left: 5%;
+      padding-right: 5%;
+      margin-top: 10%;
+  }
+  ion-select.input-color{
+      max-width: 100% !important;
+      width: 100%;
+      margin-bottom: 2%;
+      border-radius: 10px !important;
+      background-color: #E2EBF5;
+  }
+  p.alert{
+    font-size: 13px;
+    color: red;
+  }
+  .ion-button-custom{
+      margin-top: 10%;
+      background-color: #243B6B;
+      height: 55px;
+      font-size: 15px;
+      text-transform: capitalize;
+      border-radius: 10px;
+  }
+  .ion-custom-content ion-item{
+    padding-left: 0px !important;
+  }
+  .ion-custom-content .item-md.item-block .item-inner{
+      padding-right: 0px;
+      border: none; 
+  }
+  .previous-trip-item-header{        
+      font-size: 20px;
+      font-weight: bolder;
+      color: #243B6B;
+      background-color: #E2EBF5;
+      padding-left: 5%;
+  }
   // -------------Toolbar---------------//
 

@@ -1,21 +1,28 @@
-<!--
-  Generated template for the UserProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-    <ion-navbar color="primary">
-    <ion-title>Settings</ion-title>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">      
+      <ion-title class="nav-header-title">Profile</ion-title>
+      <ion-buttons end>
+        <button ion-button (click)="signOut()" icon-only>
+          <ion-icon name="exit" class="logout"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
+<div class="nav-header-second">
+    <ion-list>
+        <ion-item class="profile-item">
+          <ion-avatar item-start>
+            <img src="assets/img/profile_pic.png">
+          </ion-avatar>
+          <h1 class="text-h1-color">{{firstName}} {{lastName}}</h1>
+          <h2 class="text-h2-color">{{emailAddress}}</h2>
+        </ion-item>
+      </ion-list>
+</div>
+<ion-content class="non-scorllable-content">
   <app-profile-view></app-profile-view>
-  <button ion-button block color="danger" (click)="signOut()"> Sign Out </button>
+  <!-- <button ion-button block color="danger" (click)="signOut()"> Sign Out </button> -->
   <ion-fab top right >
     <button ion-fab (click)="navigateToAddBuddy()"><ion-icon name="person-add"></ion-icon></button>
   </ion-fab>

@@ -1,14 +1,14 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Shopping</ion-title>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">
+        <ion-title class="nav-header-title">Shopping</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<div class="nav-header-second">Stores</div>
+<ion-content class=" non-scorllable-content">
   <ion-item-group>
-    <ion-item-divider color="listtitle">Stores</ion-item-divider>
     <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingItemList(item.$key)">
-      <h1>{{ item.$key }}</h1>
+      <h1 class="text-h1-color">{{ item.$key }}</h1>
     </ion-item>
   </ion-item-group>
 </ion-content>

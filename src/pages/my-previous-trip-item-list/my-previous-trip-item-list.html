@@ -1,12 +1,12 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>{{storeName}}</ion-title>
+<ion-header no-shadow no-border>
+    <ion-navbar class="nav-header" color="navColorLight">
+        <ion-title class="nav-header-title">{{storeName}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item *ngFor="let item of previousTripRef$ | async">
-    <h2>{{item.itemName}}</h2>
-    <h3>Quantity : {{item.itemNumber}}</h3>
+    <h2 class="text-h2-color">{{item.itemName}}</h2>
+    <h3 class="text-h3">Quantity : {{item.itemNumber}}</h3>
   </ion-item>
 </ion-content>
