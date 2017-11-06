@@ -17,7 +17,10 @@
       </div>
     </ion-row>
     <div class="sub-heading">Store</div>
-    <ion-input class="input-color" formControlName="storeName" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input>
+    <!-- <ion-input class="input-color" formControlName="storeName" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
+    <ion-select class="input-color" formControlName="storeName" [(ngModel)]="currentShoppingItem.store"  placeholder = "Select store">
+      <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+    </ion-select>
     <ion-row *ngIf="formErrors.storeName">
       <div *ngFor="let errors of formErrors.storeName">
         <p class="alert">{{errors}}
@@ -25,32 +28,6 @@
       </div>
     </ion-row>
     <button class="ion-button-custom" ion-button block [disabled]="!myForm.valid"> Add Item </button> 
-    <!-- <ion-list>
-      <ion-item>
-        <ion-label floating> Item Name </ion-label>
-        <ion-input formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
-      </ion-item>
-      <ion-row *ngIf="formErrors.itemName">
-        <div *ngFor="let errors of formErrors.itemName">
-          <p class="alert">{{errors}}
-            <p>
-        </div>
-      </ion-row>
-      <ion-item>
-        <ion-label stacked> Store </ion-label>
-        <!-- <ion-input formControlName="storeName" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
-        <ion-select formControlName="storeName" [(ngModel)]="currentShoppingItem.store"  placeholder = "Select store">
-          <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-row *ngIf="formErrors.storeName">
-        <div *ngFor="let errors of formErrors.storeName">
-          <p class="alert">{{errors}}
-            <p>
-        </div>
-      </ion-row>
-    </ion-list>
-    <button ion-button block [disabled]="!myForm.valid"> Add Item </button> -->
   </form>
 </div>
 
