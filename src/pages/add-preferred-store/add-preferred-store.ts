@@ -346,7 +346,6 @@ export class AddPreferredStorePage {
              placeId: item.place_id
            }, function(place, status) {
              if (status === google.maps.places.PlacesServiceStatus.OK) {
-              
             
               self.preferredStoresList = self.db.list(`/preferredStores/${self.userId}`);
                   /* gets firebase data only once */
@@ -366,8 +365,8 @@ export class AddPreferredStorePage {
                     if (!self.isStorexists) {
                       let isSaved;
                       isSaved = self.preferredStoresList.push({
-                                 storename: item.structured_formatting.main_text,
-                                 address: item.structured_formatting.secondary_text,
+                                 storename: place.name,
+                                 address: place.formatted_address,
                                  lat: place.geometry.location.lat(),
                                  long: place.geometry.location.lng()
                                }).key;

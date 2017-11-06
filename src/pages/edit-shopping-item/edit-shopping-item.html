@@ -7,12 +7,17 @@
 
 <ion-content>
   <div class="edit-item-content">
-      <div class="sub-heading">Email</div>
+      <div class="sub-heading">Item Name</div>
       <ion-input type="text" [disabled]="true" [(ngModel)]="shoppingItem.itemName"></ion-input>
       <div class="sub-heading">Quantity</div>
       <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
       <div class="sub-heading">Store</div>
-      <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input>
+      <!-- <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input> -->
+      <ion-item>
+        <ion-select class="input-color"  [(ngModel)]="shoppingItem.store"  placeholder = {{shoppingItem.store}}>
+          <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+        </ion-select>
+      </ion-item>
       <button class="update-button" ion-button block (click)="updateShoppingItem(shoppingItem)"> Update </button>  
   </div>
   <ion-fab bottom left>
