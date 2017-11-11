@@ -1,13 +1,8 @@
-<ion-header>
-  
-    <ion-navbar>
-      <ion-title>Edit Profile</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-
-
-  <ion-content padding>
-    
-    <app-edit-profile-form (saveProfileResult)="navigateToPage($event)"></app-edit-profile-form>
-  </ion-content>
+<ion-header no-shadow no-border>
+  <ion-navbar class="nav-header" color="navColorLight">
+    <ion-title class="nav-header-title">EDIT PROFILE</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="content-color">
+  <app-edit-profile-form (saveProfileResult)="navigateToPage($event)"></app-edit-profile-form>
+</ion-content>

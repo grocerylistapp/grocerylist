@@ -1,11 +1,8 @@
-<div *ngIf="userProfile">
+<!-- <div *ngIf="userProfile">
   <ion-card>
-    <ion-card-title padding>
-      User Profile
-    </ion-card-title>
     <ion-card-content>
       <ion-item>
-        <ion-label floating>First Name</ion-label>
+        <h1 class="text-h1-color">First Name</h1>
         <ion-input [value]="userProfile.firstName" [readonly]="true"></ion-input>
       </ion-item>
       <ion-item>
@@ -18,5 +15,23 @@
           </ion-item>
     </ion-card-content>
   </ion-card>
+</div> -->
 
+<div *ngIf="userProfile">
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <h1 class="text-h1-color">First Name</h1>
+        <h3 class="text-h3">{{userProfile.firstName ? userProfile.firstName : '-Nil'}}</h3>
+      </ion-item>
+      <ion-item>
+        <h1 class="text-h1-color">Last Name</h1>
+        <h3 class="text-h3">{{userProfile.lastName ? userProfile.lastName : '-Nil'}}</h3>
+        </ion-item>
+        <ion-item>
+          <h1 class="text-h1-color">Date of Birth</h1>
+          <h3 class="text-h3">{{userProfile.dob ? userProfile.dob : '-Nil'}}</h3>
+          </ion-item>
+    </ion-card-content>
+  </ion-card>
 </div>

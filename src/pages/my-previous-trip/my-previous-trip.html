@@ -1,14 +1,14 @@
 <ion-header no-shadow no-border>
     <ion-navbar class="nav-header" color="navColorLight">
-        <ion-title class="nav-header-title">My Previous Trip</ion-title>
+        <ion-title class="nav-header-title">MY PREVIOUS TRIP</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let item of previousListArray">
+  <div *ngFor="let item of previousListArray.reverse()">
     <ion-item-group>
       <ion-item-divider class="previous-trip-item-header">{{ item.dateInFormat }}</ion-item-divider>
-      <ion-item *ngFor="let store of item.store" (click)="getItemPreviousTripByStore(item.date, store)">
+      <ion-item *ngFor="let store of item.store.reverse()" (click)="getItemPreviousTripByStore(item.date, store)">
         <h1 class="text-h2-color">{{ store.storeName }}</h1>
         <h3>Time : {{ store.time }}</h3>
       </ion-item>
