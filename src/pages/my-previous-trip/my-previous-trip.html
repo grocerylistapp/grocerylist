@@ -8,10 +8,10 @@
   <div *ngFor="let item of previousListArray.reverse()">
     <ion-item-group>
       <ion-item-divider class="previous-trip-item-header">{{ item.dateInFormat }}</ion-item-divider>
-      <ion-item *ngFor="let store of item.store.reverse()" (click)="getItemPreviousTripByStore(item.date, store)">
+      <button ion-item *ngFor="let store of item.store.reverse()" (click)="getItemPreviousTripByStore(item.date, store)">
         <h1 class="text-h2-color">{{ store.storeName }}</h1>
         <h3>Time : {{ store.time }}</h3>
-      </ion-item>
+      </button>
     </ion-item-group>
   </div>
 </ion-content>
