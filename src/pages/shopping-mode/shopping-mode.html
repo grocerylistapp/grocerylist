@@ -8,9 +8,9 @@
 <ion-content class=" non-scorllable-content">
   <div *ngIf="isNotEmpty">
     <ion-item-group>
-      <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingItemList(item.$key)">
+      <button ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingItemList(item.$key)">
         <h1 class="text-h1-color">{{ item.$key }}</h1>
-      </ion-item>
+      </button>
     </ion-item-group>
   </div>
   <h1 class="text-h2-color empty-message" *ngIf="!isNotEmpty">No shopping lists created. Please create some trips so we can shop.</h1>

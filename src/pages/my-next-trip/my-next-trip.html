@@ -12,8 +12,8 @@
 <div class="nav-header-second">Stores</div>
 <ion-content class=" non-scorllable-content">
   <ion-item-group>
-    <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
+    <button ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
       <h1 class="text-h1-color">{{ item.$key }}</h1>
-    </ion-item>
+    </button>
   </ion-item-group>
 </ion-content>

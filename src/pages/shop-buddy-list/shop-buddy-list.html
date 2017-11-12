@@ -17,7 +17,7 @@
           </div>
         </ion-item>
       </div>
-      <h1 class="text-h2-color empty-message" *ngIf="buddyListPending.length == 0">Empty</h1>
+      <h1 class="text-h2-color empty-message" *ngIf="buddyListPending.length == 0">No Pending Invitations</h1>
     </ion-item-group>
     
       <ion-item-group>
@@ -27,7 +27,7 @@
               <h2 class="text-h2-color">{{buddyInvites.buddy.firstName}} {{buddyInvites.buddy.lastName}}</h2>
           </ion-item>
         </div>
-        <h1 class="text-h2-color empty-message" *ngIf="buddyListCompleted.length == 0">Empty</h1>
+        <h1 class="text-h2-color empty-message" *ngIf="buddyListCompleted.length == 0">None Yet</h1>
       </ion-item-group>
     <!-- <ion-card>
         <ion-card-title padding>

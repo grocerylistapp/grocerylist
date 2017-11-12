@@ -5,12 +5,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
+  <button ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
     <h2 class="text-h2-color">{{item.itemName}}</h2>
     <h3 class="text-h2"> Quantity: {{item.itemNumber}}</h3>
     <ion-badge *ngIf="item.status == 'shareIn'" item-end>Shared from {{item.sharedArray[0].shopperName}}</ion-badge>
     <ion-badge *ngIf="item.status == 'shareOut'" item-end>Shared to {{item.sharedArray[0].shopperName}}</ion-badge>
-  </ion-item>
+  </button>
   <ion-fab bottom right>
     <button class="ion-fab-color" ion-fab mini (click)="navigateToShareGrocery()">
       <ion-icon name="share"></ion-icon>
