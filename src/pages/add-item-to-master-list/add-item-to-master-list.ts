@@ -48,7 +48,7 @@ export class AddItemToMasterListPage {
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
     private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) {
-      this.currentShoppingItem.thumbnailImage = "assets/img/noimagethumbnail.jpg";
+     // this.currentShoppingItem.thumbnailImage = "assets/img/noimagethumbnail.jpg";
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     });
