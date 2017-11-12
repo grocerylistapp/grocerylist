@@ -266,11 +266,13 @@ export class AddToMyNextTripAndMasterFromMntPage {
     if (this.storeName) {
       isSaved = this.shoppingItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
+        thumbnailImage: this.currentShoppingItem.thumbnailImage,
         store: this.storeName
       }).key;
     } else {
       isSaved = this.shoppingItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
+        thumbnailImage: this.currentShoppingItem.thumbnailImage,
         store: "None"
       }).key;
     }
@@ -321,6 +323,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
     let isSaved;
     isSaved = this.nextTripItemRef$.push({
       itemName: this.currentShoppingItem.itemName,
+      thumbnailImage: this.currentShoppingItem.thumbnailImage,
       itemNumber: Number(this.quantity),
       pickedQuantity : Number(0),
       status: this.status,
@@ -380,12 +383,14 @@ export class AddToMyNextTripAndMasterFromMntPage {
       if (this.storeName) {
         isSaved = this.buddyShoppingItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
-          store: this.storeName
+          store: this.storeName,
+          thumbnailImage: this.currentShoppingItem.thumbnailImage,
         }).key;
       } else {
         isSaved = this.buddyShoppingItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
-          store: "None"
+          store: "None",
+          thumbnailImage: this.currentShoppingItem.thumbnailImage,
         }).key;
       }
   
@@ -407,6 +412,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
       if (!this.currentShoppingItem.itemNumber) this.currentShoppingItem.itemNumber = 0;
       isSaved = this.buddyNextTripItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
+        thumbnailImage: this.currentShoppingItem.thumbnailImage,
         itemNumber: Number(this.quantity),
         pickedQuantity : Number(0),
         status: "shareIn",
@@ -427,6 +433,7 @@ export class AddToMyNextTripAndMasterFromMntPage {
     this.walmartApi.getProductDetaisByUPC(data).subscribe(
       data => {
         this.currentShoppingItem.itemName = data.items[0].name;
+        this.currentShoppingItem.thumbnailImage = data.items[0].thumbnailImage;
       },
       err => {  
         this.showToast('Item not found, please type in the item.', 1000);
@@ -448,7 +455,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
     let walmartModal = this.modalCtrl.create(WalmartSearchModalPage);
     
     walmartModal.onDidDismiss(data => {
-      this.currentShoppingItem.itemName = data;
+      this.currentShoppingItem.itemName = data.itemName;
+      this.currentShoppingItem.thumbnailImage = data.thumbnailImage;
     });
     
     walmartModal.present();

@@ -6,13 +6,17 @@
   
   <ion-content>
       <div class="ion-custom-content">
-          <div class="sub-heading">Item Name </div>
+        <ion-item>
+        <ion-thumbnail item-left>
+          <img src={{currentShoppingItem.thumbnailImage}}>
+        </ion-thumbnail>
+      </ion-item>
+         <div class="sub-heading">Item Name </div>
           <ion-input class="input-color" type="text" [disabled]="true" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
           <div class="sub-heading">Quantity </div>
           <ion-input class="input-color" type="number" [(ngModel)]="quantity"></ion-input>
           <div class="sub-heading">Store </div>
           <ion-item>
-          <!-- <ion-input class="input-color" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
           <ion-select class="input-color"  [(ngModel)]="currentShoppingItem.store"  placeholder = {{currentShoppingItem.store}}>
             <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
           </ion-select>

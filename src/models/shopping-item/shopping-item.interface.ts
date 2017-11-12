@@ -5,4 +5,5 @@ export interface ShoppingItem{
         itemKey?: string;
         store?: string;
         pickedQuantity?: number;
+        thumbnailImage?: string;
 }

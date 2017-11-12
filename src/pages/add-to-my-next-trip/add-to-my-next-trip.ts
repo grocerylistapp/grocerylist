@@ -210,12 +210,14 @@ export class AddToMyNextTripPage {
       if (this.currentShoppingItem.store) {
         isSaved = this.masterListItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
-          store: this.currentShoppingItem.store
+          store: this.currentShoppingItem.store,
+          thumbnailImage: this.currentShoppingItem.thumbnailImage
         }).key;
       } else {
         isSaved = this.masterListItemRef$.push({
           itemName: this.currentShoppingItem.itemName,
-          store: "None"
+          store: "None",
+          thumbnailImage: this.currentShoppingItem.thumbnailImage
         }).key;
       }
   
@@ -236,6 +238,7 @@ export class AddToMyNextTripPage {
           isSaved = this.shoppingItemRef$.push({
             itemName: this.currentShoppingItem.itemName,
             itemNumber: Number(this.currentShoppingItem.itemNumber),
+            thumbnailImage: this.currentShoppingItem.thumbnailImage,
             pickedQuantity : Number(0),
             status: "shareIn",
             sharedArray: [{shopperName: this.userName, key: this.authenticatedUser.uid}]
@@ -301,6 +304,7 @@ export class AddToMyNextTripPage {
     isSaved = this.shoppingItemRef$.push({
       itemName: self.currentShoppingItem.itemName,
       itemNumber: Number(self.quantity),
+      thumbnailImage: self.currentShoppingItem.thumbnailImage,
       pickedQuantity : Number(0),
       status: this.status,
       sharedArray: this.shareList

@@ -48,7 +48,8 @@ export class AddItemToMasterListPage {
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
     private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) {
-    this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+      this.currentShoppingItem.thumbnailImage = "assets/img/noimagethumbnail.jpg";
+      this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     });
     this.isExist = false;
@@ -164,12 +165,14 @@ export class AddItemToMasterListPage {
     if (this.currentShoppingItem.store) {
       isSaved = this.shoppingItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
-        store: this.currentShoppingItem.store
+        store: this.currentShoppingItem.store,
+        thumbnailImage: this.currentShoppingItem.thumbnailImage
       });
     } else {
       isSaved = this.shoppingItemRef$.push({
         itemName: this.currentShoppingItem.itemName,
-        store: "None"
+        store: "None",
+        thumbnailImage: this.currentShoppingItem.thumbnailImage
       });
     }
     if (isSaved) {
@@ -213,6 +216,7 @@ export class AddItemToMasterListPage {
     this.walmartApi.getProductDetaisByUPC(data).subscribe(
       data => {
         this.currentShoppingItem.itemName = data.items[0].name;
+        this.currentShoppingItem.thumbnailImage = data.items[0].thumbnailImage;
       },
       err => {  // Api response error
         this.showToast('Item not found, please type in the item.', 1000);
@@ -228,7 +232,8 @@ export class AddItemToMasterListPage {
     let walmartModal = this.modalCtrl.create(WalmartSearchModalPage);
         
     walmartModal.onDidDismiss(data => {
-      this.currentShoppingItem.itemName = data;
+      this.currentShoppingItem.itemName = data.itemName;
+      this.currentShoppingItem.thumbnailImage = data.thumbnailImage;
     });
     
     walmartModal.present();

@@ -10,7 +10,10 @@
       <button ion-item class="firebase-ion-item" *ngFor="let item of shoppingListRef$ | async" (click)="itemActionSheetCartItems(item)">
         <ion-label class="walmart-itemname">
           <ion-row class="item-name-cart">
-              <h2 class="text-h2">{{item.itemName}}</h2>
+            <ion-thumbnail item-left>
+              <img src={{item.thumbnailImage}}>
+            </ion-thumbnail>  
+            <h2 class="text-h2">{{item.itemName}}</h2>
             </ion-row>
           <ion-row>
               <h3 class="text-h3"> Quantity: {{item.itemNumber}}</h3>
@@ -19,6 +22,9 @@
       </button>
       <button ion-item class="firebase-ion-item" *ngFor="let item of pickedListRef$ | async" (click)="itemActionSheetPickedItems(item)">
         <ion-label class="walmart-itemname">
+          <ion-thumbnail item-left>
+            <img src={{item.thumbnailImage}}>
+          </ion-thumbnail>  
           <ion-row class="item-name-picked">{{item.itemName}}</ion-row>
           <ion-row> Quantity: {{item.pickedQuantity}}</ion-row>
         </ion-label>

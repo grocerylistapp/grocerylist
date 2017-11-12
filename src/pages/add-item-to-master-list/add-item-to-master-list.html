@@ -7,7 +7,9 @@
 <ion-content>
 <div class="ion-custom-content">
   <form [formGroup]="myForm" (ngSubmit)="addShoppingItemToMasterList()">
-    
+    <ion-thumbnail item-left>
+      <img src={{currentShoppingItem.thumbnailImage}}>
+    </ion-thumbnail>
     <div class="sub-heading">Item Name </div>
     <ion-input class="input-color" formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
     <ion-row *ngIf="formErrors.itemName">

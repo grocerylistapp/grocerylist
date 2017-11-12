@@ -6,6 +6,9 @@
 
 <ion-content padding>
   <button ion-item *ngFor="let item of shoppingListRef$ | async" (click)="editShoppingList(item)">
+    <ion-thumbnail item-start>
+      <img src={{item.thumbnailImage}}>
+    </ion-thumbnail>
     <h2 class="text-h2-color">{{item.itemName}}</h2>
     <h3 class="text-h2"> Quantity: {{item.itemNumber}}</h3>
     <ion-badge *ngIf="item.status == 'shareIn'" item-end>Shared from {{item.sharedArray[0].shopperName}}</ion-badge>
