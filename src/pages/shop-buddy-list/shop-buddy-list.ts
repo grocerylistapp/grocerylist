@@ -99,7 +99,7 @@ export class ShopBuddyListPage {
   declineInvite(notification) {
     console.log(notification);
     this.userBuddyListObj = this.db.object(`/grocerybuddylist/${this.authenticatedUser.uid}`);
-    this.userBuddyListObj.$ref.child(notification['$key']).remove();
+    this.userBuddyListObj.$ref.child(notification.buddy['$key']).remove();
   }
 
   navigateToAddBuddy(){

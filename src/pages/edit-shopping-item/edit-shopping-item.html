@@ -14,7 +14,7 @@
       <div class="sub-heading">Store</div>
       <!-- <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input> -->
       <ion-item>
-        <ion-select class="input-color"  [(ngModel)]="shoppingItem.store"  placeholder = {{shoppingItem.store}}>
+        <ion-select [disabled]="true" class="input-color"  [(ngModel)]="shoppingItem.store"  placeholder = {{storeName}}>
           <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
         </ion-select>
       </ion-item>

@@ -8,10 +8,10 @@
 
   <ion-navbar color="primary">
     <ion-title>Add Buddy</ion-title>
-    <ion-buttons end>
-        <button ion-button (click)="skipContent()" icon-only> 
-              <ion-icon  *ngIf ="!isAddBuddy" name="arrow-forward"></ion-icon>
-              <ion-icon *ngIf ="isAddBuddy" name="close-circle"></ion-icon>
+    <ion-buttons end *ngIf ="!isAddBuddy">
+        <button ion-button (click)="skipContent()" icon-only> Skip
+              <ion-icon name="arrow-forward"></ion-icon>
+              <!-- <ion-icon *ngIf ="isAddBuddy" name="close-circle"></ion-icon> -->
             </button>
     
       </ion-buttons>

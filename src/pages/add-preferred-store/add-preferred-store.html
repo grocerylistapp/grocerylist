@@ -9,10 +9,10 @@
   <ion-navbar color="primary">
     <ion-title style="text-align: center" >Add Preferred Store</ion-title>
     
-    <ion-buttons end>
-      <button ion-button (click)="skipContent()" icon-only> 
-            <ion-icon  *ngIf ="!isAddstore" name="arrow-forward"></ion-icon>
-            <ion-icon *ngIf ="isAddstore" name="close-circle"></ion-icon>
+    <ion-buttons end *ngIf ="!isAddstore">
+      <button ion-button (click)="skipContent()" icon-only>Done 
+            <ion-icon name="arrow-forward"></ion-icon>
+            <!-- <ion-icon *ngIf ="isAddstore" name="close-circle"></ion-icon> -->
           </button>
   
     </ion-buttons>
@@ -32,7 +32,7 @@
     </ion-searchbar>
     <div *ngIf="isStoreselected">
     <ion-item >
-      <button ion-button outline item-end large (click)="addToPreferredStore()">Add Store</button>
+      <button ion-button outline item-end large (click)="addToPreferredStore()">Save Store</button>
     </ion-item>
   </div>
   
