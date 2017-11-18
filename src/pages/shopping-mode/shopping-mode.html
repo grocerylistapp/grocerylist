@@ -1,14 +1,18 @@
 <ion-header no-shadow no-border>
     <ion-navbar class="nav-header" color="navColorLight">
-        <ion-title class="nav-header-title">Shopping</ion-title>
+        <ion-title class="nav-header-title">SHOPPING</ion-title>
   </ion-navbar>
 </ion-header>
 
 <div class="nav-header-second">Stores</div>
 <ion-content class=" non-scorllable-content">
-  <ion-item-group>
-    <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingItemList(item.$key)">
-      <h1 class="text-h1-color">{{ item.$key }}</h1>
-    </ion-item>
-  </ion-item-group>
+  <div *ngIf="isNotEmpty">
+    <ion-item-group>
+      <button ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingItemList(item.$key)">
+        <h1 class="text-h1-color">{{ item.$key }}</h1>
+      </button>
+    </ion-item-group>
+  </div>
+  <h1 class="text-h2-color empty-message" *ngIf="!isNotEmpty">No shopping lists created. Please create some trips so we can shop.</h1>
+
 </ion-content>

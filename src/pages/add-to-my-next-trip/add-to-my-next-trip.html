@@ -1,18 +1,22 @@
 <ion-header no-shadow no-border>
     <ion-navbar class="nav-header" color="navColorLight">
-      <ion-title class="nav-header-title">Add To Next Trip</ion-title>
+      <ion-title class="nav-header-title">ADD TO TRIP</ion-title>
     </ion-navbar>  
   </ion-header>  
   
   <ion-content>
       <div class="ion-custom-content">
-          <div class="sub-heading">Item Name </div>
+        <ion-item>
+        <ion-thumbnail item-left>
+          <img src={{currentShoppingItem.thumbnailImage}}>
+        </ion-thumbnail>
+      </ion-item>
+         <div class="sub-heading">Item Name </div>
           <ion-input class="input-color" type="text" [disabled]="true" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
           <div class="sub-heading">Quantity </div>
           <ion-input class="input-color" type="number" [(ngModel)]="quantity"></ion-input>
           <div class="sub-heading">Store </div>
           <ion-item>
-          <!-- <ion-input class="input-color" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
           <ion-select class="input-color"  [(ngModel)]="currentShoppingItem.store"  placeholder = {{currentShoppingItem.store}}>
             <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
           </ion-select>
@@ -29,7 +33,7 @@
        
 
   <ion-fab bottom left>
-    <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+    <button class="ion-fab-color" ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
     </ion-fab>
  
   </ion-content>

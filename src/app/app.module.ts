@@ -20,7 +20,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 //app pages
 import {ComponentsModule} from '../components/components.module';
-import { inSCANout } from './app.component';
+import { xoomCart } from './app.component';
 import { AddBuddyPageModule } from '../pages/add-buddy/add-buddy.module';
 import { AddItemToMasterListPageModule } from '../pages/add-item-to-master-list/add-item-to-master-list.module';
 import { AddPreferredStorePageModule } from '../pages/add-preferred-store/add-preferred-store.module';
@@ -56,12 +56,12 @@ import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
 
 @NgModule({
   declarations: [
-    inSCANout
+    xoomCart
   ],
   imports: [
     BrowserModule,
     ComponentsModule,
-    IonicModule.forRoot(inSCANout),
+    IonicModule.forRoot(xoomCart),
     //initialize angularfire with credentials 
     AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
     AngularFireDatabaseModule,
@@ -97,7 +97,7 @@ import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
   bootstrap: [IonicApp],
   
   entryComponents: [
-    inSCANout
+    xoomCart
 ],
   providers: [
     StatusBar,

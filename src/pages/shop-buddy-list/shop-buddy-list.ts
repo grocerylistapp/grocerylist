@@ -27,8 +27,8 @@ export class ShopBuddyListPage {
   private userBuddyListObj: FirebaseObjectObservable<Profile>;
   private buddyBuddyListObj: FirebaseObjectObservable<Profile>;
 
-  buddyListPending: Array<any>;
-  buddyListCompleted: Array<any>;
+  buddyListPending: Array<any> = [];
+  buddyListCompleted: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private data: DataServiceProvider, private auth: AuthServiceProvider,
     private db : AngularFireDatabase) {

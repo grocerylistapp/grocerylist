@@ -1,9 +1,9 @@
 <ion-header no-shadow no-border>
   <ion-navbar class="nav-header" color="navColorLight">
-      <ion-title class="nav-header-title">My Next Trip</ion-title>
+      <ion-title class="nav-header-title">NEXT TRIP</ion-title>
     <ion-buttons end>
       <button ion-button (click)="navigateToAddToNextTripPage()" icon-only>
-        <ion-icon name="add"></ion-icon>
+        <ion-icon class="button-icon-color" name="md-add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -12,8 +12,8 @@
 <div class="nav-header-second">Stores</div>
 <ion-content class=" non-scorllable-content">
   <ion-item-group>
-    <ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
+    <button ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
       <h1 class="text-h1-color">{{ item.$key }}</h1>
-    </ion-item>
+    </button>
   </ion-item-group>
 </ion-content>

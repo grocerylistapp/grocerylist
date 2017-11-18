@@ -1,6 +1,6 @@
 <ion-header no-shadow no-border>
     <ion-navbar class="nav-header" color="navColorLight">
-        <ion-title class="nav-header-title">Add To Next Trip</ion-title>
+        <ion-title class="nav-header-title">ADD TO TRIP</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,8 +8,9 @@
   <div class="ion-custom-content">
     
   <form [formGroup]="myForm" (ngSubmit)="checkUserSelection()">
-
-    
+    <ion-thumbnail item-left>
+      <img src={{currentShoppingItem.thumbnailImage}}>
+    </ion-thumbnail>
       <div class="sub-heading">Item Name </div>
       <ion-input class="input-color" formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
       <ion-row *ngIf="formErrors.itemName">
@@ -40,59 +41,19 @@
         </div>
       </ion-row>
       <div class="sub-heading">Shopper </div>
-      <!-- <ion-select class="input-color" formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "My Self">
-
-        <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
-      </ion-select> -->
-      <ion-item>
+       <ion-item>
           <!-- <ion-label stacked> Shopper </ion-label> -->
           <ion-select class="input-color" formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "My Self">
             <ion-option *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
           </ion-select>
       </ion-item>
       <button class="update-button" ion-button block [disabled]="!myForm.valid"> Add Item </button> 
-      <!-- <ion-item>
-        <ion-label floating> Item Name </ion-label>
-        <ion-input formControlName="itemName" type="text" [(ngModel)]="currentShoppingItem.itemName"></ion-input>
-      </ion-item>
-      <ion-row *ngIf="formErrors.itemName">
-        <div *ngFor="let errors of formErrors.itemName">
-          <p class="alert">{{errors}}
-            <p>
-        </div>
-      </ion-row>
-      <ion-item>
-        <ion-label floating> Quantity </ion-label>
-        <ion-input formControlName="quantity" type="number" [(ngModel)]="quantity"></ion-input>
-      </ion-item>
-      <ion-row *ngIf="formErrors.quantity">
-        <div *ngFor="let errors of formErrors.quantity">
-          <p class="alert">{{errors}}
-            <p>
-        </div>
-      </ion-row>
-      <ion-item>
-        <ion-label floating> Store </ion-label>
-        <ion-input formControlName="storeName" type="text" [(ngModel)]="storeName"></ion-input>
-      </ion-item>
-      <ion-row *ngIf="formErrors.storeName">
-        <div *ngFor="let errors of formErrors.storeName">
-          <p class="alert">{{errors}}
-            <p>
-        </div>
-      </ion-row>
-      <ion-item>
-          <ion-label stacked> Shopper </ion-label>
-          <ion-select formControlName="shopperName" [(ngModel)]="shopperName" (ionChange)="userSelect($event)" placeholder = "My Self">
-            <ion-option  *ngFor="let shopperItem of shopperNames" value = {{shopperItem.key}} >{{shopperItem.shopperName}}</ion-option>
-          </ion-select>
-        </ion-item>
-      <button ion-button block [disabled]="!myForm.valid"> Add Item </button> -->
+      
     </form>
   </div>
 
   <ion-fab bottom right >
-    <button ion-fab mini><ion-icon name="ios-search"></ion-icon></button>
+    <button class="ion-fab-color" ion-fab mini><ion-icon name="ios-search"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab mini (click)="scanWalmartCode()"><ion-icon name="qr-scanner"></ion-icon></button>
       <button ion-fab mini (click)="openWalmartSearch()"><ion-icon name="ios-create"></ion-icon></button>
@@ -100,7 +61,7 @@
   </ion-fab>
 
   <ion-fab bottom left>
-    <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+    <button class="ion-fab-color" ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="md-basket"></ion-icon></button>
     </ion-fab>
 
 </ion-content>

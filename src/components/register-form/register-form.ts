@@ -19,6 +19,7 @@ export class RegisterFormComponent {
 
   account = {} as Account;
   @Output() registerStatus: EventEmitter<LoginResponse>;
+  confirmpassword: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private auth: AuthServiceProvider, private toast: ToastController) {
@@ -27,11 +28,18 @@ export class RegisterFormComponent {
 
   async register(account){
     //try{
-      const result = await this.auth.register(this.account);
-      if(result.error != null){
-        console.error(result.error.message);
+      if(this.confirmpassword != this.account.password){
+        this.toast.create({
+          message: 'Password Mismatch !',
+          duration: 3000
+        }).present();
+      }else{
+        const result = await this.auth.register(this.account);
+        if(result.error != null){
+          console.error(result.error.message);
+        }
+        this.registerStatus.emit(result);
       }
-      this.registerStatus.emit(result);
     // }catch(e){
     //   console.error(e);
     //   this.registerStatus.emit(e);

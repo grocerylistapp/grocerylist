@@ -1,23 +1,16 @@
-<!--
-  Generated template for the AddPreferredStorePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title style="text-align: center" >Add Preferred Store</ion-title>
+<ion-header no-shadow no-border>
+  <ion-navbar class="nav-header" color="navColorLight">
+      <ion-title class="nav-header-title">ADD PREFERRED STORE</ion-title>
     
-    <ion-buttons end *ngIf ="!isAddstore">
-      <button ion-button (click)="skipContent()" icon-only>Done 
-            <ion-icon name="arrow-forward"></ion-icon>
+
+    <ion-buttons *ngIf ="!isAddstore" end>
+      <button ion-button (click)="skipContent()" icon-only> Done
+            <ion-icon class="button-icon-color" name="arrow-forward"></ion-icon>
             <!-- <ion-icon *ngIf ="isAddstore" name="close-circle"></ion-icon> -->
-          </button>
-  
+          </button>  
+
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -31,15 +24,19 @@
     placeholder="Start typing and select ...">
     </ion-searchbar>
     <div *ngIf="isStoreselected">
-    <ion-item >
-      <button ion-button outline item-end large (click)="addToPreferredStore()">Save Store</button>
-    </ion-item>
+
+    <!-- <ion-item >      -->
+      <ion-fab bottom right>
+        <button class="ion-fab-color" ion-fab mini (click)="addToPreferredStore()"><ion-icon name="add"></ion-icon></button>
+      </ion-fab>
+      <!-- <button ion-button outline item-end large (click)="addToPreferredStore()">Add Store</button> -->
+    <!-- </ion-item> -->
+
   </div>
   
     <ion-list>
-      <ion-item *ngFor="let item of autocompleteItems" 
-      (click)="chooseItem(item)">
-      {{ item.description }}
+      <ion-item *ngFor="let item of autocompleteItems" (click)="chooseItem(item)">
+        <h2 class="text-h3">{{item.description}}</h2>
       </ion-item>
     </ion-list>
 

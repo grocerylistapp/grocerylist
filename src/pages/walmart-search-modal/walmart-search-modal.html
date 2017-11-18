@@ -1,6 +1,6 @@
 <ion-header no-shadow no-border>
   <ion-navbar class="nav-header" color="navColorLight">
-    <ion-title class="nav-header-title">Search Items</ion-title>
+    <ion-title class="nav-header-title">SEARCH ITEMS</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -10,24 +10,16 @@
         <ion-input class="input-color" type="text" [(ngModel)]="itemName" (input)="searchProduct($event, searchKey)"></ion-input>
         <ion-list *ngIf="isList">
           <ion-item *ngFor="let item of products" (click)="itemTapped($event, item)">
+            <ion-thumbnail item-left>
+              <img src={{item.thumbnailImage}}>
+            </ion-thumbnail>
             <h2 class="text-h3">{{item.name}}</h2>
           </ion-item>
         </ion-list>
-  <!-- <ion-list>
-    <ion-item>
-      <ion-label floating> Item Name </ion-label>
-      <ion-input type="text" [(ngModel)]="itemName" (input)="searchProduct($event, searchKey)"></ion-input>
-    </ion-item>
-    <ion-list *ngIf="isList">
-      <ion-item *ngFor="let item of products" (click)="itemTapped($event, item)">
-        <h2>{{item.name}}</h2>
-      </ion-item>
-    </ion-list>
-  </ion-list> -->
 </div>
 
   <ion-fab right bottom>
-    <button ion-fab mini (click)="closeWalmartModal()">
+    <button class="ion-fab-color" ion-fab mini (click)="closeWalmartModal()">
       <ion-icon name="ios-arrow-down"></ion-icon>
     </button>
   </ion-fab>

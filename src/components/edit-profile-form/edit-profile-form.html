@@ -1,4 +1,4 @@
-<ion-card> 
+<!-- <ion-card> 
   <ion-card-content>
     <ion-item>
       <ion-label floating>First Name</ion-label>
@@ -19,4 +19,18 @@
   </ion-card-content>
 </ion-card>
 
-<button ion-button (click)="saveProfile()">Next</button>
+<button ion-button (click)="saveProfile()">Next</button> -->
+  
+<div class="ion-custom-content">
+    <div class="sub-heading">First Name</div>
+    <ion-input [(ngModel)]="profile.firstName" type="text"></ion-input>
+    <div class="sub-heading">Last Name</div>
+    <ion-input [(ngModel)]="profile.lastName" type="text"></ion-input>
+    <div class="sub-heading">Phone</div>
+    <ion-input [(ngModel)]="profile.phone" type="phone"></ion-input>
+    <div class="sub-heading">Date of Birth</div>
+    <ion-item>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="profile.dob"></ion-datetime>
+    </ion-item>
+    <button class="ion-button-custom" ion-button block (click)="saveProfile()" > Next </button> 
+</div>

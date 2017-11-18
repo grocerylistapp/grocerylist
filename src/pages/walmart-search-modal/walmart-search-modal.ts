@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController  } from 'ionic-angular';
 import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
+import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 
 @IonicPage()
 @Component({
@@ -10,12 +11,15 @@ import { WalmartApiProvider } from '../../providers/walmart-api/walmart-api';
 export class WalmartSearchModalPage {
 
   private itemName: string;
+  private thumbnailImage: string;
   public isList: boolean;  // Product item list boolean
   public productName: string;  // Product name for searching
   public products: Array<any>; // Products search array
-
+  private shoppingItem: ShoppingItem;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, private walmartApi: WalmartApiProvider) {
+      this.shoppingItem = {} as ShoppingItem;
   }
 
   ionViewDidLoad() {
@@ -48,13 +52,17 @@ export class WalmartSearchModalPage {
   /* Item tapped event on the item list */
   itemTapped(event, item) {
     this.itemName = item.name;
+    this.thumbnailImage = item.thumbnailImage;
     this.products = [];
     this.isList = false;
   }
   
   closeWalmartModal(){
     console.log('closeWalmartModal');
-    this.viewCtrl.dismiss(this.itemName);
+    this.shoppingItem.itemName = this.itemName;
+    this.shoppingItem.thumbnailImage = this.thumbnailImage;
+    this.viewCtrl.dismiss(this.shoppingItem);
+    
   }
 
 }

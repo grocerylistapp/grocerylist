@@ -9,7 +9,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 @Component({
   templateUrl: 'app.html',
 })
-export class inSCANout {
+export class xoomCart {
 
   rootPage:string;
 

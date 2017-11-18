@@ -1,12 +1,13 @@
    
-<div class="register-form-body">
+<div class="ion-custom-content">
   <div class="sub-heading">Email</div>
   <!-- <ion-input [(ngModel)]="account.email" type="email"></ion-input> -->
-  <ion-input type="email"></ion-input>
+  <ion-input [(ngModel)]="account.email" type="email"></ion-input>
   <div class="sub-heading">Password</div>
-  <!-- <ion-input [(ngModel)]="account.password" type="password"></ion-input> -->
-  <ion-input type="password"></ion-input>
-  <button class="register-button" ion-button block> Register </button>  
+  <ion-input [(ngModel)]="account.password" type="password"></ion-input>
+  <div class="sub-heading">Confirm Password</div>
+  <ion-input [(ngModel)]="this.confirmpassword" type="password"></ion-input>
+  <button class="ion-button-custom" ion-button block (click)="register()" > Register </button>  
   <div class="terms-policy">By registering,you automatically accept the <span>Terms & Policy</span> of XoomCart.</div>
   <div class="redirect-login" (click)="goBackToLogin()">Have account? Log In </div>
 </div>

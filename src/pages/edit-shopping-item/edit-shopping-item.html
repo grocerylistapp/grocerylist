@@ -1,6 +1,6 @@
 <ion-header no-shadow no-border>
 <ion-navbar class="nav-header" color="navColorLight">   
-    <ion-title class="nav-header-title">{{shoppingItem.itemName}}</ion-title>
+    <ion-title class="nav-header-title">Edit Item</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
       <button class="update-button" ion-button block (click)="updateShoppingItem(shoppingItem)"> Update </button>  
   </div>
   <ion-fab bottom left>
-      <button ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="basket"></ion-icon></button>
+      <button class="ion-fab-color" ion-fab mini (click)="navigateToAddPreferredStorePage()"><ion-icon name="md-basket"></ion-icon></button>
       </ion-fab>
 </ion-content>
 

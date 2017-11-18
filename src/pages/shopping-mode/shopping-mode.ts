@@ -21,6 +21,7 @@ export class ShoppingModePage {
     private authenticatedUser: User;
     private authenticatedUser$: Subscription;
     private loading;
+    isNotEmpty:boolean = false;
     
       constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
         private actionSheetCntrl: ActionSheetController, private auth: AuthServiceProvider,
@@ -47,6 +48,9 @@ export class ShoppingModePage {
         let self = this;
         this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
         this.nextTripRef$.$ref.once("value", function (snapshot) {
+          if(snapshot.numChildren() > 0){
+            self.isNotEmpty = true;
+          }
           self.loading.dismiss();
         });
       }
