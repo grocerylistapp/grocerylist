@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, AlertController  } from 'ionic-angular';
 
 import { ShoppingItem } from '../../models/shopping-item/shopping-item.interface';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -47,9 +47,9 @@ export class AddItemToMasterListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase,
     private auth: AuthServiceProvider, private data: DataServiceProvider, private toast: ToastController,
     public loadingCtrl: LoadingController, public formBuilder: FormBuilder, private walmartApi: WalmartApiProvider,
-    private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) {
-     // this.currentShoppingItem.thumbnailImage = "assets/img/noimagethumbnail.jpg";
-      this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+    private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController, public alertCtrl: AlertController) {
+    this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+
       this.authenticatedUser = user;
     });
     this.isExist = false;
@@ -91,9 +91,9 @@ export class AddItemToMasterListPage {
     'storeName': {}
   };
 
-  ionViewDidLoad() {
-    this.getPreferredStore();
-  }
+  // ionViewDidLoad() {
+  //   this.getPreferredStore();
+  // }
   
   ionViewWillEnter(){
     this.getPreferredStore();
@@ -106,8 +106,12 @@ export class AddItemToMasterListPage {
     /* gets firebase data only once */
     
     self.preferredStoresList.$ref.once("value", function (snapshot) {
-      
+     
+      if(snapshot.val()==null){
+        self.showAlert();
+      }
       snapshot.forEach(data => {
+        
         var store = data.val().storename+' - '+data.val().address;
         if (data.val().lat) {
           self.storeList.push({
@@ -116,7 +120,9 @@ export class AddItemToMasterListPage {
           // self.showToast('Item already exists in Master List', 1000);
           // self.loading.dismiss();
         }
+        
         return false;
+        
       });
     
 
@@ -124,6 +130,8 @@ export class AddItemToMasterListPage {
       
       
     });
+
+    
 
   }
 
@@ -242,6 +250,24 @@ export class AddItemToMasterListPage {
   navigateToAddPreferredStorePage(){
     this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "addStore"});
   }
+
+  showAlert() {
+    
+      let alert = this.alertCtrl.create({
+        title: 'No Stores Found',
+        subTitle: 'Please add any stores to your preferred store list',
+        buttons: [{
+          text: 'Ok',
+          handler: data => {
+            this.navigateToAddPreferredStorePage();
+          }
+        }]
+      });
+      alert.present();
+    
+  }
+    
+
 
 }
 

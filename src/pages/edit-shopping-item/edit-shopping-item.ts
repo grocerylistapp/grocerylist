@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -22,9 +22,10 @@ export class EditShoppingItemPage {
    shoppingItem = {} as ShoppingItem;
    public storeList: Array<any>;
    private authenticatedUser : User;
+   private storeName : string;
    private authenticatedUser$ : Subscription;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private auth: AuthServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private auth: AuthServiceProvider, public alertCtrl: AlertController) {
     this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     
@@ -43,6 +44,7 @@ export class EditShoppingItemPage {
 
     this.shoppingItemRef$.subscribe(
       shoppingItem  => this.shoppingItem = shoppingItem);
+      this.storeName = storeName;
   }
 
   ionViewDidLoad() {
@@ -60,7 +62,9 @@ export class EditShoppingItemPage {
     /* gets firebase data only once */
     
     self.preferredStoresList.$ref.once("value", function (snapshot) {
-      
+      if(snapshot.val()==null){
+        self.showAlert();
+      }
       snapshot.forEach(data => {
         var store = data.val().storename+' - '+data.val().address;
         if (data.val().lat) {
@@ -74,6 +78,7 @@ export class EditShoppingItemPage {
       });
       
     });
+    
 
   }
   
@@ -85,5 +90,20 @@ export class EditShoppingItemPage {
 
   navigateToAddPreferredStorePage(){
     this.navCtrl.push('AddPreferredStorePage',{ storeStatus: "addStore"});
+  }
+  showAlert() {
+    
+      let alert = this.alertCtrl.create({
+        title: 'No Stores Found',
+        subTitle: 'Please add any stores to your preferred store list',
+        buttons: [{
+          text: 'Ok',
+          handler: data => {
+            this.navigateToAddPreferredStorePage();
+          }
+        }]
+      });
+      alert.present();
+    
   }
 }
