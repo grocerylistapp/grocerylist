@@ -21,9 +21,9 @@
     <div class="sub-heading">Store</div>
     <!-- <ion-input class="input-color" formControlName="storeName" type="text" [(ngModel)]="currentShoppingItem.store"></ion-input> -->
     <ion-item>
-      <ion-select class="input-color" formControlName="storeName" [(ngModel)]="currentShoppingItem.store"  placeholder = "Select store">
-        <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
-      </ion-select>
+    <ion-select class="input-color" formControlName="storeName" [(ngModel)]="currentShoppingItem.store"  placeholder = "Select store">
+      <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
+    </ion-select>
   </ion-item>
     <ion-row *ngIf="formErrors.storeName">
       <div *ngFor="let errors of formErrors.storeName">
