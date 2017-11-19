@@ -1,6 +1,6 @@
 <ion-header no-shadow no-border>
   <ion-navbar class="nav-header" color="navColorLight">
-      <ion-title class="nav-header-title">NEXT TRIP</ion-title>
+      <ion-title class="nav-header-title">NEXT TRIxxP</ion-title>
     <ion-buttons end>
       <button ion-button (click)="navigateToAddToNextTripPage()" icon-only>
         <ion-icon class="button-icon-color" name="md-add"></ion-icon>
@@ -13,7 +13,8 @@
 <ion-content class=" non-scorllable-content">
   <ion-item-group>
     <button ion-item *ngFor="let item of nextTripRef$ | async" (click)="navigateToShoppingListForStore(item.$key)">
-      <h1 class="text-h1-color">{{ item.$key }}</h1>
+      <h2 class="text-h2-color">{{ splitStore(item.$key,0) }}</h2>
+      <h3 class="text-h3">{{ splitStore(item.$key,1) }}</h3>
     </button>
   </ion-item-group>
 </ion-content>

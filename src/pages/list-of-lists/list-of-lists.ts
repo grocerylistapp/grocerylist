@@ -69,15 +69,15 @@ export class ListOfListsPage {
       });
       
       // initialize the plugin
-      // self.geofence.initialize().then(
-      //   // resolved promise does not return a value
-      //   () => {
+      self.geofence.initialize().then(
+        // resolved promise does not return a value
+        () => {
           
           self.addGeofence();
-      //     console.log('Geofence Plugin Ready Always');
-      //   },
-      //   (err) => console.log(err)
-      // )
+          console.log('Geofence Plugin Ready Always');
+        },
+        (err) => console.log(err)
+      )
     });    
   }
   

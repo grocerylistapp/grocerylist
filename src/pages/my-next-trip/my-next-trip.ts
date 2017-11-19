@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import { AddShoppingPage } from "../add-shopping/add-shopping";
@@ -18,7 +18,7 @@ import { Store } from '../../models/store/store';
   selector: 'page-my-next-trip-list',
   templateUrl: 'my-next-trip.html',
 })
-export class MyNextTripPage implements OnInit {
+export class MyNextTripPage {
 
 
   shoppingListRef$: FirebaseListObservable<ShoppingItem[]>;
@@ -53,6 +53,7 @@ export class MyNextTripPage implements OnInit {
     let self = this;
     this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
     this.nextTripRef$.$ref.once("value", function (snapshot) {
+      
       self.loading.dismiss();
     });
   }
@@ -88,24 +89,6 @@ export class MyNextTripPage implements OnInit {
     }).present();
   }
 
-  ngOnInit(): void {
-    try {
-      console.log("Came to nexttrip oninnit");
-      this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
-        this.authenticatedUser = user;
-        console.log(`nexttrip got user1 ${this.authenticatedUser.uid}`);
-      })
-      this.nextTripRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}`);
-
-      this.nextTripRef$.forEach(element => {
-        console.log(element);
-      });
-
-    } catch (e) {
-      // console.error(e);
-    }
-  }
-
   getItemsForStore(store: Store) {
     console.log("came to getItemsForStore in MyNextTripPage");
     this.shoppingListRef$ = this.db.list(`/nexttrip/${this.authenticatedUser.uid}/${store.storename}`, { preserveSnapshot: true });
@@ -114,6 +97,15 @@ export class MyNextTripPage implements OnInit {
   navigateToShoppingListForStore(store: string) {
     console.log(`came to navigateToShoppingListForStore in MyNextTripPage, store is ${store}`);
     this.navCtrl.push('MyNextTripShoppingListForStorePage', { storeName: store, userid: this.authenticatedUser.uid });
+  }
+
+  splitStore(storeValue,type){
+    let store = storeValue.split(" - ");
+    if(type == 0){
+      return store[0];
+    }else{
+      return store[1];
+    }
   }
 
 

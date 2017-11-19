@@ -79,6 +79,10 @@
       color: #243B6B !important;
       font-size: 18px;
   }
+  .toolbar-title-ios{
+      color: #243B6B !important;
+      font-size: 18px;
+  }
   .text-h1-color{    
     white-space: normal;
     color: #243B6B;
@@ -163,9 +167,9 @@
   .ion-fab-color{        
       background-color: #243B6B;
   }
-  .tabs-md .tab-button[aria-selected=true]{
-   border-bottom: 3px solid #243B6B;
-  }
+  // .tabs-md .tab-button[aria-selected=true]{
+  //  border-bottom: 3px solid #243B6B;
+  // }
   .button-icon-color{     
     color: #243B6B;
   }
@@ -175,12 +179,22 @@
   .action-sheet-container{
     background-color: #E2EBF5 !important;
   }
-  .action-sheet-md .action-sheet-button{
-    color: #243B6B;
-  }
-  .action-sheet-md .action-sheet-title{
-    color: #243B6B;
-  }
+  // .action-sheet-md .action-sheet-button{
+  //   color: #243B6B;
+  // }
+  // .action-sheet-md .action-sheet-title{
+  //   color: #243B6B;
+  // }
   ion-item ion-label { pointer-events: none; }
+
+  .ion-page .show-page{
+    background-color: #E2EBF5 !important;
+  }
+  .action-sheet-title{
+    
+    background-color: #E2EBF5 !important;
+    color: #243B6B !important;
+    font-size: medium !important;
+  }
   // -------------Toolbar---------------//
 
