@@ -52,6 +52,7 @@ import { WalmartSearchModalPageModule} from '../pages/walmart-search-modal/walma
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
+import { GoogleApiProvider } from '../providers/google-api/google-api';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import { WalmartApiProvider } from '../providers/walmart-api/walmart-api';
     Geofence,
     Geolocation,
     Network,
-    SocialSharing
+    SocialSharing,
+    GoogleApiProvider
 
   ]
 })
