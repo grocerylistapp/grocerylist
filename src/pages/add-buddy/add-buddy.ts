@@ -107,8 +107,8 @@ export class AddBuddyPage {
           status: 'pending'
         });
 
-        this.navCtrl.setRoot('TabsHomePage');
-        this.presentToast(this.message);
+        // this.navCtrl.setRoot('TabsHomePage');
+        this.presentToast("Invitation send");
       }
     
       saveBuddyList(){

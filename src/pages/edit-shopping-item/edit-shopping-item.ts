@@ -55,12 +55,12 @@ export class EditShoppingItemPage {
 
   getPreferredStore(){
     var self =this;
-    self.storeList = [];
+    
     self.preferredStoresList = self.db.list(`/preferredStores/${self.authenticatedUser.uid}`);
     /* gets firebase data only once */
     
     self.preferredStoresList.$ref.once("value", function (snapshot) {
-      
+      self.storeList = [];
       snapshot.forEach(data => {
         var store = data.val().storename+' - '+data.val().address;
         if (data.val().lat) {
