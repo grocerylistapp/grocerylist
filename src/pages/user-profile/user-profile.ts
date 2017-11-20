@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, App } from 'ionic-angular';
 import { Profile } from '../../models/profile/profile';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { User } from 'firebase/app';
@@ -22,7 +22,8 @@ export class UserProfilePage {
   private authenticatedUser$ : Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider,
-    public loadingCtrl: LoadingController,private data: DataServiceProvider, public alertCtrl: AlertController) {
+    public loadingCtrl: LoadingController,private data: DataServiceProvider, public alertCtrl: AlertController,
+    public appCtrl: App) {
     
     let self = this;
     this.loading = this.loadingCtrl.create({
@@ -71,7 +72,7 @@ export class UserProfilePage {
               handler: () => {
                 console.log('Yes clicked');
                 this.auth.signOut();
-                this.navCtrl.setRoot('LoginPage');
+                this.appCtrl.getRootNav().setRoot('LoginPage');
               }
             }
           ]
