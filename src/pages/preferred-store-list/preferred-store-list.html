@@ -7,7 +7,7 @@
 <div class="nav-header-second">My Preferred Stores</div>
 <ion-content class="non-scorllable-content">
 <ion-list >
-  <ion-item *ngFor="let item of storeListRef$ | async" (click)="showActionSheetControler(item)">
+  <button ion-item *ngFor="let item of storeListRef$ | async" (click)="showActionSheetControler(item)">
     <ion-grid class="list-grid" >
 <!--         <ion-row class="list-row">
         <ion-col width-20 center> -->
@@ -18,7 +18,7 @@
       </ion-row> -->
     </ion-grid>
 
-  </ion-item>
+  </button>
 </ion-list>
 <ion-fab bottom right>
   <button ion-fab mini class="ion-fab-color" (click)="navigateToAddPreferredStorePage()"><ion-icon name="add"></ion-icon></button>
