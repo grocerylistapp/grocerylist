@@ -13,7 +13,7 @@
       <ion-input type="number" [(ngModel)]="shoppingItem.itemNumber"></ion-input>
       <div class="sub-heading">Store</div>
       <!-- <ion-input type="text" [(ngModel)]="shoppingItem.store"></ion-input> -->
-      <ion-item>
+      <ion-item class="ion-edit-shopping">
         <ion-select class="input-color"  [(ngModel)]="shoppingItem.store"  placeholder = {{shoppingItem.store}}>
           <ion-option  *ngFor="let storeItem of storeList" value = {{storeItem.storeName}} >{{storeItem.storeName}}</ion-option>
         </ion-select>

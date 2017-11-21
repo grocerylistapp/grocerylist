@@ -55,7 +55,7 @@ export class ListOfListsPage {
             id: generateUUID(), //any unique ID
             latitude: data.val().lat, //center of geofence radius
             longitude:  data.val().long,
-            radius: 100, //radius to edge of geofence in meters
+            radius: 1000, //radius to edge of geofence in meters
             transitionType: 1, //see 'Transition Types' below
             notification: { //notification settings
               id: count + 1, //any unique ID
@@ -69,15 +69,15 @@ export class ListOfListsPage {
       });
       
       // initialize the plugin
-      // self.geofence.initialize().then(
-      //   // resolved promise does not return a value
-      //   () => {
+      self.geofence.initialize().then(
+        // resolved promise does not return a value
+        () => {
           
           self.addGeofence();
-      //     console.log('Geofence Plugin Ready Always');
-      //   },
-      //   (err) => console.log(err)
-      // )
+          console.log('Geofence Plugin Ready Always');
+        },
+        (err) => console.log(err)
+      )
     });    
   }
   

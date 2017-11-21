@@ -4,4 +4,8 @@ page-shop-buddy-list {
         padding-left: 16px;
         font-weight: normal;
     }
+    ion-item ion-label{
+        pointer-events: auto !important;
+    }
+      
 }

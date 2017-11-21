@@ -426,6 +426,20 @@ export class AddToMyNextTripAndMasterFromMntPage {
         this.navCtrl.pop();
       }
     }
+  
+  /* call barcode plugin to scan the barcode */
+  scanWalmartCode() {
+    this.barcodeScanner.scan().then((barcodeData) => {
+      /* Success! Barcode data is here */
+      this.getBarcodeProductDetails(barcodeData.text);
+    }, (err) => {
+      if(err !== "cordova_not_available"){
+        this.showToast('Item not found, please type in the item.', 1000);
+      }
+      // An error occurred
+      console.log('err ='+ JSON.stringify(err));
+    });
+  }
 
   /* get item detail from walmart using UPC */
   getBarcodeProductDetails(data) {

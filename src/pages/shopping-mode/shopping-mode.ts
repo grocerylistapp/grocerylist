@@ -59,5 +59,14 @@ export class ShoppingModePage {
         console.log(`came to navigateToShoppingListForStore in MyNextTripPage, store is ${store}`);
         this.navCtrl.push('ShoppingItemListPage', { storeName: store, userid: this.authenticatedUser.uid });
       }
+      
+      splitStore(storeValue,type){
+        let store = storeValue.split(" - ");
+        if(type == 0){
+          return store[0];
+        }else{
+          return store[1];
+        }
+      }
     }
     

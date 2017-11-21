@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {ToastController} from 'ionic-angular';
 
 import { Geofence } from '@ionic-native/geofence';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { DataServiceProvider } from '../providers/data-service/data-service';
+import { User } from 'firebase/app';
 
 @Component({
   templateUrl: 'app.html',
@@ -12,10 +15,27 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 export class xoomCart {
 
   rootPage:string;
+  isFirstTime: boolean = true;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth: AuthServiceProvider, private geofence: Geofence) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth: AuthServiceProvider, 
+    private geofence: Geofence, private data: DataServiceProvider, private toast: ToastController) {
     this.auth.getAuthenticatedUser().subscribe(auth => {
-      !auth? this.rootPage = 'LoginPage' : this.rootPage = 'TabsHomePage';
+      
+      if(this.isFirstTime){        
+        if(!auth){
+          this.rootPage = 'LoginPage';
+        }else{
+          this.data.getProfile(<User>auth).subscribe(profile => {
+            this.toast.create({
+              message: `Welcome In! ${auth.email}`,
+              duration: 3000
+            }).present();
+    
+            profile.val() ? this.rootPage = 'TabsHomePage': this.rootPage = 'EditProfilePage';
+          })
+        }
+        this.isFirstTime = false;
+      }
     })
 
     platform.ready().then(() => {
