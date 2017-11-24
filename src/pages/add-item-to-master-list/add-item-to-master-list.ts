@@ -93,6 +93,8 @@ export class AddItemToMasterListPage {
 
   ionViewDidLoad() {
     this.getPreferredStore();
+    this.currentShoppingItem.thumbnailImage = "";
+    
   }
   
   ionViewWillEnter(){

@@ -157,7 +157,8 @@ export class AddPreferredStorePage {
        
       }
 
-  updateSearch(event){
+  updateSearch(){
+    console.log(this.autocomplete.query);
     this.isStoreselected = false;
     // console.log(this.autocomplete.query);
     if (this.autocomplete.query.length > 1) {
@@ -210,9 +211,10 @@ export class AddPreferredStorePage {
 
       if (!self.isStorexists) {
         let isSaved;
+        // let invalidChar = ['.', '#', '$', '[', ']'];
         isSaved = self.preferredStoresList.push({
-                   storename: item.name,
-                   address: item.formatted_address,
+                   storename: item.name.split('.').join(' '),
+                   address: item.formatted_address.split('.').join(' '),
                    lat: item.geometry.location.lat,
                    long: item.geometry.location.lng
                  }).key;

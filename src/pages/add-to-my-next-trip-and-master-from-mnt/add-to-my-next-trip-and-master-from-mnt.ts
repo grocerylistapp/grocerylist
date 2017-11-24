@@ -144,6 +144,8 @@ export class AddToMyNextTripAndMasterFromMntPage {
   }
   ionViewDidLoad() {
     this.getUserDetails();
+    this.currentShoppingItem.thumbnailImage = "";
+    
   }
 
   ionViewWillEnter(){

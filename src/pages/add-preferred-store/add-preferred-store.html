@@ -14,13 +14,16 @@
 
 <ion-content padding>
 
-    <ion-searchbar 
+    <!-- <ion-searchbar 
     [(ngModel)]="autocomplete.query" 
     [showCancelButton]="true" 
     (ionInput)="updateSearch($event)" 
     (ionCancel)="dismiss()"
     placeholder="Start typing and select ...">
-    </ion-searchbar>
+    </ion-searchbar> -->
+    <ion-input [(ngModel)]="autocomplete.query" placeholder="Start typing and select ...">
+    </ion-input>
+    <button ion-button (click)="updateSearch()">search</button>
     <div *ngIf="isStoreselected">
       <ion-item >
         <button ion-button outline item-end large (click)="addToPreferredStore()">Save Store</button>
