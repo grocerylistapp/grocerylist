@@ -21,9 +21,20 @@
     (ionCancel)="dismiss()"
     placeholder="Start typing and select ...">
     </ion-searchbar> -->
-    <ion-input [(ngModel)]="autocomplete.query" placeholder="Start typing and select ...">
+    
+    <!-- <ion-input [(ngModel)]="autocomplete.query" placeholder="Start typing and select ...">
     </ion-input>
-    <button ion-button (click)="updateSearch()">search</button>
+    <button ion-button (click)="updateSearch()">search</button> -->
+    <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+            <ion-input [(ngModel)]="autocomplete.query"></ion-input>
+      </ion-col>
+      <ion-col>
+        <button ion-button  (click)="updateSearch()"><ion-icon name="search"></ion-icon></button>
+      </ion-col>
+   </ion-row>
+  </ion-grid>
     <div *ngIf="isStoreselected">
       <ion-item >
         <button ion-button outline item-end large (click)="addToPreferredStore()">Save Store</button>
