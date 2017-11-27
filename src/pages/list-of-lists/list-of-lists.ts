@@ -65,6 +65,7 @@ export class ListOfListsPage {
             }
           }
         );
+        count++;
         return false;
       });
       
@@ -73,6 +74,7 @@ export class ListOfListsPage {
         // resolved promise does not return a value
         () => {
           
+          self.geofence.removeAll();
           self.addGeofence();
           console.log('Geofence Plugin Ready Always');
         },

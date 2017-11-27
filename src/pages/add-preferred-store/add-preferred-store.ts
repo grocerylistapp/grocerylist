@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { Geofence } from '@ionic-native/geofence';
 import { Network } from '@ionic-native/network';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -9,6 +10,7 @@ import { GoogleApiProvider } from '../../providers/google-api/google-api';
 import { User } from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '../../models/store/store';
+import generateUUID from "../../utils/uuid";
 
 /**
  * Generated class for the AddPreferredStorePage page.
@@ -37,6 +39,7 @@ export class AddPreferredStorePage {
   public  isStorexists: boolean;
   public  isStoreselected: boolean;
   places: Array<any>; 
+  public storeListArray: Array<any> = [];
   autocompleteItems: any;
   autocomplete: any;
   acService:any;
@@ -53,7 +56,8 @@ export class AddPreferredStorePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public geolocation: Geolocation,
     private network: Network, private db: AngularFireDatabase, public alertCtrl: AlertController, private googleApi: GoogleApiProvider,
-    private auth: AuthServiceProvider, private data: DataServiceProvider, private toastCtrl: ToastController) {
+    private auth: AuthServiceProvider, private data: DataServiceProvider, private toastCtrl: ToastController,
+    private geofence: Geofence) {
 
       this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
         this.authenticatedUser = user;
@@ -221,7 +225,7 @@ export class AddPreferredStorePage {
 
                  if (isSaved) {
                   self.presentToast("Store saved");
-                  
+                  self.initGeofence();
                 }
       }
       else{
@@ -258,4 +262,60 @@ export class AddPreferredStorePage {
     });
     toast.present();
   }
+
+  initGeofence(){
+
+    var self = this;
+    let count = 1;
+    this.preferredStoresList.$ref.once("value",function(snapshot){
+      
+      snapshot.forEach(data => {
+
+        self.storeListArray.push(
+          {
+            id: generateUUID(), //any unique ID
+            latitude: data.val().lat, //center of geofence radius
+            longitude:  data.val().long,
+            radius: 1000, //radius to edge of geofence in meters
+            transitionType: 1, //see 'Transition Types' below
+            notification: { //notification settings
+              id: count + 1, //any unique ID
+              title: 'Start Shopping', //notification title
+              text: 'You are near a Preferred Store -'+ data.val().storename, //notification body
+              openAppOnClick: true //open app when notification is tapped
+            }
+          }
+        );
+        count++;
+        return false;
+      });
+      
+      // initialize the plugin
+      self.geofence.initialize().then(
+        // resolved promise does not return a value
+        () => {
+          
+          self.geofence.removeAll();
+          self.addGeofence();
+          console.log('Geofence Plugin Ready Always');
+        },
+        (err) => console.log(err)
+      )
+    });    
+  }
+  private addGeofence() {
+    
+    console.log(this.storeListArray);
+    this.geofence.addOrUpdate(this.storeListArray).then(
+      () => console.log('Geofence added'),
+      (err) => console.log('Geofence failed to add')
+    );
+
+    this.geofence.onNotificationClicked().subscribe((notificationData) => {
+        console.log(notificationData);
+        //notificationData.notification.text
+      });
+
+  }
+
 }
